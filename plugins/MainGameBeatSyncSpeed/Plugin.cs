@@ -122,6 +122,7 @@ namespace MainGameBeatSyncSpeed
             {
                 _cfgEnabled.Value = !_cfgEnabled.Value;
                 LogInfo($"toggled enabled={_cfgEnabled.Value}");
+                ShowRhythmSyncToggleNotice(_cfgEnabled.Value);
             }
 
             if (!_cfgEnabled.Value)
@@ -470,6 +471,45 @@ namespace MainGameBeatSyncSpeed
         {
             _analysisReady    = false;
             _lastAnalyzedPath = null;
+        }
+
+        private void ShowRhythmSyncToggleNotice(bool enabled)
+        {
+            string text = enabled ? "リズム同期 ON" : "リズム同期 OFF";
+            if (TryShowSpeedLimitBreakNotice(text))
+            {
+                return;
+            }
+
+            LogInfo("[notice] " + text);
+        }
+
+        private bool TryShowSpeedLimitBreakNotice(string text)
+        {
+            try
+            {
+                var type = Type.GetType("MainGameSpeedLimitBreak.Plugin, MainGameSpeedLimitBreak");
+                if (type == null) return false;
+
+                var instanceProp = type.GetProperty(
+                    "Instance",
+                    BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                object instance = instanceProp?.GetValue(null, null);
+                if (instance == null) return false;
+
+                var method = type.GetMethod(
+                    "ShowUiNotice",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+                if (method == null) return false;
+
+                method.Invoke(instance, new object[] { text });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogWarn("[notice] failed to show via speedlimit: " + ex.Message);
+                return false;
+            }
         }
 
         // ── Logging ──────────────────────────────────────────────
