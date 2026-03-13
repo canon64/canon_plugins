@@ -3,6 +3,12 @@
 動画を見ながら、その動画の音楽リズムに合わせて女性キャラの腰振りを同期させるための
 KKS 向けプラグイン群です。
 
+## ダウンロード（最新版）
+- GitHub Releases（推奨）:
+  - https://github.com/canon64/canon_plugins/releases/latest
+- 直接DL（BepInEx一式zip）:
+  - https://github.com/canon64/canon_plugins/releases/latest/download/canon_plugins_BepInEx_dropin.zip
+
 ## このプラグイン群のメイン用途
 - 動画を再生する
 - 音楽の BPM に合わせて `右Ctrl` をタップする
