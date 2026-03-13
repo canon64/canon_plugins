@@ -105,6 +105,19 @@ namespace MainGameBlankMapAdd
         internal int FolderIndex = -1;
         private string _lastScannedFolder = null;
         private RoomLayoutProfileRepository _roomLayoutProfiles;
+        private bool _profileResetBaselinesCaptured;
+        private float _profileResetRoomScale = 1f;
+        private float _profileResetOffsetX = 0f;
+        private float _profileResetOffsetY = -1f;
+        private float _profileResetOffsetZ = 0f;
+        private float _profileResetRotationX = 0f;
+        private float _profileResetRotationY = 0f;
+        private float _profileResetRotationZ = 0f;
+        private float _profileResetAudioGain = 1f;
+        private bool _profileResetSpeedCaptured;
+        private bool _profileResetBeatCaptured;
+        private SpeedLimitBreakSnapshot _profileResetSpeedSnapshot;
+        private BeatSyncSnapshot _profileResetBeatSnapshot;
 
         // フォルダ切り替えフェード（IMGUI黒オーバーレイ）
         private enum FadePhase { None, ToBlack, FromBlack }
@@ -126,13 +139,14 @@ namespace MainGameBlankMapAdd
             string logDir = Path.Combine(_pluginDir, "_logs");
             Directory.CreateDirectory(logDir);
             _logPath = Path.Combine(logDir, "info.txt");
-            File.AppendAllText(
+            File.WriteAllText(
                 _logPath,
                 $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] === {PluginName} {Version} start ==={Environment.NewLine}",
                 Encoding.UTF8);
 
             _settings = SettingsStore.LoadOrCreate(_pluginDir, LogInfo, LogWarn, LogError);
             _roomLayoutProfiles = RoomLayoutProfileStore.LoadOrCreate(_pluginDir, LogInfo, LogWarn, LogError);
+            CaptureProfileResetBaselinesIfNeeded();
             SetupConfigEntries();
 
             OnVideoEnded += OnFolderVideoEnded;

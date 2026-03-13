@@ -87,6 +87,6 @@ namespace MainGameAllPoseMap
         public string CategoriesOverrideCsv = "";
 
         [DataMember(Order = 22)]
-        public bool VerboseLog = true;
+        public bool VerboseLog = false;
     }
 }

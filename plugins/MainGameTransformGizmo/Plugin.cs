@@ -27,7 +27,11 @@ namespace MainGameTransformGizmo
             Directory.CreateDirectory(logDir);
             _logPath = Path.Combine(logDir, "info.txt");
 
-            WriteLog("INFO", $"=== {PluginName} {Version} start ===");
+            File.WriteAllText(
+                _logPath,
+                $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] [INFO] === {PluginName} {Version} start ==={Environment.NewLine}",
+                Encoding.UTF8);
+            Logger.LogInfo($"=== {PluginName} {Version} start ===");
         }
 
         private void OnDestroy()

@@ -293,6 +293,9 @@ namespace MainGameBlankMapAdd
             if (_settings == null || _roomLayoutProfiles == null)
                 return false;
 
+            CaptureProfileResetBaselinesIfNeeded();
+            TryCaptureExternalProfileResetBaselines();
+
             string videoKey = NormalizeVideoProfileKey(ResolveCurrentVideoPathForProfile(videoPathOverride));
             string folderKey = NormalizeFolderPathForList(_settings.FolderPlayPath);
 
@@ -317,6 +320,13 @@ namespace MainGameBlankMapAdd
                 LogInfo($"room layout applied scope=folder trigger={trigger} key={folderKey}");
                 applied = true;
             }
+            else
+            {
+                RoomLayoutProfile resetProfile = CreateRoomLayoutResetProfile();
+                ApplyRoomLayoutProfile(resetProfile, persistSettings: true, applyToRoomTransform: true);
+                LogInfo($"room layout reset scope=baseline trigger={trigger}");
+                applied = true;
+            }
 
             if (hasVideo && videoProfile.HasAudioGain)
             {
@@ -328,6 +338,13 @@ namespace MainGameBlankMapAdd
             {
                 ApplyAudioGainFromProfile(folderProfile, persistSettings: true);
                 LogInfo($"audio gain applied scope=folder trigger={trigger} key={folderKey} gain={folderProfile.AudioGain:F3}");
+                applied = true;
+            }
+            else
+            {
+                RoomLayoutProfile resetGain = CreateAudioGainResetProfile();
+                ApplyAudioGainFromProfile(resetGain, persistSettings: true);
+                LogInfo($"audio gain reset scope=baseline trigger={trigger} gain={resetGain.AudioGain:F3}");
                 applied = true;
             }
 
@@ -356,6 +373,15 @@ namespace MainGameBlankMapAdd
                 if (TryApplySpeedLimitBreakSnapshot(snap, $"profile-folder:{trigger}"))
                 {
                     LogInfo($"speed-limit-break applied scope=folder trigger={trigger} key={folderKey}");
+                    applied = true;
+                }
+            }
+            else
+            {
+                SpeedLimitBreakSnapshot resetSnap = CreateSpeedLimitBreakResetSnapshot();
+                if (TryApplySpeedLimitBreakSnapshot(resetSnap, $"profile-reset:{trigger}"))
+                {
+                    LogInfo($"speed-limit-break reset scope=baseline trigger={trigger}");
                     applied = true;
                 }
             }
@@ -410,8 +436,170 @@ namespace MainGameBlankMapAdd
                     applied = true;
                 }
             }
+            else
+            {
+                BeatSyncSnapshot resetSnap = CreateBeatSyncResetSnapshot();
+                if (TryApplyBeatSyncSnapshot(resetSnap, $"profile-reset:{trigger}"))
+                {
+                    LogInfo($"beat-sync reset scope=baseline trigger={trigger}");
+                    applied = true;
+                }
+            }
 
             return applied;
+        }
+
+        private void CaptureProfileResetBaselinesIfNeeded()
+        {
+            if (_profileResetBaselinesCaptured)
+                return;
+
+            _profileResetBaselinesCaptured = true;
+
+            float scale = _playbackRoomScale;
+            if (_videoRoomRoot != null)
+                scale = _videoRoomRoot.transform.localScale.x;
+            if (float.IsNaN(scale) || float.IsInfinity(scale) || scale <= 0f)
+                scale = 1f;
+            _profileResetRoomScale = Mathf.Clamp(scale, 0.25f, 4f);
+
+            if (_settings != null)
+            {
+                _profileResetOffsetX = _settings.VideoRoomOffsetX;
+                _profileResetOffsetY = _settings.VideoRoomOffsetY;
+                _profileResetOffsetZ = _settings.VideoRoomOffsetZ;
+                _profileResetRotationX = _settings.VideoRoomRotationX;
+                _profileResetRotationY = _settings.VideoRoomRotationY;
+                _profileResetRotationZ = _settings.VideoRoomRotationZ;
+                _profileResetAudioGain = _settings.VideoAudioGain;
+            }
+
+            if (float.IsNaN(_profileResetAudioGain) || float.IsInfinity(_profileResetAudioGain) || _profileResetAudioGain <= 0f)
+                _profileResetAudioGain = 1f;
+            _profileResetAudioGain = Mathf.Clamp(_profileResetAudioGain, 0.1f, 6f);
+
+            TryCaptureExternalProfileResetBaselines();
+        }
+
+        private void TryCaptureExternalProfileResetBaselines()
+        {
+            if (!_profileResetSpeedCaptured &&
+                TryGetSpeedLimitBreakSnapshot(out SpeedLimitBreakSnapshot speedSnap) &&
+                speedSnap != null)
+            {
+                _profileResetSpeedSnapshot = CloneSpeedLimitBreakSnapshot(speedSnap);
+                _profileResetSpeedCaptured = true;
+            }
+
+            if (!_profileResetBeatCaptured &&
+                TryGetBeatSyncSnapshot(out BeatSyncSnapshot beatSnap) &&
+                beatSnap != null)
+            {
+                _profileResetBeatSnapshot = CloneBeatSyncSnapshot(beatSnap);
+                _profileResetBeatCaptured = true;
+            }
+        }
+
+        private RoomLayoutProfile CreateRoomLayoutResetProfile()
+        {
+            var profile = new RoomLayoutProfile
+            {
+                Scale = _profileResetRoomScale,
+                OffsetX = _profileResetOffsetX,
+                OffsetY = _profileResetOffsetY,
+                OffsetZ = _profileResetOffsetZ,
+                RotationX = _profileResetRotationX,
+                RotationY = _profileResetRotationY,
+                RotationZ = _profileResetRotationZ,
+                HasRoomLayout = true
+            };
+            profile.Normalize();
+            return profile;
+        }
+
+        private RoomLayoutProfile CreateAudioGainResetProfile()
+        {
+            var profile = new RoomLayoutProfile
+            {
+                HasAudioGain = true,
+                AudioGain = _profileResetAudioGain
+            };
+            profile.Normalize();
+            return profile;
+        }
+
+        private SpeedLimitBreakSnapshot CreateSpeedLimitBreakResetSnapshot()
+        {
+            if (_profileResetSpeedCaptured && _profileResetSpeedSnapshot != null)
+                return CloneSpeedLimitBreakSnapshot(_profileResetSpeedSnapshot);
+
+            return new SpeedLimitBreakSnapshot
+            {
+                ForceVanillaSpeed = false,
+                EnableVideoTimeSpeedCues = false,
+                AppliedBpmMax = 120f
+            };
+        }
+
+        private BeatSyncSnapshot CreateBeatSyncResetSnapshot()
+        {
+            if (_profileResetBeatCaptured && _profileResetBeatSnapshot != null)
+                return CloneBeatSyncSnapshot(_profileResetBeatSnapshot);
+
+            return new BeatSyncSnapshot
+            {
+                Enabled = true,
+                Bpm = 128,
+                AutoMotionSwitch = true,
+                AutoThreshold = true,
+                LowThreshold = 0.3f,
+                HighThreshold = 0.7f,
+                LowIntensity = 0.25f,
+                MidIntensity = 0.5f,
+                HighIntensity = 1f,
+                SmoothTime = 0.5f,
+                StrongMotionBeats = 4f,
+                WeakMotionBeats = 4f,
+                LowPassHz = 150f,
+                VerboseLog = false
+            };
+        }
+
+        private static SpeedLimitBreakSnapshot CloneSpeedLimitBreakSnapshot(SpeedLimitBreakSnapshot source)
+        {
+            if (source == null)
+                return null;
+
+            return new SpeedLimitBreakSnapshot
+            {
+                ForceVanillaSpeed = source.ForceVanillaSpeed,
+                EnableVideoTimeSpeedCues = source.EnableVideoTimeSpeedCues,
+                AppliedBpmMax = source.AppliedBpmMax
+            };
+        }
+
+        private static BeatSyncSnapshot CloneBeatSyncSnapshot(BeatSyncSnapshot source)
+        {
+            if (source == null)
+                return null;
+
+            return new BeatSyncSnapshot
+            {
+                Enabled = source.Enabled,
+                Bpm = source.Bpm,
+                AutoMotionSwitch = source.AutoMotionSwitch,
+                AutoThreshold = source.AutoThreshold,
+                LowThreshold = source.LowThreshold,
+                HighThreshold = source.HighThreshold,
+                LowIntensity = source.LowIntensity,
+                MidIntensity = source.MidIntensity,
+                HighIntensity = source.HighIntensity,
+                SmoothTime = source.SmoothTime,
+                StrongMotionBeats = source.StrongMotionBeats,
+                WeakMotionBeats = source.WeakMotionBeats,
+                LowPassHz = source.LowPassHz,
+                VerboseLog = source.VerboseLog
+            };
         }
 
         private RoomLayoutProfile CaptureCurrentRoomLayoutProfile(bool includeAudioGain, bool markAsRoomLayout)

@@ -435,8 +435,7 @@ namespace MainGameBlankMapAdd
             }
 
             if (_settings == null || !_settings.EnablePlaybackBar) return;
-            if (_mainVideoPlayer == null) return;
-            if (_videoRoomRoot == null) return;
+            if (_videoRoomRoot == null && _lastReservedMap == null) return;
 
             float triggerPx = Mathf.Max(0f, _settings.PlaybackBarShowMouseBottomPx);
             // 上段の部屋操作スライダー群 + ボタン群 + 下段再生スライダー群の3段構成を確保
@@ -524,6 +523,7 @@ namespace MainGameBlankMapAdd
                 SaveFolderPlayStateFromBar(rescanNow: false, logMessage: null);
 
             VideoPlayer player = _mainVideoPlayer;
+            bool hasPlayer = player != null;
             double totalSec = ResolveTotalSeconds(player);
             double currentSec = ResolveCurrentSeconds(player, totalSec);
 
@@ -1161,6 +1161,7 @@ namespace MainGameBlankMapAdd
                 _playbackRoomControlsExpanded = !_playbackRoomControlsExpanded;
             }
 
+            GUI.enabled = hasPlayer;
             if (HelpButton(new Rect(x, y, buttonW, buttonH), "Play", "動画再生"))
             {
                 PlayFromBar(player);
@@ -1169,20 +1170,27 @@ namespace MainGameBlankMapAdd
 
             if (HelpButton(new Rect(x, y, buttonW, buttonH), "Pause", "動画一時停止"))
             {
-                player.Pause();
-                LogInfo("video pause (bar)");
-                LogAudioDiagnosticsSnapshot("bar-pause", includeStoppedSources: true);
+                if (player != null)
+                {
+                    player.Pause();
+                    LogInfo("video pause (bar)");
+                    LogAudioDiagnosticsSnapshot("bar-pause", includeStoppedSources: true);
+                }
             }
             x += buttonW + pad;
 
             if (HelpButton(new Rect(x, y, buttonW, buttonH), "Stop", "動画停止（先頭へ戻す）"))
             {
-                ClearDeferredPlayFromBar();
-                player.Stop();
-                _playbackSeekNormalized = 0f;
-                LogInfo("video stop (bar)");
-                LogAudioDiagnosticsSnapshot("bar-stop", includeStoppedSources: true);
+                if (player != null)
+                {
+                    ClearDeferredPlayFromBar();
+                    player.Stop();
+                    _playbackSeekNormalized = 0f;
+                    LogInfo("video stop (bar)");
+                    LogAudioDiagnosticsSnapshot("bar-stop", includeStoppedSources: true);
+                }
             }
+            GUI.enabled = true;
             x += buttonW + pad;
 
             Rect folderDropdownButtonRect = Rect.zero;
@@ -1554,7 +1562,7 @@ namespace MainGameBlankMapAdd
             if (Event.current != null && Event.current.type == EventType.MouseDown && seekSliderRect.Contains(mouseGui))
                 _playbackSeekDragging = true;
 
-            bool canSeek = player.canSetTime && totalSec > 0.0001d;
+            bool canSeek = player != null && player.canSetTime && totalSec > 0.0001d;
             if (!_playbackSeekDragging && canSeek)
             {
                 _playbackSeekNormalized = Mathf.Clamp01((float)(currentSec / totalSec));

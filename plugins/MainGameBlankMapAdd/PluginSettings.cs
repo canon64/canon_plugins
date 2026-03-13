@@ -105,7 +105,7 @@ namespace MainGameBlankMapAdd
         public bool DisableParticles = true;
 
         [DataMember(Order = 13)]
-        public bool VerboseLog = true;
+        public bool VerboseLog = false;
 
         [DataMember(Order = 14)]
         public int AddedThumbnailID = 9000;
@@ -132,7 +132,7 @@ namespace MainGameBlankMapAdd
         public bool VideoLoop = true;
 
         [DataMember(Order = 22)]
-        public bool MuteVideoAudio = true;
+        public bool MuteVideoAudio = false;
 
         [DataMember(Order = 26)]
         public bool AutoPlayOnMapLoad = false;
@@ -172,7 +172,7 @@ namespace MainGameBlankMapAdd
 
         /// <summary>true=球体、false=平面(Quad)</summary>
         [DataMember(Order = 35)]
-        public bool UseSphere = true;
+        public bool UseSphere = false;
 
         [DataMember(Order = 36)]
         public float SphereRadius = 4f;
