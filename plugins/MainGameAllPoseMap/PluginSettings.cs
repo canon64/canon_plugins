@@ -8,10 +8,10 @@ namespace MainGameAllPoseMap
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
         {
-            if (AddedMapNo <= 0) AddedMapNo = 901;
+            if (AddedMapNo <= 0) AddedMapNo = 900;
             if (SourceMapNo < 0) SourceMapNo = 1;
             if (AddedThumbnailID <= 0) AddedThumbnailID = 9901;
-            if (string.IsNullOrWhiteSpace(AddedMapName)) AddedMapName = "all_pose_map_901";
+            if (string.IsNullOrWhiteSpace(AddedMapName)) AddedMapName = "all_pose_map_900";
             if (string.IsNullOrWhiteSpace(AddedDisplayName)) AddedDisplayName = "All Pose Map";
             if (string.IsNullOrWhiteSpace(VirtualPointAnchorName)) VirtualPointAnchorName = "h_free";
             if (VirtualPointsPerRing <= 0) VirtualPointsPerRing = 12;
@@ -24,19 +24,19 @@ namespace MainGameAllPoseMap
         public bool Enabled = true;
 
         [DataMember(Order = 1)]
-        public int AddedMapNo = 901;
+        public int AddedMapNo = 900;
 
         [DataMember(Order = 2)]
         public int SourceMapNo = 1;
 
         [DataMember(Order = 3)]
-        public string AddedMapName = "all_pose_map_901";
+        public string AddedMapName = "all_pose_map_900";
 
         [DataMember(Order = 4)]
         public string AddedDisplayName = "All Pose Map";
 
         [DataMember(Order = 5)]
-        public int AddedSort = 901;
+        public int AddedSort = 900;
 
         [DataMember(Order = 6)]
         public bool ForceIsGate = true;

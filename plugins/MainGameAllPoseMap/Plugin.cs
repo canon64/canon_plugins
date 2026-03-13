@@ -170,6 +170,21 @@ namespace MainGameAllPoseMap
             if (mapInfo == null || mapInfo.Count == 0)
                 return;
 
+            if (mapInfo.TryGetValue(_settings.AddedMapNo, out var existingTarget) && existingTarget != null)
+            {
+                _sourceThumbnailId = existingTarget.ThumbnailMorningID != -1 ? existingTarget.ThumbnailMorningID
+                    : existingTarget.ThumbnailDayTimeID != -1 ? existingTarget.ThumbnailDayTimeID
+                    : existingTarget.ThumbnailEveningID != -1 ? existingTarget.ThumbnailEveningID
+                    : existingTarget.ThumbnailNightID;
+
+                if (_settings.VerboseLog)
+                {
+                    LogInfo(
+                        $"target map exists; use existing map no={existingTarget.No} display={existingTarget.DisplayName}");
+                }
+                return;
+            }
+
             if (!mapInfo.TryGetValue(_settings.SourceMapNo, out var source) || source == null)
                 source = mapInfo.Values.FirstOrDefault(v => v != null);
             if (source == null)
