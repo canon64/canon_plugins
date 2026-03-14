@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <KKSDir Condition="'$(KKSDir)'==''">$(KKS_DIR)</KKSDir>
+    <KKSDir Condition="'$(KKSDir)'==''">F:\kks</KKSDir>
     <BepInExDir Condition="'$(BepInExDir)'==''">$(KKSDir)\BepInEx</BepInExDir>
   </PropertyGroup>
 

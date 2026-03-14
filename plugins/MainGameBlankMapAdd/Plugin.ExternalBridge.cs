@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Reflection;
 
 namespace MainGameBlankMapAdd
@@ -211,7 +212,6 @@ namespace MainGameBlankMapAdd
                 float lowPassHz = UnityEngine.Mathf.Clamp(snapshot.LowPassHz, 50f, 500f);
 
                 SetConfigEntryBool(instType, instance, "_cfgEnabled", snapshot.Enabled);
-                SetConfigEntryInt(instType, instance, "_cfgBpm", bpm);
                 SetConfigEntryBool(instType, instance, "_cfgAutoMotionSwitch", snapshot.AutoMotionSwitch);
                 SetConfigEntryBool(instType, instance, "_cfgAutoThreshold", snapshot.AutoThreshold);
                 SetConfigEntryFloat(instType, instance, "_cfgLowThreshold", lowThreshold);
@@ -225,15 +225,78 @@ namespace MainGameBlankMapAdd
                 SetConfigEntryFloat(instType, instance, "_cfgLowPassHz", lowPassHz);
                 SetConfigEntryBool(instType, instance, "_cfgVerboseLog", snapshot.VerboseLog);
 
+                bool loadedFromSongMap = TryApplyBeatSyncSavedSongBpm(instType, instance, out int songMapBpm);
+                int appliedBpm = bpm;
+                if (loadedFromSongMap)
+                {
+                    appliedBpm = UnityEngine.Mathf.Clamp(songMapBpm, 1, 999);
+                }
+                else
+                {
+                    SetConfigEntryInt(instType, instance, "_cfgBpm", bpm);
+                }
+
                 LogInfo(
                     $"beat-sync applied reason={reason} " +
-                    $"enabled={snapshot.Enabled} bpm={bpm} autoMotion={snapshot.AutoMotionSwitch} " +
+                    $"enabled={snapshot.Enabled} bpm={appliedBpm} bpmSrc={(loadedFromSongMap ? "song-map" : "profile")} autoMotion={snapshot.AutoMotionSwitch} " +
                     $"autoThreshold={snapshot.AutoThreshold} low/high={lowThreshold:0.###}/{highThreshold:0.###}");
                 return true;
             }
             catch (Exception ex)
             {
                 LogWarn($"beat-sync apply failed reason={reason} error={ex.Message}");
+                return false;
+            }
+        }
+
+        private bool TryApplyBeatSyncSavedSongBpm(Type instType, object instance, out int bpm)
+        {
+            bpm = 0;
+            if (instType == null || instance == null)
+                return false;
+
+            try
+            {
+                const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+                FieldInfo currentSongKeyField = instType.GetField("_currentSongPathKey", flags);
+                currentSongKeyField?.SetValue(instance, null);
+
+                FieldInfo nextPollField = instType.GetField("_nextSongPathPollTime", flags);
+                if (nextPollField != null)
+                {
+                    nextPollField.SetValue(instance, 0f);
+                }
+
+                MethodInfo refreshMethod = instType.GetMethod("RefreshSongBpmAutoLoad", flags);
+                if (refreshMethod == null)
+                    return false;
+
+                refreshMethod.Invoke(instance, null);
+
+                string key = currentSongKeyField?.GetValue(instance) as string;
+                if (string.IsNullOrWhiteSpace(key))
+                    return false;
+
+                FieldInfo mapField = instType.GetField("_songBpmByPath", flags);
+                if (mapField == null)
+                    return false;
+
+                var map = mapField.GetValue(instance) as IDictionary;
+                if (map == null || !map.Contains(key))
+                    return false;
+
+                object raw = map[key];
+                if (raw == null)
+                    return false;
+
+                bpm = UnityEngine.Mathf.Clamp(Convert.ToInt32(raw), 1, 999);
+                SetConfigEntryInt(instType, instance, "_cfgBpm", bpm);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogWarn($"beat-sync song-map apply failed: {ex.Message}");
                 return false;
             }
         }

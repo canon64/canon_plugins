@@ -48,7 +48,7 @@ namespace MainGameBlankMapAdd
             string url = inst._mainVideoPlayer.url;
             if (string.IsNullOrEmpty(url)) return null;
 
-            // Unity VideoPlayer は "file:///..." 形式で返すことがある
+            // Unity VideoPlayer は "file:///F:/..." 形式で返すことがある
             if (url.StartsWith("file:///", StringComparison.OrdinalIgnoreCase))
                 url = Uri.UnescapeDataString(url.Substring(8));
 

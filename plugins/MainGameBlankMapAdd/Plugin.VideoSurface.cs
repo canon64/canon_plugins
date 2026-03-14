@@ -584,11 +584,12 @@ namespace MainGameBlankMapAdd
                     Mathf.Max(_settings?.RoomDepth ?? 12f, _settings?.RoomHeight ?? 6f)));
             float roomScale = Mathf.Max(0.25f, _playbackRoomScale);
             source.maxDistance = Mathf.Max(6f, roomMax * roomScale * 1.5f);
+            float videoReverbMix = ResolveVideoAudioReverbMix();
             bool enableVideoReverb =
                 (_settings?.ApplyReverbToVideoAudio ?? false) &&
-                (_settings?.EnableVoiceReverb ?? false);
+                videoReverbMix > 0.0001f;
             source.bypassReverbZones = !enableVideoReverb;
-            source.reverbZoneMix = enableVideoReverb ? ResolveVideoAudioReverbMix() : 0f;
+            source.reverbZoneMix = enableVideoReverb ? videoReverbMix : 0f;
             source.mute = _settings?.MuteVideoAudio ?? false;
             source.volume = Mathf.Clamp01(_settings?.VideoVolume ?? 0.5f);
             EnsureDualMonoFilter(source);
@@ -596,17 +597,14 @@ namespace MainGameBlankMapAdd
 
         private float ResolveVideoAudioReverbMix()
         {
-            if (_settings == null)
+            if (_settings == null || !_settings.EnableVoiceReverb)
                 return 0f;
 
             float minDistance = Mathf.Max(0f, _settings.VoiceReverbMinDistance);
-            float maxDistance = Mathf.Clamp(
-                _settings.VoiceReverbMaxDistance,
-                minDistance + 0.1f,
-                Mathf.Max(minDistance + 0.1f, 40f));
-            float normalized = Mathf.Clamp01(
-                (maxDistance - minDistance) / Mathf.Max(0.0001f, 40f - minDistance));
-            return Mathf.Lerp(0f, 1.1f, normalized);
+            float normalized = ResolveReverbStrengthNormalized(minDistance, _settings.VoiceReverbMaxDistance);
+            if (normalized <= 0.0001f)
+                return 0f;
+            return MapReverbStrengthToMix(normalized);
         }
 
         private void ApplyRuntimeVideoAudioLevel(float volume)

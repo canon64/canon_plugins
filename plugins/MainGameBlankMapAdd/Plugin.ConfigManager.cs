@@ -455,6 +455,7 @@ namespace MainGameBlankMapAdd
             _settings.VoiceReverbPreset = NormalizeString(_cfgVoiceReverbPreset.Value);
             _settings.VoiceReverbMinDistance = _cfgVoiceReverbMinDistance.Value;
             _settings.VoiceReverbMaxDistance = _cfgVoiceReverbMaxDistance.Value;
+            ApplyGlobalReverbState($"config:{reason}", persistConfig: true);
 
             _settings.FolderPlayEnabled = true;
             _settings.FolderPlayPath = NormalizeVideoPathInput(NormalizeString(_cfgFolderPlayPath.Value));

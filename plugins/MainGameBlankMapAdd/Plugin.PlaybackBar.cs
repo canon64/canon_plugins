@@ -435,7 +435,8 @@ namespace MainGameBlankMapAdd
             }
 
             if (_settings == null || !_settings.EnablePlaybackBar) return;
-            if (_videoRoomRoot == null && _lastReservedMap == null) return;
+            if (_mainVideoPlayer == null) return;
+            if (_videoRoomRoot == null) return;
 
             float triggerPx = Mathf.Max(0f, _settings.PlaybackBarShowMouseBottomPx);
             // 上段の部屋操作スライダー群 + ボタン群 + 下段再生スライダー群の3段構成を確保
@@ -523,7 +524,6 @@ namespace MainGameBlankMapAdd
                 SaveFolderPlayStateFromBar(rescanNow: false, logMessage: null);
 
             VideoPlayer player = _mainVideoPlayer;
-            bool hasPlayer = player != null;
             double totalSec = ResolveTotalSeconds(player);
             double currentSec = ResolveCurrentSeconds(player, totalSec);
 
@@ -1161,7 +1161,6 @@ namespace MainGameBlankMapAdd
                 _playbackRoomControlsExpanded = !_playbackRoomControlsExpanded;
             }
 
-            GUI.enabled = hasPlayer;
             if (HelpButton(new Rect(x, y, buttonW, buttonH), "Play", "動画再生"))
             {
                 PlayFromBar(player);
@@ -1170,27 +1169,20 @@ namespace MainGameBlankMapAdd
 
             if (HelpButton(new Rect(x, y, buttonW, buttonH), "Pause", "動画一時停止"))
             {
-                if (player != null)
-                {
-                    player.Pause();
-                    LogInfo("video pause (bar)");
-                    LogAudioDiagnosticsSnapshot("bar-pause", includeStoppedSources: true);
-                }
+                player.Pause();
+                LogInfo("video pause (bar)");
+                LogAudioDiagnosticsSnapshot("bar-pause", includeStoppedSources: true);
             }
             x += buttonW + pad;
 
             if (HelpButton(new Rect(x, y, buttonW, buttonH), "Stop", "動画停止（先頭へ戻す）"))
             {
-                if (player != null)
-                {
-                    ClearDeferredPlayFromBar();
-                    player.Stop();
-                    _playbackSeekNormalized = 0f;
-                    LogInfo("video stop (bar)");
-                    LogAudioDiagnosticsSnapshot("bar-stop", includeStoppedSources: true);
-                }
+                ClearDeferredPlayFromBar();
+                player.Stop();
+                _playbackSeekNormalized = 0f;
+                LogInfo("video stop (bar)");
+                LogAudioDiagnosticsSnapshot("bar-stop", includeStoppedSources: true);
             }
-            GUI.enabled = true;
             x += buttonW + pad;
 
             Rect folderDropdownButtonRect = Rect.zero;
@@ -1517,10 +1509,11 @@ namespace MainGameBlankMapAdd
             GUI.Label(
                 volumeTextRect,
                 $"VOL {Mathf.RoundToInt(currentVolume * 100f)}%");
-            float reverbMin = Mathf.Max(0f, _settings.VoiceReverbMinDistance + 0.1f);
-            float reverbMaxLimit = Mathf.Max(reverbMin + 0.1f, 40f);
-            float currentReverbMax = Mathf.Clamp(_settings.VoiceReverbMaxDistance, reverbMin, reverbMaxLimit);
-            float currentReverbNorm = Mathf.Clamp01((currentReverbMax - reverbMin) / Mathf.Max(0.0001f, reverbMaxLimit - reverbMin));
+            float reverbMinDistance = Mathf.Max(0f, _settings.VoiceReverbMinDistance);
+            float reverbFloorMax = ResolveReverbSliderFloorMaxDistance(reverbMinDistance);
+            float reverbMaxLimit = ResolveReverbSliderMaxLimit(reverbMinDistance);
+            float currentReverbMax = Mathf.Clamp(_settings.VoiceReverbMaxDistance, reverbFloorMax, reverbMaxLimit);
+            float currentReverbNorm = ResolveEffectiveReverbStrengthNormalized();
             GUI.Label(
                 reverbTextRect,
                 $"REV {Mathf.RoundToInt(currentReverbNorm * 100f)}%");
@@ -1548,8 +1541,9 @@ namespace MainGameBlankMapAdd
             float nextReverbNorm = HelpSlider(reverbSliderRect, currentReverbNorm, 0f, 1f, "残響の強さ");
             if (Mathf.Abs(nextReverbNorm - currentReverbNorm) > 0.0001f)
             {
-                float nextReverbMax = reverbMin + (reverbMaxLimit - reverbMin) * nextReverbNorm;
-                ApplyPlaybackBarReverbMaxDistance(nextReverbMax, persist: false);
+                float nextReverbMax = reverbFloorMax + (reverbMaxLimit - reverbFloorMax) * nextReverbNorm;
+                // Reverb is persisted immediately to prevent cfg re-apply from reviving old values.
+                ApplyPlaybackBarReverbMaxDistance(nextReverbMax, persist: true);
             }
 
             bool currentVideoReverb = _settings.ApplyReverbToVideoAudio;
@@ -1562,7 +1556,7 @@ namespace MainGameBlankMapAdd
             if (Event.current != null && Event.current.type == EventType.MouseDown && seekSliderRect.Contains(mouseGui))
                 _playbackSeekDragging = true;
 
-            bool canSeek = player != null && player.canSetTime && totalSec > 0.0001d;
+            bool canSeek = player.canSetTime && totalSec > 0.0001d;
             if (!_playbackSeekDragging && canSeek)
             {
                 _playbackSeekNormalized = Mathf.Clamp01((float)(currentSec / totalSec));
@@ -1714,47 +1708,16 @@ namespace MainGameBlankMapAdd
             if (_settings == null)
                 return;
 
-            if (!_settings.EnableVoiceReverb)
-                _settings.EnableVoiceReverb = true;
-
             float minDistance = Mathf.Max(0f, _settings.VoiceReverbMinDistance);
-            float clampedMax = Mathf.Max(minDistance + 0.1f, maxDistance);
+            float sliderFloorMax = ResolveReverbSliderFloorMaxDistance(minDistance);
+            float sliderMaxLimit = ResolveReverbSliderMaxLimit(minDistance);
+            float clampedMax = Mathf.Clamp(maxDistance, sliderFloorMax, sliderMaxLimit);
             _settings.VoiceReverbMaxDistance = clampedMax;
-
-            if (_voiceReverbZone != null)
-            {
-                _voiceReverbZone.minDistance = minDistance;
-                _voiceReverbZone.maxDistance = clampedMax;
-                _voiceReverbZone.enabled = true;
-            }
-            else if (_videoRoomRoot != null)
-            {
-                // Ensure slider changes apply immediately even when zone is not yet initialized.
-                ApplyRoomReverb(_settings.RoomWidth, _settings.RoomDepth, _settings.RoomHeight);
-            }
-
-            float reverbNorm = Mathf.Clamp01((clampedMax - minDistance) / Mathf.Max(0.0001f, 40f - minDistance));
-            ApplyPlaybackBarReverbMixToPlayingSources(reverbNorm);
-            if (_videoRoomAudioSource != null)
-                ConfigureVideoRoomAudioSource(_videoRoomAudioSource);
+            _settings.EnableVoiceReverb = ResolveReverbStrengthNormalized(minDistance, clampedMax) > ReverbOffSnapThreshold;
+            ApplyGlobalReverbState("playback-reverb-slider", persistConfig: persist);
 
             if (!persist)
                 return;
-
-            bool prevSync = _syncingConfig;
-            _syncingConfig = true;
-            try
-            {
-                if (_cfgEnableVoiceReverb != null)
-                    _cfgEnableVoiceReverb.Value = _settings.EnableVoiceReverb;
-                if (_cfgVoiceReverbMaxDistance != null)
-                    _cfgVoiceReverbMaxDistance.Value = clampedMax;
-            }
-            finally
-            {
-                _syncingConfig = prevSync;
-                _configDirty = false;
-            }
 
             SettingsStore.Save(Path.Combine(_pluginDir, "MapAddSettings.json"), _settings);
         }
@@ -1787,18 +1750,134 @@ namespace MainGameBlankMapAdd
             SettingsStore.Save(Path.Combine(_pluginDir, "MapAddSettings.json"), _settings);
         }
 
+        private static float MapReverbStrengthToMix(float normalized)
+        {
+            float n = Mathf.Clamp01(normalized);
+            // Ease-in curve: low range stays gentle, high range grows stronger.
+            float curved = Mathf.Pow(n, 2.1f);
+            return Mathf.Lerp(0f, 1.1f, curved);
+        }
+
         private void ApplyPlaybackBarReverbMixToPlayingSources(float normalized)
         {
-            float mix = Mathf.Lerp(0f, 1.1f, Mathf.Clamp01(normalized));
+            float mix = MapReverbStrengthToMix(normalized);
+            bool disable = mix <= 0.0001f || !(_settings?.EnableVoiceReverb ?? false);
             var sources = UnityEngine.Object.FindObjectsOfType<AudioSource>();
             for (int i = 0; i < sources.Length; i++)
             {
                 var s = sources[i];
                 if (s == null || !s.isPlaying) continue;
+                if (disable)
+                {
+                    s.bypassReverbZones = true;
+                    s.reverbZoneMix = 0f;
+                    continue;
+                }
+
                 if (s.spatialBlend <= 0.01f) continue;
                 s.bypassReverbZones = false;
                 s.reverbZoneMix = mix;
             }
+        }
+
+        private const float ReverbOffSnapThreshold = 0.02f;
+
+        private float ResolveEffectiveReverbStrengthNormalized()
+        {
+            if (_settings == null || !_settings.EnableVoiceReverb)
+                return 0f;
+
+            float minDistance = Mathf.Max(0f, _settings.VoiceReverbMinDistance);
+            float normalized = ResolveReverbStrengthNormalized(minDistance, _settings.VoiceReverbMaxDistance);
+            return normalized <= ReverbOffSnapThreshold ? 0f : normalized;
+        }
+
+        private void ApplyGlobalReverbState(string source, bool persistConfig)
+        {
+            if (_settings == null)
+                return;
+
+            float minDistance = Mathf.Max(0f, _settings.VoiceReverbMinDistance);
+            float floorMax = ResolveReverbSliderFloorMaxDistance(minDistance);
+            float maxLimit = ResolveReverbSliderMaxLimit(minDistance);
+            float clampedMax = Mathf.Clamp(_settings.VoiceReverbMaxDistance, floorMax, maxLimit);
+            float normalized = ResolveReverbStrengthNormalized(minDistance, clampedMax);
+            bool requestedEnabled = _settings.EnableVoiceReverb;
+            bool effectiveEnabled = requestedEnabled && normalized > ReverbOffSnapThreshold;
+
+            if (!effectiveEnabled)
+            {
+                normalized = 0f;
+                clampedMax = floorMax;
+            }
+
+            _settings.VoiceReverbMinDistance = minDistance;
+            _settings.VoiceReverbMaxDistance = clampedMax;
+            _settings.EnableVoiceReverb = effectiveEnabled;
+
+            if (_videoRoomRoot != null || _voiceReverbZone != null || _reverbZoneObject != null)
+                ApplyRoomReverb(_settings.RoomWidth, _settings.RoomDepth, _settings.RoomHeight);
+
+            ApplyPlaybackBarReverbMixToPlayingSources(normalized);
+            if (_videoRoomAudioSource != null)
+                ConfigureVideoRoomAudioSource(_videoRoomAudioSource);
+
+            if (persistConfig)
+            {
+                bool prevSync = _syncingConfig;
+                _syncingConfig = true;
+                try
+                {
+                    if (_cfgEnableVoiceReverb != null)
+                        _cfgEnableVoiceReverb.Value = _settings.EnableVoiceReverb;
+                    if (_cfgVoiceReverbMinDistance != null)
+                        _cfgVoiceReverbMinDistance.Value = _settings.VoiceReverbMinDistance;
+                    if (_cfgVoiceReverbMaxDistance != null)
+                        _cfgVoiceReverbMaxDistance.Value = _settings.VoiceReverbMaxDistance;
+                }
+                finally
+                {
+                    _syncingConfig = prevSync;
+                    _configDirty = false;
+                }
+            }
+
+            LogInfo(
+                $"[reverb-state] source={source} requested={requestedEnabled} enabled={_settings.EnableVoiceReverb} " +
+                $"strength={normalized:F3} min={_settings.VoiceReverbMinDistance:F2} max={_settings.VoiceReverbMaxDistance:F2}");
+        }
+
+        private void EnforceReverbBypassWhileDisabled()
+        {
+            if (_settings == null || _settings.EnableVoiceReverb)
+                return;
+            if (Time.unscaledTime < _nextReverbBypassEnforceTime)
+                return;
+
+            _nextReverbBypassEnforceTime = Time.unscaledTime + 0.25f;
+            ApplyPlaybackBarReverbMixToPlayingSources(0f);
+            if (_videoRoomAudioSource != null)
+                ConfigureVideoRoomAudioSource(_videoRoomAudioSource);
+        }
+
+        private static float ResolveReverbSliderFloorMaxDistance(float minDistance)
+        {
+            return Mathf.Max(0f, minDistance) + 0.1f;
+        }
+
+        private static float ResolveReverbSliderMaxLimit(float minDistance)
+        {
+            float floor = ResolveReverbSliderFloorMaxDistance(minDistance);
+            // Keep max distance practical to avoid "small slider move => huge effect".
+            return Mathf.Max(floor + 0.1f, 14f);
+        }
+
+        private static float ResolveReverbStrengthNormalized(float minDistance, float maxDistance)
+        {
+            float floor = ResolveReverbSliderFloorMaxDistance(minDistance);
+            float limit = ResolveReverbSliderMaxLimit(minDistance);
+            float clamped = Mathf.Clamp(maxDistance, floor, limit);
+            return Mathf.Clamp01((clamped - floor) / Mathf.Max(0.0001f, limit - floor));
         }
 
         private void CommitPlaybackBarReverbMaxDistance()

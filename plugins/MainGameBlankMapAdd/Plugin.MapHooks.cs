@@ -344,6 +344,7 @@ namespace MainGameBlankMapAdd
         {
             _settings = SettingsStore.LoadOrCreate(_pluginDir, LogInfo, LogWarn, LogError);
             SyncConfigEntriesFromSettings();
+            ApplyGlobalReverbState("reload-settings", persistConfig: true);
 
             if (_lastReservedMap == null || _lastReservedMap.mapRoot == null)
             {
