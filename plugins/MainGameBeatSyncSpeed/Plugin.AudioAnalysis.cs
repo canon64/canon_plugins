@@ -261,16 +261,52 @@ namespace MainGameBeatSyncSpeed
 
         internal string FindFfmpegPath()
         {
+            // 1) 配布同梱版を優先（plugins 配下）
+            try
+            {
+                string pluginDir = _pluginDir;
+                string parentDir = Directory.GetParent(pluginDir)?.FullName ?? pluginDir;
+                string grandParentDir = Directory.GetParent(parentDir)?.FullName ?? parentDir;
+
+                string[] bundledCandidates = new[]
+                {
+                    Path.Combine(pluginDir, "ffmpeg.exe"),
+                    Path.Combine(pluginDir, "_tools", "ffmpeg", "ffmpeg.exe"),
+                    Path.Combine(pluginDir, "_tools", "ffmpeg", "bin", "ffmpeg.exe"),
+                    Path.Combine(parentDir, "_tools", "ffmpeg", "ffmpeg.exe"),
+                    Path.Combine(parentDir, "_tools", "ffmpeg", "bin", "ffmpeg.exe"),
+                    Path.Combine(grandParentDir, "_tools", "ffmpeg", "ffmpeg.exe"),
+                    Path.Combine(grandParentDir, "_tools", "ffmpeg", "bin", "ffmpeg.exe")
+                };
+
+                foreach (string candidate in bundledCandidates)
+                {
+                    if (File.Exists(candidate))
+                        return candidate;
+                }
+            }
+            catch
+            {
+                // bundled lookup failure falls back to PATH scan.
+            }
+
+            // 2) PATH フォールバック
             string pathEnv = Environment.GetEnvironmentVariable("PATH") ?? "";
             foreach (string dir in pathEnv.Split(Path.PathSeparator))
             {
                 try
                 {
-                    string candidate = Path.Combine(dir.Trim(), "ffmpeg.exe");
-                    if (File.Exists(candidate)) return candidate;
+                    string trimmed = dir.Trim();
+                    if (string.IsNullOrEmpty(trimmed))
+                        continue;
+
+                    string candidate = Path.Combine(trimmed, "ffmpeg.exe");
+                    if (File.Exists(candidate))
+                        return candidate;
                 }
                 catch { }
             }
+
             return null;
         }
     }

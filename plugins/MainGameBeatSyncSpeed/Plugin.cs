@@ -256,7 +256,7 @@ namespace MainGameBeatSyncSpeed
             {
                 if (_ffmpegMissingWarnedFor != videoPath)
                 {
-                    LogWarn("ffmpeg.exe が PATH に見つかりません。ffmpeg をインストールして環境変数 PATH に追加してください。");
+                    LogWarn("ffmpeg.exe が見つかりません。plugins 配下の _tools/ffmpeg/(bin/)ffmpeg.exe を同梱するか、PATH に追加してください。");
                     _ffmpegMissingWarnedFor = videoPath;
                 }
                 return null;

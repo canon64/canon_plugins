@@ -3,6 +3,12 @@
 動画を見ながら、その動画の音楽リズムに合わせて女性キャラの腰振りを同期させるための
 KKS 向けプラグイン群です。
 
+## ダウンロード（最新版）
+- GitHub Releases（推奨）:
+  - https://github.com/canon64/canon_plugins/releases/latest
+- 直接DL（BepInEx一式zip）:
+  - https://github.com/canon64/canon_plugins/releases/latest/download/canon_plugins_BepInEx_dropin.zip
+
 ## このプラグイン群のメイン用途
 - 動画を再生する
 - 音楽の BPM に合わせて `右Ctrl` をタップする
@@ -51,3 +57,12 @@ KKS 向けプラグイン群です。
 - MainGameSpeedLimitBreak
 - MainGameBeatSyncSpeed
 - MainGameTransformGizmo（MainGameBlankMapAdd の依存）
+
+## ffmpeg 同梱について
+- この配布物は `ffmpeg.exe` を同梱します（BeatSync の動画音声解析で使用）。
+- 同梱先: `BepInEx/plugins/canon_plugins/_tools/ffmpeg/bin/ffmpeg.exe`
+- `MainGameBeatSyncSpeed` は同梱版を優先で探索し、見つからない場合のみ `PATH` を参照します。
+
+## サードパーティライセンス（ffmpeg）
+- 同梱 `ffmpeg.exe` は GPLv3 ビルドです。
+- ライセンス通知と入手元情報は `BepInEx/plugins/canon_plugins/_tools/ffmpeg/NOTICE.txt` を参照してください。

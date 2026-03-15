@@ -13,7 +13,9 @@
 
 ## 導入
 - `MainGameBeatSyncSpeed.dll` を `BepInEx/plugins/MainGameBeatSyncSpeed/` に配置します。
-- 動画から自動抽出を使う場合は `ffmpeg.exe` を PATH に追加してください。
+- 動画から自動抽出を使う場合は、`ffmpeg.exe` を次のどちらかで用意してください。
+  - 同梱（推奨）: `BepInEx/plugins/canon_plugins/_tools/ffmpeg/bin/ffmpeg.exe`
+  - 既存環境: `PATH` に `ffmpeg.exe` が通っている状態
 
 ## 基本操作
 - 既定ホットキー: `F9`（有効/無効の切替）
