@@ -6,8 +6,8 @@ KKS 向けプラグイン群です。
 ## ダウンロード（最新版）
 - GitHub Releases（推奨）:
   - https://github.com/canon64/canon_plugins/releases/latest
-- 直接DL（BepInEx一式zip）:
-  - https://github.com/canon64/canon_plugins/releases/latest/download/canon_plugins_BepInEx_dropin.zip
+- 直接DL（`canon_plugins` フォルダ単体zip）:
+  - https://github.com/canon64/canon_plugins/releases/latest/download/canon_plugins.zip
 
 ## このプラグイン群のメイン用途
 - 動画を再生する
