@@ -8,11 +8,11 @@ namespace MainGameAllPoseMap
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
         {
-            if (AddedMapNo <= 0) AddedMapNo = 900;
+            if (AddedMapNo <= 0) AddedMapNo = 910;
             if (SourceMapNo < 0) SourceMapNo = 1;
-            if (AddedThumbnailID <= 0) AddedThumbnailID = 9901;
-            if (string.IsNullOrWhiteSpace(AddedMapName)) AddedMapName = "all_pose_map_900";
-            if (string.IsNullOrWhiteSpace(AddedDisplayName)) AddedDisplayName = "All Pose Map";
+            if (AddedThumbnailID <= 0) AddedThumbnailID = 9000;
+            if (string.IsNullOrWhiteSpace(AddedMapName)) AddedMapName = "video_allpose_910";
+            if (string.IsNullOrWhiteSpace(AddedDisplayName)) AddedDisplayName = "Video AllPose Room";
             if (string.IsNullOrWhiteSpace(VirtualPointAnchorName)) VirtualPointAnchorName = "h_free";
             if (VirtualPointsPerRing <= 0) VirtualPointsPerRing = 12;
             if (VirtualPointRadius < 0.1f) VirtualPointRadius = 1.5f;
@@ -24,19 +24,19 @@ namespace MainGameAllPoseMap
         public bool Enabled = true;
 
         [DataMember(Order = 1)]
-        public int AddedMapNo = 900;
+        public int AddedMapNo = 910;
 
         [DataMember(Order = 2)]
         public int SourceMapNo = 1;
 
         [DataMember(Order = 3)]
-        public string AddedMapName = "all_pose_map_900";
+        public string AddedMapName = "video_allpose_910";
 
         [DataMember(Order = 4)]
-        public string AddedDisplayName = "All Pose Map";
+        public string AddedDisplayName = "Video AllPose Room";
 
         [DataMember(Order = 5)]
-        public int AddedSort = 900;
+        public int AddedSort = 910;
 
         [DataMember(Order = 6)]
         public bool ForceIsGate = true;
@@ -48,7 +48,7 @@ namespace MainGameAllPoseMap
         public bool ForceIsH = false;
 
         [DataMember(Order = 9)]
-        public int AddedThumbnailID = 9901;
+        public int AddedThumbnailID = 9000;
 
         [DataMember(Order = 10)]
         public bool EnableAllPoseInFreeH = true;
@@ -87,6 +87,6 @@ namespace MainGameAllPoseMap
         public string CategoriesOverrideCsv = "";
 
         [DataMember(Order = 22)]
-        public bool VerboseLog = false;
+        public bool VerboseLog = true;
     }
 }

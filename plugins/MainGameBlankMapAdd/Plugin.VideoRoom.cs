@@ -515,7 +515,8 @@ namespace MainGameBlankMapAdd
             if (!withLog && Time.unscaledTime < _nextVoiceSyncLogTime)
                 return;
             _nextVoiceSyncLogTime = Time.unscaledTime + 2f;
-            LogInfo($"[voice-sync] active voice sources moved={moved} target={target}");
+            if (_settings.VerboseLog)
+                LogInfo($"[voice-sync] active voice sources moved={moved} target={target}");
         }
 
         private void LogReverbDiagnostics(string context)

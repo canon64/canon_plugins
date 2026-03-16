@@ -248,7 +248,7 @@ namespace MainGameBlankMapAdd
             if (string.IsNullOrWhiteSpace(normalized))
                 return null;
 
-            // ストリームURLはファイル存在チェックをスキップしてそのまま返す
+            // ストリームURL / WebCamはファイル存在チェックをスキップしてそのまま返す
             if (IsStreamUrl(normalized) || IsWebCamUrl(normalized))
             {
                 LogInfo($"[stream/webcam] URL detected: {normalized}");

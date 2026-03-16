@@ -11,6 +11,9 @@ namespace MainGameBlankMapAdd
 
         private void TryLogAudioDiagnosticsTick()
         {
+            if (_settings == null || !_settings.EnableAudioDiagnosticsLog)
+                return;
+
             if (_mainVideoPlayer == null)
                 return;
 

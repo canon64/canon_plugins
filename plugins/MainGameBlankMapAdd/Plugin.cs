@@ -105,6 +105,7 @@ namespace MainGameBlankMapAdd
         internal string[] FolderFiles = Array.Empty<string>();
         internal int FolderIndex = -1;
         private string _lastScannedFolder = null;
+        internal RoomLayoutProfile FolderBaselineProfile = null;
         private RoomLayoutProfileRepository _roomLayoutProfiles;
 
         // フォルダ切り替えフェード（IMGUI黒オーバーレイ）
@@ -254,7 +255,8 @@ namespace MainGameBlankMapAdd
             EnforceReverbBypassWhileDisabled();
             TryLogAudioDiagnosticsTick();
 
-            // Position log every 5 seconds.
+            // Position log every 5 seconds (VerboseLog only).
+            if (!_settings.VerboseLog) return;
             if (Time.unscaledTime < _nextPositionLogTime) return;
             _nextPositionLogTime = Time.unscaledTime + 5f;
 
@@ -304,6 +306,33 @@ namespace MainGameBlankMapAdd
                     : files.OrderByDescending(f => f, StringComparer.OrdinalIgnoreCase));
             FolderFiles = sorted.ToArray();
             FolderIndex = FolderFiles.Length > 0 ? 0 : -1;
+            // フォルダ切り替え時点の全設定をベースラインとして保存（動画個別設定なし時の戻し先）
+            FolderBaselineProfile = CaptureCurrentRoomLayoutProfile(includeAudioGain: true, markAsRoomLayout: true);
+            if (TryGetBeatSyncSnapshot(out BeatSyncSnapshot baselineBeat))
+            {
+                FolderBaselineProfile.HasBeatSync = true;
+                FolderBaselineProfile.BeatEnabled = baselineBeat.Enabled;
+                FolderBaselineProfile.BeatBpm = baselineBeat.Bpm;
+                FolderBaselineProfile.BeatAutoMotionSwitch = baselineBeat.AutoMotionSwitch;
+                FolderBaselineProfile.BeatAutoThreshold = baselineBeat.AutoThreshold;
+                FolderBaselineProfile.BeatLowThreshold = baselineBeat.LowThreshold;
+                FolderBaselineProfile.BeatHighThreshold = baselineBeat.HighThreshold;
+                FolderBaselineProfile.BeatLowIntensity = baselineBeat.LowIntensity;
+                FolderBaselineProfile.BeatMidIntensity = baselineBeat.MidIntensity;
+                FolderBaselineProfile.BeatHighIntensity = baselineBeat.HighIntensity;
+                FolderBaselineProfile.BeatSmoothTime = baselineBeat.SmoothTime;
+                FolderBaselineProfile.BeatStrongMotionBeats = baselineBeat.StrongMotionBeats;
+                FolderBaselineProfile.BeatWeakMotionBeats = baselineBeat.WeakMotionBeats;
+                FolderBaselineProfile.BeatLowPassHz = baselineBeat.LowPassHz;
+                FolderBaselineProfile.BeatVerboseLog = baselineBeat.VerboseLog;
+            }
+            if (TryGetSpeedLimitBreakSnapshot(out SpeedLimitBreakSnapshot baselineSlb))
+            {
+                FolderBaselineProfile.HasSpeedLimitBreak = true;
+                FolderBaselineProfile.SpeedForceVanilla = baselineSlb.ForceVanillaSpeed;
+                FolderBaselineProfile.SpeedEnableVideoTimeSpeedCues = baselineSlb.EnableVideoTimeSpeedCues;
+                FolderBaselineProfile.SpeedAppliedBpmMax = baselineSlb.AppliedBpmMax;
+            }
             LogInfo($"folder play: scanned path={folder} count={FolderFiles.Length}");
         }
 
@@ -318,7 +347,7 @@ namespace MainGameBlankMapAdd
         internal void ApplyFolderVideoPath()
         {
             ScanFolderIfNeeded();
-            if (FolderIndex >= 0 && FolderIndex < FolderFiles.Length)
+            if (FolderIndex >= 0 && FolderIndex < FolderFiles.Length && !IsWebCamUrl(_settings.VideoPath))
                 _settings.VideoPath = FolderFiles[FolderIndex];
 
             TryApplySavedRoomLayoutForCurrentSelection("apply-folder-video-path");
@@ -683,7 +712,7 @@ namespace MainGameBlankMapAdd
             timeSec = player.time;
             lengthSec = player.length;
 
-            if (Time.unscaledTime >= inst._nextBridgeSnapshotLogTime)
+            if (inst._settings.VerboseLog && Time.unscaledTime >= inst._nextBridgeSnapshotLogTime)
             {
                 inst._nextBridgeSnapshotLogTime = Time.unscaledTime + 2f;
                 inst.LogInfo(

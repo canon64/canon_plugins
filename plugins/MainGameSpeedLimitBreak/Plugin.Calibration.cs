@@ -53,7 +53,8 @@ namespace MainGameSpeedLimitBreak
                 return;
             }
 
-            ApplyCalibrationPair(bpmMin, bpmMax, "manual calibration", "較正BPMを反映しました");
+            BpmReferenceMode mode = ResolveCurrentBpmReferenceMode();
+            ApplyCalibrationPair(mode, bpmMin, bpmMax, "manual calibration", "較正BPMを反映しました");
         }
 
         private void PushCalibrationToConfigEntries(float bpmMin, float bpmMax)
@@ -73,11 +74,12 @@ namespace MainGameSpeedLimitBreak
             if (s == null)
                 return;
 
-            float bpmMax = s.BpmReferenceAtSpeed3;
+            BpmReferenceMode mode = ResolveCurrentBpmReferenceMode();
+            GetStoredCalibrationPair(s, mode, out _, out float bpmMax);
             if (bpmMin > 0f && bpmMax <= bpmMin)
                 bpmMax = bpmMin + 1f;
 
-            ApplyCalibrationPair(bpmMin, bpmMax, reason, $"最小基準BPMを反映: {bpmMin:0.##}");
+            ApplyCalibrationPair(mode, bpmMin, bpmMax, reason, $"最小基準BPMを反映: {bpmMin:0.##}");
         }
 
         private void ApplyMaxBpmCalibration(float bpmMax, string reason)
@@ -86,17 +88,18 @@ namespace MainGameSpeedLimitBreak
             if (s == null)
                 return;
 
-            float bpmMin = s.BpmReferenceAtSourceMin;
+            BpmReferenceMode mode = ResolveCurrentBpmReferenceMode();
+            GetStoredCalibrationPair(s, mode, out float bpmMin, out _);
             if (bpmMin > 0f && bpmMax <= bpmMin)
             {
                 ShowUiNotice("最大基準BPMは最小基準BPMより大きくしてください");
                 return;
             }
 
-            ApplyCalibrationPair(bpmMin, bpmMax, reason, $"最大基準BPMを反映: {bpmMax:0.##}");
+            ApplyCalibrationPair(mode, bpmMin, bpmMax, reason, $"最大基準BPMを反映: {bpmMax:0.##}");
         }
 
-        private void ApplyCalibrationPair(float bpmMin, float bpmMax, string reason, string notice)
+        private void ApplyCalibrationPair(BpmReferenceMode mode, float bpmMin, float bpmMax, string reason, string notice)
         {
             var s = Settings;
             if (s == null)
@@ -107,18 +110,20 @@ namespace MainGameSpeedLimitBreak
             if (clampedMin > 0f && clampedMax <= clampedMin)
                 clampedMax = clampedMin + 1f;
 
-            float beforeMin = s.BpmReferenceAtSourceMin;
-            float beforeMax = s.BpmReferenceAtSpeed3;
-            s.BpmReferenceAtSourceMin = clampedMin;
-            s.BpmReferenceAtSpeed3 = clampedMax;
+            GetStoredCalibrationPair(s, mode, out float beforeMin, out float beforeMax);
+            SaveCalibrationForModeAndApplyWorking(
+                s,
+                mode,
+                clampedMin,
+                clampedMax,
+                pushConfigEntries: true);
             EnsureAppliedBpmRangeInitialized(s);
             ApplyAppliedRangeToTargetSpeeds(s, s.AppliedBpmMin, s.AppliedBpmMax);
-            PushCalibrationToConfigEntries(clampedMin, clampedMax);
             SaveSettings(reason);
             SyncUiFromSettings();
             LogInfo(
-                $"calibration applied ({reason}): min {beforeMin:0.##}->{clampedMin:0.##}, " +
-                $"max {beforeMax:0.##}->{clampedMax:0.##}");
+                $"calibration applied ({reason}, {GetBpmReferenceModeLabel(mode)}): " +
+                $"min {beforeMin:0.##}->{clampedMin:0.##}, max {beforeMax:0.##}->{clampedMax:0.##}");
             ShowUiNotice(notice);
         }
 
@@ -141,6 +146,7 @@ namespace MainGameSpeedLimitBreak
             float beforeTargetMax = s.TargetMaxSpeed;
 
             DisableForceVanillaForCustomApply(reason);
+            ApplyStoredCalibrationToWorkingValues(s, ResolveCurrentBpmReferenceMode(), pushConfigEntries: false);
             s.AppliedBpmMin = safeMin;
             s.AppliedBpmMax = safeMax;
             ApplyAppliedRangeToTargetSpeeds(s, safeMin, safeMax);
@@ -213,15 +219,17 @@ namespace MainGameSpeedLimitBreak
             if (s == null)
                 return bpm;
 
-            if (HasTwoPointCalibration(s))
+            BpmReferenceMode mode = ResolveCurrentBpmReferenceMode();
+            GetStoredCalibrationPair(s, mode, out float bpmMinRef, out float bpmMaxRef);
+            if (HasTwoPointCalibration(s, bpmMinRef, bpmMaxRef))
             {
-                float bpmRange = Mathf.Max(0.0001f, s.BpmReferenceAtSpeed3 - s.BpmReferenceAtSourceMin);
+                float bpmRange = Mathf.Max(0.0001f, bpmMaxRef - bpmMinRef);
                 float sourceRange = Mathf.Max(0.0001f, s.SourceMaxSpeed - s.SourceMinSpeed);
-                float t = (bpm - s.BpmReferenceAtSourceMin) / bpmRange;
+                float t = (bpm - bpmMinRef) / bpmRange;
                 return s.SourceMinSpeed + sourceRange * t;
             }
 
-            float baseBpm = Mathf.Max(1f, s.BpmReferenceAtSpeed3);
+            float baseBpm = Mathf.Max(1f, bpmMaxRef);
             float sourceMax = Mathf.Max(0.0001f, s.SourceMaxSpeed);
             return sourceMax * (bpm / baseBpm);
         }
@@ -232,26 +240,28 @@ namespace MainGameSpeedLimitBreak
             if (s == null)
                 return mappedSpeed;
 
-            if (HasTwoPointCalibration(s))
+            BpmReferenceMode mode = ResolveCurrentBpmReferenceMode();
+            GetStoredCalibrationPair(s, mode, out float bpmMinRef, out float bpmMaxRef);
+            if (HasTwoPointCalibration(s, bpmMinRef, bpmMaxRef))
             {
                 float sourceRange = Mathf.Max(0.0001f, s.SourceMaxSpeed - s.SourceMinSpeed);
-                float bpmRange = Mathf.Max(0.0001f, s.BpmReferenceAtSpeed3 - s.BpmReferenceAtSourceMin);
+                float bpmRange = Mathf.Max(0.0001f, bpmMaxRef - bpmMinRef);
                 float t = (mappedSpeed - s.SourceMinSpeed) / sourceRange;
-                return s.BpmReferenceAtSourceMin + bpmRange * t;
+                return bpmMinRef + bpmRange * t;
             }
 
-            float baseBpm = Mathf.Max(1f, s.BpmReferenceAtSpeed3);
+            float baseBpm = Mathf.Max(1f, bpmMaxRef);
             float sourceMax = Mathf.Max(0.0001f, s.SourceMaxSpeed);
             return (mappedSpeed / sourceMax) * baseBpm;
         }
 
-        private static bool HasTwoPointCalibration(PluginSettings s)
+        private static bool HasTwoPointCalibration(PluginSettings s, float bpmMinRef, float bpmMaxRef)
         {
             if (s == null)
                 return false;
 
-            return s.BpmReferenceAtSourceMin > 0f
-                && s.BpmReferenceAtSpeed3 > s.BpmReferenceAtSourceMin
+            return bpmMinRef > 0f
+                && bpmMaxRef > bpmMinRef
                 && s.SourceMaxSpeed > s.SourceMinSpeed + 0.0001f;
         }
     }

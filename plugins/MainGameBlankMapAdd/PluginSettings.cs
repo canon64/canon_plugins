@@ -31,15 +31,15 @@ namespace MainGameBlankMapAdd
             if (RoomWidth  <= 0.01f) RoomWidth  = 12f;
             if (RoomDepth  <= 0.01f) RoomDepth  = 12f;
             if (RoomHeight <= 0.01f) RoomHeight = 6f;
-            if (VideoVolume < 0f)    VideoVolume = 0.5f;
-            if (SphereRadius <= 0.01f) SphereRadius = 4f;
-            if (string.IsNullOrWhiteSpace(VoiceReverbPreset)) VoiceReverbPreset = "Cave";
-            if (VoiceReverbMinDistance < 0f) VoiceReverbMinDistance = 1.5f;
+            if (VideoVolume < 0f)    VideoVolume = 0.3f;
+            if (SphereRadius <= 0.01f) SphereRadius = 8f;
+            if (string.IsNullOrWhiteSpace(VoiceReverbPreset)) VoiceReverbPreset = "Psychotic";
+            if (VoiceReverbMinDistance < 0f) VoiceReverbMinDistance = 4f;
             if (VoiceReverbMaxDistance <= VoiceReverbMinDistance)
                 VoiceReverbMaxDistance = VoiceReverbMinDistance + 8f;
-            if (PlaybackBarShowMouseBottomPx < 0f) PlaybackBarShowMouseBottomPx = 20f;
+            if (PlaybackBarShowMouseBottomPx < 0f) PlaybackBarShowMouseBottomPx = 0f;
             if (PlaybackBarHeight < 20f) PlaybackBarHeight = 72f;
-            if (PlaybackBarMarginX < 0f) PlaybackBarMarginX = 8f;
+            if (PlaybackBarMarginX < 0f) PlaybackBarMarginX = 0f;
             if (PlaybackBarButtonWidth < 36f) PlaybackBarButtonWidth = 64f;
             CubeFaceTileCount = NormalizeCubeFaceTileCount(CubeFaceTileCount);
             if (FolderFadeDuration < 0.01f) FolderFadeDuration = 1.0f;
@@ -78,7 +78,7 @@ namespace MainGameBlankMapAdd
         public string AddedDisplayName = "Blank Test";
 
         [DataMember(Order = 4)]
-        public int AddedSort = 900;
+        public int AddedSort = 1;
 
         [DataMember(Order = 5)]
         public bool ForceIsGate = true;
@@ -132,7 +132,7 @@ namespace MainGameBlankMapAdd
         public bool VideoLoop = true;
 
         [DataMember(Order = 22)]
-        public bool MuteVideoAudio = true;
+        public bool MuteVideoAudio = false;
 
         [DataMember(Order = 26)]
         public bool AutoPlayOnMapLoad = false;
@@ -147,16 +147,16 @@ namespace MainGameBlankMapAdd
         public float RoomHeight = 6f;
 
         [DataMember(Order = 27)]
-        public float VideoVolume = 0.5f;
+        public float VideoVolume = 0.3f;
 
         [DataMember(Order = 28)]
-        public bool DisableAudioSources = false;
+        public bool DisableAudioSources = true;
 
         [DataMember(Order = 29)]
         public float VideoRoomOffsetX = 0f;
 
         [DataMember(Order = 30)]
-        public float VideoRoomOffsetY = -1f;
+        public float VideoRoomOffsetY = 0f;
 
         [DataMember(Order = 31)]
         public float VideoRoomOffsetZ = 0f;
@@ -165,29 +165,29 @@ namespace MainGameBlankMapAdd
         public float VideoRoomRotationX = 0f;
 
         [DataMember(Order = 33)]
-        public float VideoRoomRotationY = 0f;
+        public float VideoRoomRotationY = 180f;
 
         [DataMember(Order = 34)]
         public float VideoRoomRotationZ = 0f;
 
         /// <summary>true=球体、false=平面(Quad)</summary>
         [DataMember(Order = 35)]
-        public bool UseSphere = true;
+        public bool UseSphere = false;
 
         [DataMember(Order = 36)]
-        public float SphereRadius = 4f;
+        public float SphereRadius = 8f;
 
         [DataMember(Order = 37)]
         public bool EnableVoiceReverb = true;
 
         [DataMember(Order = 38)]
-        public string VoiceReverbPreset = "Cave";
+        public string VoiceReverbPreset = "Psychotic";
 
         [DataMember(Order = 39)]
-        public float VoiceReverbMinDistance = 1.5f;
+        public float VoiceReverbMinDistance = 4f;
 
         [DataMember(Order = 40)]
-        public float VoiceReverbMaxDistance = 18f;
+        public float VoiceReverbMaxDistance = 50f;
 
         /// <summary>true=球体の内側面に表示、false=外側面に表示</summary>
         [DataMember(Order = 41)]
@@ -197,13 +197,13 @@ namespace MainGameBlankMapAdd
         public bool EnablePlaybackBar = true;
 
         [DataMember(Order = 43)]
-        public float PlaybackBarShowMouseBottomPx = 20f;
+        public float PlaybackBarShowMouseBottomPx = 0f;
 
         [DataMember(Order = 44)]
         public float PlaybackBarHeight = 72f;
 
         [DataMember(Order = 45)]
-        public float PlaybackBarMarginX = 8f;
+        public float PlaybackBarMarginX = 0f;
 
         [DataMember(Order = 46)]
         public float PlaybackBarButtonWidth = 64f;
@@ -247,7 +247,7 @@ namespace MainGameBlankMapAdd
 
         /// <summary>再生中Hボイス音源(Voice/PlayObjectPCM)を動画部屋座標へ同期する</summary>
         [DataMember(Order = 60)]
-        public bool SyncVoiceSourcesToVideoRoom = true;
+        public bool SyncVoiceSourcesToVideoRoom = false;
 
         [DataMember(Order = 61)]
         public bool ApplyReverbToVideoAudio = false;
@@ -259,5 +259,10 @@ namespace MainGameBlankMapAdd
         /// <summary>再生バーの説明ポップアップ表示</summary>
         [DataMember(Order = 63)]
         public bool EnableUiHelpPopup = true;
+
+        /// <summary>audio-snap 診断ログを出力する（通常は false でよい）</summary>
+        [DataMember(Order = 64)]
+        public bool EnableAudioDiagnosticsLog = false;
+
     }
 }

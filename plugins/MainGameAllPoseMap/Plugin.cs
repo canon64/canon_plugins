@@ -53,7 +53,7 @@ namespace MainGameAllPoseMap
             Directory.CreateDirectory(_pluginDir);
 
             _logPath = Path.Combine(_pluginDir, "MainGameAllPoseMap.log");
-            File.WriteAllText(
+            File.AppendAllText(
                 _logPath,
                 $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] === {PluginName} {Version} start ==={Environment.NewLine}",
                 Utf8NoBom);

@@ -28,8 +28,8 @@ namespace MainGameSpeedLimitBreak
             string userLabel = (_presetNameInput ?? string.Empty).Trim();
             string labelBase = BuildPresetLabelBase(userLabel, animationName);
             string folder = BuildAnimationFolderName(animationName);
-            float baseMin = Mathf.Max(0f, s.BpmReferenceAtSourceMin);
-            float baseMax = Mathf.Max(baseMin + 1f, s.BpmReferenceAtSpeed3);
+            BpmReferenceMode modeForPreset = ClassifyBpmReferenceModeForPreset(animationName);
+            GetStoredCalibrationPair(s, modeForPreset, out float baseMin, out float baseMax);
             float appliedMin = Mathf.Max(0f, s.AppliedBpmMin);
             float appliedMax = Mathf.Max(appliedMin + 0.0001f, s.AppliedBpmMax);
             string saveName = BuildUniquePresetName(s, BuildPresetDisplayName(labelBase, appliedMax, appliedMin));
@@ -50,7 +50,8 @@ namespace MainGameSpeedLimitBreak
             });
             LogInfo(
                 $"preset added: name={saveName} folder={folder} animation={animationName} " +
-                $"applied=[{appliedMin:0.##}/{appliedMax:0.##}] base=[{baseMin:0.##}/{baseMax:0.##}]");
+                $"applied=[{appliedMin:0.##}/{appliedMax:0.##}] " +
+                $"base=[{baseMin:0.##}/{baseMax:0.##}] mode={GetBpmReferenceModeLabel(modeForPreset)}");
 
             SaveSettings("save preset");
             _presetNameInput = saveName;
@@ -85,9 +86,14 @@ namespace MainGameSpeedLimitBreak
             if (baseMax <= baseMin)
                 baseMax = baseMin + 1f;
 
-            s.BpmReferenceAtSourceMin = baseMin;
-            s.BpmReferenceAtSpeed3 = baseMax;
-            PushCalibrationToConfigEntries(baseMin, baseMax);
+            BpmReferenceMode modeForPreset = ClassifyBpmReferenceModeForPreset(p.AnimationName);
+            _activeBpmReferenceMode = modeForPreset;
+            SaveCalibrationForModeAndApplyWorking(
+                s,
+                modeForPreset,
+                baseMin,
+                baseMax,
+                pushConfigEntries: true);
 
             float appliedMax = Mathf.Max(0.0001f, p.AppliedBpmMax > 0f ? p.AppliedBpmMax : p.AppliedBpm);
             float appliedMin = Mathf.Max(0f, p.AppliedBpmMin);
@@ -114,7 +120,8 @@ namespace MainGameSpeedLimitBreak
             LogInfo(
                 $"preset apply: folder={GetPresetFolder(p)} animation={p.AnimationName} " +
                 $"applied=[{appliedMin:0.##}/{appliedMax:0.##}] " +
-                $"base=[{baseMin:0.##}/{baseMax:0.##}] target=[{s.TargetMinSpeed:0.###}/{s.TargetMaxSpeed:0.###}]");
+                $"base=[{baseMin:0.##}/{baseMax:0.##}] mode={GetBpmReferenceModeLabel(modeForPreset)} " +
+                $"target=[{s.TargetMinSpeed:0.###}/{s.TargetMaxSpeed:0.###}]");
             ShowUiNotice($"プリセット適用: {p.Name}");
         }
 
@@ -141,9 +148,14 @@ namespace MainGameSpeedLimitBreak
             if (baseMax <= baseMin)
                 baseMax = baseMin + 1f;
 
-            s.BpmReferenceAtSourceMin = baseMin;
-            s.BpmReferenceAtSpeed3 = baseMax;
-            PushCalibrationToConfigEntries(baseMin, baseMax);
+            BpmReferenceMode modeForPreset = ClassifyBpmReferenceModeForPreset(p.AnimationName);
+            _activeBpmReferenceMode = modeForPreset;
+            SaveCalibrationForModeAndApplyWorking(
+                s,
+                modeForPreset,
+                baseMin,
+                baseMax,
+                pushConfigEntries: true);
 
             float sourceMin = s.SourceMinSpeed;
             float sourceMax = Mathf.Max(sourceMin + 0.0001f, s.SourceMaxSpeed);
@@ -165,7 +177,8 @@ namespace MainGameSpeedLimitBreak
 
             LogInfo(
                 $"preset base apply: folder={GetPresetFolder(p)} animation={p.AnimationName} " +
-                $"base=[{baseMin:0.##}/{baseMax:0.##}] target=[{s.TargetMinSpeed:0.###}/{s.TargetMaxSpeed:0.###}] " +
+                $"base=[{baseMin:0.##}/{baseMax:0.##}] mode={GetBpmReferenceModeLabel(modeForPreset)} " +
+                $"target=[{s.TargetMinSpeed:0.###}/{s.TargetMaxSpeed:0.###}] " +
                 $"forceVanilla={s.ForceVanillaSpeed}");
             ShowUiNotice($"Base loaded (vanilla): {p.Name}");
         }

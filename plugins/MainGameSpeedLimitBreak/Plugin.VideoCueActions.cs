@@ -86,19 +86,6 @@ namespace MainGameSpeedLimitBreak
                 }
             }
 
-            if (cue.VoicePlayCode.HasValue)
-            {
-                if (TryApplyCueVoice(cue, out string voiceResult))
-                {
-                    appliedAny = true;
-                    LogInfo($"[video-cue] voice applied time={videoTimeSec:0.###} {voiceResult}");
-                }
-                else
-                {
-                    LogWarn($"[video-cue] voice skipped time={videoTimeSec:0.###} reason={voiceResult}");
-                }
-            }
-
             if (!string.IsNullOrWhiteSpace(cue.ClickKind))
             {
                 if (TryApplyCueClick(cue, out string clickResult))
@@ -262,44 +249,6 @@ namespace MainGameSpeedLimitBreak
             return true;
         }
 
-        private bool TryApplyCueVoice(VideoTimeSpeedCue cue, out string result)
-        {
-            result = "unknown";
-            if (_hSceneProc == null || _hSceneProc.flags == null || _hSceneProc.flags.voice == null)
-            {
-                result = "hscene-or-voice-null";
-                return false;
-            }
-
-            if (!cue.VoicePlayCode.HasValue || cue.VoicePlayCode.Value < 0)
-            {
-                result = "voice-code-empty";
-                return false;
-            }
-
-            var playVoices = _hSceneProc.flags.voice.playVoices;
-            if (playVoices == null || playVoices.Length <= 0)
-            {
-                result = "playVoices-null";
-                return false;
-            }
-
-            int femaleIndex = cue.TargetFemaleIndex;
-            if (femaleIndex < 0)
-            {
-                femaleIndex = 0;
-            }
-            if (femaleIndex >= playVoices.Length)
-            {
-                femaleIndex = playVoices.Length - 1;
-            }
-
-            int code = cue.VoicePlayCode.Value;
-            playVoices[femaleIndex] = code;
-            result = $"femaleIndex={femaleIndex} code={code} mode={code / 100} key={code % 100}";
-            return true;
-        }
-
         private bool TryApplyCueClick(VideoTimeSpeedCue cue, out string result)
         {
             result = "unknown";
@@ -316,16 +265,6 @@ namespace MainGameSpeedLimitBreak
                 return false;
             }
 
-            if (raw.Equals("motionStrong", StringComparison.OrdinalIgnoreCase))
-            {
-                return TryApplyCueMotionTarget(cue, wantStrong: true, out result);
-            }
-
-            if (raw.Equals("motionWeak", StringComparison.OrdinalIgnoreCase))
-            {
-                return TryApplyCueMotionTarget(cue, wantStrong: false, out result);
-            }
-
             if (!Enum.TryParse(raw, true, out HFlag.ClickKind click))
             {
                 result = $"click-parse-failed raw={raw}";
@@ -335,154 +274,6 @@ namespace MainGameSpeedLimitBreak
             _hSceneProc.flags.click = click;
             result = $"click={click}";
             return true;
-        }
-
-        private bool TryApplyCueMotionTarget(VideoTimeSpeedCue cue, bool wantStrong, out string result)
-        {
-            result = "unknown";
-            if (_hSceneProc == null || _hSceneProc.flags == null)
-            {
-                result = "hscene-or-flags-null";
-                return false;
-            }
-
-            string targetLabel = wantStrong ? "strong" : "weak";
-
-            if (TryGetCurrentMotionStrength(cue, out bool currentStrong, out string stateLabel))
-            {
-                if (currentStrong == wantStrong)
-                {
-                    result = $"motionTarget={targetLabel} already state={stateLabel}";
-                    return true;
-                }
-
-                _hSceneProc.flags.click = HFlag.ClickKind.motionchange;
-                result = $"motionTarget={targetLabel} click=motionchange state={stateLabel}";
-                return true;
-            }
-
-            if (_hSceneProc.flags.voice != null)
-            {
-                bool proxyStrong = _hSceneProc.flags.voice.speedMotion;
-                if (proxyStrong == wantStrong)
-                {
-                    result = $"motionTarget={targetLabel} already proxy=speedMotion";
-                    return true;
-                }
-
-                _hSceneProc.flags.click = HFlag.ClickKind.motionchange;
-                result = $"motionTarget={targetLabel} click=motionchange proxy=speedMotion";
-                return true;
-            }
-
-            _hSceneProc.flags.click = HFlag.ClickKind.motionchange;
-            result = $"motionTarget={targetLabel} click=motionchange fallback=unknown-state";
-            return true;
-        }
-
-        private bool TryGetCurrentMotionStrength(VideoTimeSpeedCue cue, out bool isStrong, out string stateLabel)
-        {
-            isStrong = false;
-            stateLabel = "unknown";
-
-            int requestedIndex = cue != null ? cue.TargetFemaleIndex : 0;
-            if (!TryGetFemaleByIndex(requestedIndex, out var female, out int resolvedIndex) || female == null)
-            {
-                stateLabel = "female-not-found";
-                return false;
-            }
-
-            AnimatorStateInfo state = female.getAnimatorStateInfo(0);
-            if (IsStrongMotionState(state, out string matchedStrongState))
-            {
-                isStrong = true;
-                stateLabel = $"{matchedStrongState} femaleIndex={resolvedIndex}";
-                return true;
-            }
-
-            if (IsWeakMotionState(state, out string matchedWeakState))
-            {
-                isStrong = false;
-                stateLabel = $"{matchedWeakState} femaleIndex={resolvedIndex}";
-                return true;
-            }
-
-            stateLabel = $"state-unresolved femaleIndex={resolvedIndex}";
-            return false;
-        }
-
-        private static bool IsStrongMotionState(AnimatorStateInfo state, out string matchedName)
-        {
-            matchedName = null;
-            if (state.IsName("SLoop"))
-            {
-                matchedName = "SLoop";
-                return true;
-            }
-            if (state.IsName("A_SLoop"))
-            {
-                matchedName = "A_SLoop";
-                return true;
-            }
-            if (state.IsName("SS_IN_Loop"))
-            {
-                matchedName = "SS_IN_Loop";
-                return true;
-            }
-            if (state.IsName("SF_IN_Loop"))
-            {
-                matchedName = "SF_IN_Loop";
-                return true;
-            }
-            if (state.IsName("sameS"))
-            {
-                matchedName = "sameS";
-                return true;
-            }
-            if (state.IsName("orgS"))
-            {
-                matchedName = "orgS";
-                return true;
-            }
-
-            return false;
-        }
-
-        private static bool IsWeakMotionState(AnimatorStateInfo state, out string matchedName)
-        {
-            matchedName = null;
-            if (state.IsName("WLoop"))
-            {
-                matchedName = "WLoop";
-                return true;
-            }
-            if (state.IsName("A_WLoop"))
-            {
-                matchedName = "A_WLoop";
-                return true;
-            }
-            if (state.IsName("WS_IN_Loop"))
-            {
-                matchedName = "WS_IN_Loop";
-                return true;
-            }
-            if (state.IsName("WF_IN_Loop"))
-            {
-                matchedName = "WF_IN_Loop";
-                return true;
-            }
-            if (state.IsName("sameW"))
-            {
-                matchedName = "sameW";
-                return true;
-            }
-            if (state.IsName("orgW"))
-            {
-                matchedName = "orgW";
-                return true;
-            }
-
-            return false;
         }
 
         private bool TryResolveCueTaii(VideoTimeSpeedCue cue, out HSceneProc.AnimationListInfo info, out string reason)

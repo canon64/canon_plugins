@@ -180,6 +180,70 @@ namespace MainGameSpeedLimitBreak
                 LogIntervalSec = 0.1f;
             }
 
+            float legacyRefMin = BpmReferenceAtSourceMin;
+            float legacyRefMax = BpmReferenceAtSpeed3;
+            if (legacyRefMin < 0f)
+            {
+                legacyRefMin = 44.5f;
+            }
+            if (legacyRefMax < 1f)
+            {
+                legacyRefMax = 135.6f;
+            }
+
+            if (BpmReferenceAtSourceMinSonyu < 0f)
+            {
+                BpmReferenceAtSourceMinSonyu = legacyRefMin;
+            }
+
+            if (BpmReferenceAtSpeed3Sonyu < 1f)
+            {
+                BpmReferenceAtSpeed3Sonyu = legacyRefMax;
+            }
+
+            if (BpmReferenceAtSourceMinSonyu < 0f)
+            {
+                BpmReferenceAtSourceMinSonyu = 0f;
+            }
+
+            if (BpmReferenceAtSpeed3Sonyu < 1f)
+            {
+                BpmReferenceAtSpeed3Sonyu = 1f;
+            }
+
+            if (BpmReferenceAtSourceMinSonyu > 0f && BpmReferenceAtSpeed3Sonyu <= BpmReferenceAtSourceMinSonyu)
+            {
+                BpmReferenceAtSpeed3Sonyu = BpmReferenceAtSourceMinSonyu + 1f;
+            }
+
+            if (BpmReferenceAtSourceMinHoushi < 0f)
+            {
+                BpmReferenceAtSourceMinHoushi = 45f;
+            }
+
+            if (BpmReferenceAtSpeed3Houshi < 1f)
+            {
+                BpmReferenceAtSpeed3Houshi = 113f;
+            }
+
+            if (BpmReferenceAtSourceMinHoushi < 0f)
+            {
+                BpmReferenceAtSourceMinHoushi = 0f;
+            }
+
+            if (BpmReferenceAtSpeed3Houshi < 1f)
+            {
+                BpmReferenceAtSpeed3Houshi = 1f;
+            }
+
+            if (BpmReferenceAtSourceMinHoushi > 0f && BpmReferenceAtSpeed3Houshi <= BpmReferenceAtSourceMinHoushi)
+            {
+                BpmReferenceAtSpeed3Houshi = BpmReferenceAtSourceMinHoushi + 1f;
+            }
+
+            BpmReferenceAtSourceMin = BpmReferenceAtSourceMinSonyu;
+            BpmReferenceAtSpeed3 = BpmReferenceAtSpeed3Sonyu;
+
             if (BpmReferenceAtSpeed3 < 1f)
             {
                 BpmReferenceAtSpeed3 = 1f;
@@ -423,10 +487,10 @@ namespace MainGameSpeedLimitBreak
         public float SourceMaxSpeed = 3.0f;
 
         [DataMember(Order = 7)]
-        public float TargetMinSpeed = 1.0f;
+        public float TargetMinSpeed = 0.8014706f;
 
         [DataMember(Order = 8)]
-        public float TargetMaxSpeed = 14.0f;
+        public float TargetMaxSpeed = 4.17647076f;
 
         [DataMember(Order = 9)]
         public bool VerboseLog = false;
@@ -435,10 +499,14 @@ namespace MainGameSpeedLimitBreak
         public float LogIntervalSec = 1.0f;
 
         [DataMember(Order = 11)]
-        public float BpmReferenceAtSpeed3 = 135.6f;
+        public float BpmReferenceAtSpeed3 = 113f;
 
         [DataMember(Order = 12)]
-        public List<BpmPreset> BpmPresets = new List<BpmPreset>();
+        public List<BpmPreset> BpmPresets = new List<BpmPreset>
+        {
+            new BpmPreset { AnimationName = "M_SLoop1", AppliedBpmMax = 150f, AppliedBpmMin = 37.5f, BaseBpmMin = 47f, BaseBpmMax = 135f, Folder = "M_SLoop1", Name = "挿入 150-37.5" },
+            new BpmPreset { AnimationName = "M_WLoop1", AppliedBpmMax = 150f, AppliedBpmMin = 37.5f, BaseBpmMin = 45.08f, BaseBpmMax = 112.63f, Folder = "M_WLoop1", Name = "フェラ 150-37.5" },
+        };
 
         [DataMember(Order = 13)]
         public bool EnableAutoSonyuHijack = true;
@@ -459,28 +527,28 @@ namespace MainGameSpeedLimitBreak
         public float AutoSonyuHijackFixedSourceSpeed = 3.0f;
 
         [DataMember(Order = 19)]
-        public float BpmReferenceAtSourceMin = 44.5f;
+        public float BpmReferenceAtSourceMin = 45f;
 
         [DataMember(Order = 20)]
-        public float BpmMeasureWindowSec = 2.5f;
+        public float BpmMeasureWindowSec = 0.2f;
 
         [DataMember(Order = 21)]
         public float BpmMeasureStrokesPerLoop = 1.0f;
 
         [DataMember(Order = 22)]
-        public float BpmMeasureNegativeDeltaResetThreshold = -0.2f;
+        public float BpmMeasureNegativeDeltaResetThreshold = 0f;
 
         [DataMember(Order = 23)]
-        public float BpmMeasureMinAccumSec = 1.0f;
+        public float BpmMeasureMinAccumSec = 0.1f;
 
         [DataMember(Order = 24)]
-        public bool BpmMeasureAbortOnStateChange = true;
+        public bool BpmMeasureAbortOnStateChange = false;
 
         [DataMember(Order = 25)]
-        public float AppliedBpmMin = 0f;
+        public float AppliedBpmMin = 38.25f;
 
         [DataMember(Order = 26)]
-        public float AppliedBpmMax = 0f;
+        public float AppliedBpmMax = 153f;
 
         [DataMember(Order = 27)]
         public bool EnableVideoTimeSpeedCues = false;
@@ -500,6 +568,20 @@ namespace MainGameSpeedLimitBreak
 
         [DataMember(Order = 32)]
         public bool ForceVanillaSpeed = false;
+
+        // 挿入系モーション向け基準BPM（速度1/速度3）。
+        [DataMember(Order = 33)]
+        public float BpmReferenceAtSourceMinSonyu = 47f;
+
+        [DataMember(Order = 34)]
+        public float BpmReferenceAtSpeed3Sonyu = 135f;
+
+        // 奉仕系モーション向け基準BPM（速度1/速度3）。
+        [DataMember(Order = 35)]
+        public float BpmReferenceAtSourceMinHoushi = 45f;
+
+        [DataMember(Order = 36)]
+        public float BpmReferenceAtSpeed3Houshi = 113f;
     }
 
     [DataContract]

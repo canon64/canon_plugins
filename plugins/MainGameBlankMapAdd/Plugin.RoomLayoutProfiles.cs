@@ -317,6 +317,13 @@ namespace MainGameBlankMapAdd
                 LogInfo($"room layout applied scope=folder trigger={trigger} key={folderKey}");
                 applied = true;
             }
+            else if (FolderBaselineProfile != null && FolderBaselineProfile.HasRoomLayout)
+            {
+                // 動画個別プロファイルもフォルダプロファイルもない場合はフォルダ読み込み時点の設定に戻す
+                ApplyRoomLayoutProfile(FolderBaselineProfile, persistSettings: false, applyToRoomTransform: true);
+                LogInfo($"room layout applied scope=folder-baseline trigger={trigger}");
+                applied = true;
+            }
 
             if (hasVideo && videoProfile.HasAudioGain)
             {
@@ -330,7 +337,6 @@ namespace MainGameBlankMapAdd
                 LogInfo($"audio gain applied scope=folder trigger={trigger} key={folderKey} gain={folderProfile.AudioGain:F3}");
                 applied = true;
             }
-
             if (hasVideo && videoProfile.HasSpeedLimitBreak)
             {
                 var snap = new SpeedLimitBreakSnapshot
@@ -356,6 +362,20 @@ namespace MainGameBlankMapAdd
                 if (TryApplySpeedLimitBreakSnapshot(snap, $"profile-folder:{trigger}"))
                 {
                     LogInfo($"speed-limit-break applied scope=folder trigger={trigger} key={folderKey}");
+                    applied = true;
+                }
+            }
+            else if (FolderBaselineProfile != null && FolderBaselineProfile.HasSpeedLimitBreak)
+            {
+                var snap = new SpeedLimitBreakSnapshot
+                {
+                    ForceVanillaSpeed = FolderBaselineProfile.SpeedForceVanilla,
+                    EnableVideoTimeSpeedCues = FolderBaselineProfile.SpeedEnableVideoTimeSpeedCues,
+                    AppliedBpmMax = FolderBaselineProfile.SpeedAppliedBpmMax
+                };
+                if (TryApplySpeedLimitBreakSnapshot(snap, $"profile-folder-baseline:{trigger}"))
+                {
+                    LogInfo($"speed-limit-break applied scope=folder-baseline trigger={trigger}");
                     applied = true;
                 }
             }
@@ -407,6 +427,31 @@ namespace MainGameBlankMapAdd
                 if (TryApplyBeatSyncSnapshot(snap, $"profile-folder:{trigger}"))
                 {
                     LogInfo($"beat-sync applied scope=folder trigger={trigger} key={folderKey}");
+                    applied = true;
+                }
+            }
+            else if (FolderBaselineProfile != null && FolderBaselineProfile.HasBeatSync)
+            {
+                var snap = new BeatSyncSnapshot
+                {
+                    Enabled = FolderBaselineProfile.BeatEnabled,
+                    Bpm = FolderBaselineProfile.BeatBpm,
+                    AutoMotionSwitch = FolderBaselineProfile.BeatAutoMotionSwitch,
+                    AutoThreshold = FolderBaselineProfile.BeatAutoThreshold,
+                    LowThreshold = FolderBaselineProfile.BeatLowThreshold,
+                    HighThreshold = FolderBaselineProfile.BeatHighThreshold,
+                    LowIntensity = FolderBaselineProfile.BeatLowIntensity,
+                    MidIntensity = FolderBaselineProfile.BeatMidIntensity,
+                    HighIntensity = FolderBaselineProfile.BeatHighIntensity,
+                    SmoothTime = FolderBaselineProfile.BeatSmoothTime,
+                    StrongMotionBeats = FolderBaselineProfile.BeatStrongMotionBeats,
+                    WeakMotionBeats = FolderBaselineProfile.BeatWeakMotionBeats,
+                    LowPassHz = FolderBaselineProfile.BeatLowPassHz,
+                    VerboseLog = FolderBaselineProfile.BeatVerboseLog
+                };
+                if (TryApplyBeatSyncSnapshot(snap, $"profile-folder-baseline:{trigger}"))
+                {
+                    LogInfo($"beat-sync applied scope=folder-baseline trigger={trigger}");
                     applied = true;
                 }
             }

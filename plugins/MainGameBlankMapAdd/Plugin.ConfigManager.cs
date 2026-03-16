@@ -56,7 +56,9 @@ namespace MainGameBlankMapAdd
         private ConfigEntry<float> _cfgPlaybackBarHeight;
         private ConfigEntry<float> _cfgPlaybackBarMarginX;
         private ConfigEntry<float> _cfgPlaybackBarButtonWidth;
-        private ConfigEntry<int> _cfgCubeFaceTileCount;
+        private ConfigEntry<int>   _cfgCubeFaceTileCount;
+        private ConfigEntry<bool>   _cfgUseWebCam;
+        private ConfigEntry<string> _cfgWebCamDevice;
 
         private ConfigEntry<string> _cfgFolderPlayPath;
         private ConfigEntry<bool> _cfgBrowseFolderPlayPath;
@@ -212,6 +214,31 @@ namespace MainGameBlankMapAdd
                 new ConfigDescription(
                     "立方体1面に並べる動画パネル枚数（サイズ固定）",
                     new AcceptableValueList<int>(1, 4, 9, 16, 25)));
+
+            _cfgUseWebCam = Config.Bind(
+                "03.Video",
+                "UseWebCam",
+                IsWebCamUrl(NormalizeString(_settings.VideoPath)),
+                new ConfigDescription(
+                    "WebCam映像を表示する（ONにするとVideoPathをwebcam://デバイス名に設定）"));
+            _cfgUseWebCam.SettingChanged += OnUseWebCamChanged;
+
+            var webCamDeviceNames = BuildWebCamDeviceList();
+            string currentWebCamDevice = IsWebCamUrl(NormalizeString(_settings.VideoPath))
+                ? ExtractWebCamDeviceName(NormalizeString(_settings.VideoPath))
+                : (webCamDeviceNames.Length > 0 ? webCamDeviceNames[0] : string.Empty);
+            if (!System.Array.Exists(webCamDeviceNames, d => d == currentWebCamDevice) && webCamDeviceNames.Length > 0)
+                currentWebCamDevice = webCamDeviceNames[0];
+            _cfgWebCamDevice = Config.Bind(
+                "03.Video",
+                "WebCamDevice",
+                currentWebCamDevice,
+                new ConfigDescription(
+                    "WebCamデバイス名（UseWebCam=trueの場合に使用される）",
+                    webCamDeviceNames.Length > 0
+                        ? (AcceptableValueBase)new AcceptableValueList<string>(webCamDeviceNames)
+                        : null));
+            _cfgWebCamDevice.SettingChanged += OnWebCamDeviceChanged;
 
             Config.Remove(new ConfigDefinition("04.FolderPlay", "FolderPlayEnabled"));
             _cfgFolderPlayLoop = Config.Bind("04.FolderPlay", "FolderPlayLoop", _settings.FolderPlayLoop, "フォルダ末尾まで再生したら先頭に戻る");
@@ -569,6 +596,10 @@ namespace MainGameBlankMapAdd
                 _cfgHttpPort.Value = _settings.HttpPort;
                 _cfgSyncVoiceSourcesToVideoRoom.Value = _settings.SyncVoiceSourcesToVideoRoom;
 
+                _cfgUseWebCam.Value = IsWebCamUrl(_settings.VideoPath);
+                _cfgWebCamDevice.Value = IsWebCamUrl(_settings.VideoPath)
+                    ? ExtractWebCamDeviceName(_settings.VideoPath)
+                    : _cfgWebCamDevice.Value;
                 _cfgVerboseLog.Value = _settings.VerboseLog;
             }
             finally
@@ -610,6 +641,64 @@ namespace MainGameBlankMapAdd
             finally
             {
                 ResetPresetTriggerEntry(_cfgSaveCurrentState);
+            }
+        }
+
+        private void OnUseWebCamChanged(object sender, EventArgs e)
+        {
+            if (_syncingConfig) return;
+            _syncingConfig = true;
+            try
+            {
+                if (_cfgUseWebCam.Value)
+                {
+                    string device = NormalizeString(_cfgWebCamDevice.Value);
+                    _cfgVideoPath.Value = "webcam://" + device;
+                }
+                else if (IsWebCamUrl(_cfgVideoPath.Value))
+                {
+                    _cfgVideoPath.Value = string.Empty;
+                }
+            }
+            finally
+            {
+                _syncingConfig = false;
+            }
+            _configDirty = true;
+        }
+
+        private void OnWebCamDeviceChanged(object sender, EventArgs e)
+        {
+            if (_syncingConfig) return;
+            if (!_cfgUseWebCam.Value) return;
+            _syncingConfig = true;
+            try
+            {
+                string device = NormalizeString(_cfgWebCamDevice.Value);
+                _cfgVideoPath.Value = "webcam://" + device;
+            }
+            finally
+            {
+                _syncingConfig = false;
+            }
+            _configDirty = true;
+        }
+
+        private static string[] BuildWebCamDeviceList()
+        {
+            try
+            {
+                var devices = WebCamTexture.devices;
+                if (devices == null || devices.Length == 0)
+                    return new[] { string.Empty };
+                var names = new string[devices.Length];
+                for (int i = 0; i < devices.Length; i++)
+                    names[i] = devices[i].name;
+                return names;
+            }
+            catch
+            {
+                return new[] { string.Empty };
             }
         }
 

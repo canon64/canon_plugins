@@ -38,7 +38,7 @@ namespace MainGameSpeedLimitBreak
         private float _nextVideoRoomPollTime;
         private static readonly UTF8Encoding Utf8NoBom = new UTF8Encoding(false);
 
-        private bool _showBpmUi;
+        private bool _showBpmUi = false;
         private Rect _windowRect = new Rect(32f, 32f, 520f, 520f);
         private Vector2 _windowScroll;
         private string _appliedBpmMaxInput = "240";
@@ -56,11 +56,8 @@ namespace MainGameSpeedLimitBreak
         private ConfigEntry<bool> _cfgEnablePerFrameTrace;
         private ConfigEntry<bool> _cfgEnableVideoTimeSpeedCues;
         private ConfigEntry<string> _cfgVideoTimeCueFilePath;
-        private ConfigEntry<string> _cfgUiToggleHotkey;
-        private ConfigEntry<string> _cfgPresetPrevHotkey;
-        private ConfigEntry<string> _cfgPresetNextHotkey;
-        private ConfigEntry<string>[] _cfgPresetSlotHotkeys;
         private bool _suppressConfigSync;
+        private bool _calibrationCfgMirrorInitialized;
         private int _lastAppliedPresetOrderIndex = -1;
         private bool _videoRoomPlaybackAvailable;
         private double _videoRoomPlaybackTimeSec;
@@ -149,7 +146,6 @@ namespace MainGameSpeedLimitBreak
                 LogInfo("patched: HSceneProc.Update");
                 LogInfo("patched: HSprite.Update");
                 LogInfo($"range map src=[{Settings.SourceMinSpeed:0.###}..{Settings.SourceMaxSpeed:0.###}] -> dst=[{Settings.TargetMinSpeed:0.###}..{Settings.TargetMaxSpeed:0.###}]");
-                LogInfo("BPM UI hotkey: " + GetConfigHotkey(_cfgUiToggleHotkey, "LeftAlt+S"));
                 LogInfo($"bpm remap: {(Settings.EnableBpmSpeedRemap.GetValueOrDefault(true) ? "ON" : "OFF")}");
                 LogInfo($"force vanilla speed: {(Settings.ForceVanillaSpeed ? "ON" : "OFF")}");
                 LogInfo($"auto sonyu hijack: {(Settings.EnableAutoSonyuHijack ? "ON" : "OFF")}");
@@ -178,13 +174,11 @@ namespace MainGameSpeedLimitBreak
         private void Update()
         {
             UpdateBpmMeasure();
+            UpdateBpmReferenceMode();
 
-            if (IsHotkeyDown(GetConfigHotkey(_cfgUiToggleHotkey, "LeftAlt+S")))
+            if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetKeyDown(KeyCode.S))
             {
-                _showBpmUi = !_showBpmUi;
-                string state = _showBpmUi ? "ON" : "OFF";
-                LogInfo("BPM UI " + state);
-                ShowUiNotice("BPM UI " + state);
+                ToggleBpmUi("hotkey-update");
             }
 
             if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.R))
@@ -194,6 +188,7 @@ namespace MainGameSpeedLimitBreak
                 ReloadVideoCueTimelineFromConfiguredPath(migrateLegacyIfMissing: false);
                 SyncUiFromSettings();
                 ResetVideoCueRuntime(clearTriggerOnce: true);
+                UpdateBpmReferenceMode(force: true);
                 LogInfo("settings reloaded by Ctrl+R");
                 LogInfo($"range map src=[{Settings.SourceMinSpeed:0.###}..{Settings.SourceMaxSpeed:0.###}] -> dst=[{Settings.TargetMinSpeed:0.###}..{Settings.TargetMaxSpeed:0.###}]");
             }
@@ -202,8 +197,6 @@ namespace MainGameSpeedLimitBreak
             {
                 ApplyMaxBpmFromInput();
             }
-
-            HandlePresetHotkeys();
             PollVideoRoomPlaybackSnapshot();
             UpdateVideoTimeSpeedCues();
 
@@ -221,6 +214,14 @@ namespace MainGameSpeedLimitBreak
             {
                 _insideHScene = false;
             }
+        }
+
+        private void ToggleBpmUi(string reason)
+        {
+            _showBpmUi = !_showBpmUi;
+            string state = _showBpmUi ? "ON" : "OFF";
+            LogInfo($"BPM UI {state} ({reason})");
+            ShowUiNotice("BPM UI " + state);
         }
 
         // ─── ログ ───────────────────────────────────────────────────────────────

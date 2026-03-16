@@ -9,6 +9,13 @@ namespace MainGameSpeedLimitBreak
     {
         private void OnGUI()
         {
+            var ev = Event.current;
+            if (ev != null && ev.type == EventType.KeyDown && ev.alt && ev.keyCode == KeyCode.S)
+            {
+                ToggleBpmUi("hotkey-ongui");
+                ev.Use();
+            }
+
             if (_showBpmUi)
             {
                 _windowRect = GUI.Window(_windowId, _windowRect, DrawBpmWindow, "SpeedLimitBreak BPM");
@@ -33,7 +40,7 @@ namespace MainGameSpeedLimitBreak
             GUILayout.BeginVertical();
             if (s == null)
             {
-                GUILayout.Label("settings not loaded");
+                GUILayout.Label("設定が未読み込みです");
                 GUILayout.EndVertical();
                 GUI.DragWindow(new Rect(0f, 0f, 10000f, 20f));
                 return;
@@ -41,12 +48,14 @@ namespace MainGameSpeedLimitBreak
 
             float scrollHeight = Mathf.Max(160f, _windowRect.height - 52f);
             _windowScroll = GUILayout.BeginScrollView(_windowScroll, false, true, GUILayout.Height(scrollHeight));
+            BpmReferenceMode activeMode = ResolveCurrentBpmReferenceMode();
 
             GUILayout.Label($"現在 TargetSpeed(最小/最大): {s.TargetMinSpeed:0.###} / {s.TargetMaxSpeed:0.###}");
             GUILayout.Label($"現在反映BPM(最小/最大): {s.AppliedBpmMin:0.##} / {s.AppliedBpmMax:0.##}");
+            GUILayout.Label($"基準BPMモード: {GetBpmReferenceModeLabel(activeMode)}（自動切替）");
             GUILayout.Label($"基準BPM(速度1): {s.BpmReferenceAtSourceMin:0.##}");
             GUILayout.Label($"基準BPM(速度3): {s.BpmReferenceAtSpeed3:0.##}");
-            GUILayout.Label($"Speed mode: {(s.ForceVanillaSpeed ? "VANILLA (locked)" : "CUSTOM (applied)")}");
+            GUILayout.Label($"速度モード: {(s.ForceVanillaSpeed ? "VANILLA（固定）" : "CUSTOM（適用中）")}");
 
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Reset to vanilla speed", GUILayout.Width(170f)))
@@ -197,8 +206,7 @@ namespace MainGameSpeedLimitBreak
             if (deleteIndex >= 0) DeletePreset(deleteIndex);
 
             GUILayout.Space(4f);
-            string uiToggle = GetConfigHotkey(_cfgUiToggleHotkey, "LeftAlt+S");
-            GUILayout.Label($"操作: {uiToggle} で表示切替 / Enter で最大へ適用");
+            GUILayout.Label("操作: LeftAlt+S で表示切替 / Enter で最大へ適用");
 
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
@@ -212,6 +220,7 @@ namespace MainGameSpeedLimitBreak
             if (s == null)
                 return;
 
+            ApplyStoredCalibrationToWorkingValues(s, ResolveCurrentBpmReferenceMode(), pushConfigEntries: false);
             EnsureAppliedBpmRangeInitialized(s);
             _appliedBpmMinInput = s.AppliedBpmMin.ToString("0.##", CultureInfo.InvariantCulture);
             _appliedBpmMaxInput = s.AppliedBpmMax.ToString("0.##", CultureInfo.InvariantCulture);
@@ -229,31 +238,31 @@ namespace MainGameSpeedLimitBreak
                 "Behavior",
                 "00 Enable BPM Remap",
                 s.EnableBpmSpeedRemap.GetValueOrDefault(true),
-                "Enable remapping animator speed/speedBody from configured BPM-applied range.");
+                "設定した反映BPMレンジに基づいて animator の speed/speedBody を再マップします。");
 
             _cfgForceVanillaSpeed = Config.Bind(
                 "Behavior",
                 "01 Force Vanilla Speed",
                 s.ForceVanillaSpeed,
-                "Disable all speed/gauge intervention and keep vanilla in-game speed behavior.");
+                "速度・ゲージへの介入を停止し、ゲーム標準の速度挙動を維持します。");
 
             _cfgEnablePerFrameTrace = Config.Bind(
                 "Debug",
                 "00 Enable Per-Frame Trace",
                 s.EnablePerFrameTrace,
-                "Enable per-frame patch/timeline diagnostic logs. Keep OFF in normal use.");
+                "毎フレームのパッチ/タイムライン診断ログを出力します。通常時はOFF推奨です。");
 
             _cfgBpmReferenceAtSourceMin = Config.Bind(
                 "Calibration",
                 "10 BPM Ref At Source Min",
                 s.BpmReferenceAtSourceMin,
-                "Measured BPM at SourceMinSpeed. Set 0 to disable two-point calibration.");
+                "現在のモーション系統（挿入/奉仕）に対する SourceMinSpeed 時点の基準BPM。0で2点較正を無効化します。");
 
             _cfgBpmReferenceAtSourceMax = Config.Bind(
                 "Calibration",
                 "11 BPM Ref At Source Max",
                 s.BpmReferenceAtSpeed3,
-                "Measured BPM at SourceMaxSpeed (gauge max).");
+                "現在のモーション系統（挿入/奉仕）に対する SourceMaxSpeed（ゲージ最大）時点の基準BPM。");
 
             _cfgBpmReferenceAtSourceMin.SettingChanged += OnConfigCalibrationChanged;
             _cfgBpmReferenceAtSourceMax.SettingChanged += OnConfigCalibrationChanged;
@@ -265,45 +274,16 @@ namespace MainGameSpeedLimitBreak
                 "Video Timeline",
                 "00 Enable Speed Timeline",
                 s.EnableVideoTimeSpeedCues,
-                "Enable applying saved speed presets from external video timeline cue file.");
+                "外部動画タイムラインcueファイルから速度プリセットを適用します。");
 
             _cfgVideoTimeCueFilePath = Config.Bind(
                 "Video Timeline",
                 "01 Cue File Path",
                 "SpeedTimeline.json",
-                "Timeline cue JSON path. Relative path is resolved from plugin folder.");
+                "タイムラインcue JSONのパス。相対パスはプラグインフォルダ基準で解決されます。");
 
             _cfgEnableVideoTimeSpeedCues.SettingChanged += OnConfigCalibrationChanged;
             _cfgVideoTimeCueFilePath.SettingChanged += OnConfigCalibrationChanged;
-
-            _cfgUiToggleHotkey = Config.Bind(
-                "Hotkeys",
-                "00 Toggle UI",
-                "LeftAlt+S",
-                "Toggle BPM UI on/off.");
-
-            _cfgPresetPrevHotkey = Config.Bind(
-                "Hotkeys",
-                "01 Previous Preset",
-                "",
-                "Apply previous preset in sorted list order.");
-
-            _cfgPresetNextHotkey = Config.Bind(
-                "Hotkeys",
-                "02 Next Preset",
-                "",
-                "Apply next preset in sorted list order.");
-
-            _cfgPresetSlotHotkeys = new ConfigEntry<string>[10];
-            for (int i = 0; i < _cfgPresetSlotHotkeys.Length; i++)
-            {
-                int slot = i + 1;
-                _cfgPresetSlotHotkeys[i] = Config.Bind(
-                    "Hotkeys",
-                    $"{10 + slot:00} Preset Slot {slot}",
-                    "",
-                    $"Apply preset slot {slot} from current sorted preset list.");
-            }
 
             ApplyConfigManagerOverrides(saveIfChanged: false, reason: "config init");
         }
@@ -330,23 +310,39 @@ namespace MainGameSpeedLimitBreak
                 _cfgVideoTimeCueFilePath == null)
                 return;
 
-            float minRef = Mathf.Max(0f, _cfgBpmReferenceAtSourceMin.Value);
-            float maxRef = Mathf.Max(1f, _cfgBpmReferenceAtSourceMax.Value);
             bool calibrationChanged = false;
+            bool skipCalibrationPull = false;
+            bool isConfigInit = string.Equals(reason, "config init", StringComparison.OrdinalIgnoreCase);
+            bool isSettingsReload = string.Equals(reason, "settings reload", StringComparison.OrdinalIgnoreCase);
+            bool forceMirrorOnlySync = isConfigInit || isSettingsReload;
 
-            bool changed = false;
-            if (!Mathf.Approximately(s.BpmReferenceAtSourceMin, minRef))
+            BpmReferenceMode activeMode = ResolveCurrentBpmReferenceMode();
+            GetStoredCalibrationPair(s, activeMode, out float currentModeMinRef, out float currentModeMaxRef);
+            if (!_calibrationCfgMirrorInitialized || forceMirrorOnlySync)
             {
-                s.BpmReferenceAtSourceMin = minRef;
-                changed = true;
-                calibrationChanged = true;
+                SyncCalibrationConfigEntriesForMode(s, activeMode);
+                _calibrationCfgMirrorInitialized = true;
+                skipCalibrationPull = true;
             }
 
-            if (!Mathf.Approximately(s.BpmReferenceAtSpeed3, maxRef))
+            bool changed = false;
+            if (!skipCalibrationPull)
             {
-                s.BpmReferenceAtSpeed3 = maxRef;
-                changed = true;
-                calibrationChanged = true;
+                float minRef = Mathf.Max(0f, _cfgBpmReferenceAtSourceMin.Value);
+                float maxRef = Mathf.Max(1f, _cfgBpmReferenceAtSourceMax.Value);
+                if (!Mathf.Approximately(currentModeMinRef, minRef))
+                {
+                    currentModeMinRef = minRef;
+                    changed = true;
+                    calibrationChanged = true;
+                }
+
+                if (!Mathf.Approximately(currentModeMaxRef, maxRef))
+                {
+                    currentModeMaxRef = maxRef;
+                    changed = true;
+                    calibrationChanged = true;
+                }
             }
 
             bool bpmRemapEnabled = _cfgEnableBpmSpeedRemap.Value;
@@ -377,14 +373,14 @@ namespace MainGameSpeedLimitBreak
                 LogInfo($"per-frame trace changed: {perFrameTraceEnabled}");
             }
 
-            if (s.BpmReferenceAtSourceMin > 0f && s.BpmReferenceAtSpeed3 <= s.BpmReferenceAtSourceMin)
+            if (!skipCalibrationPull && currentModeMinRef > 0f && currentModeMaxRef <= currentModeMinRef)
             {
-                s.BpmReferenceAtSpeed3 = s.BpmReferenceAtSourceMin + 1f;
+                currentModeMaxRef = currentModeMinRef + 1f;
                 changed = true;
                 calibrationChanged = true;
 
                 _suppressConfigSync = true;
-                _cfgBpmReferenceAtSourceMax.Value = s.BpmReferenceAtSpeed3;
+                _cfgBpmReferenceAtSourceMax.Value = currentModeMaxRef;
                 _suppressConfigSync = false;
             }
 
@@ -420,9 +416,17 @@ namespace MainGameSpeedLimitBreak
 
             if (calibrationChanged)
             {
+                SaveCalibrationForModeAndApplyWorking(
+                    s,
+                    activeMode,
+                    currentModeMinRef,
+                    currentModeMaxRef,
+                    pushConfigEntries: false);
                 EnsureAppliedBpmRangeInitialized(s);
                 ApplyAppliedRangeToTargetSpeeds(s, s.AppliedBpmMin, s.AppliedBpmMax);
-                LogInfo($"calibration updated: bpmRefMin={s.BpmReferenceAtSourceMin:0.##}, bpmRefMax={s.BpmReferenceAtSpeed3:0.##}");
+                LogInfo(
+                    $"calibration updated ({GetBpmReferenceModeLabel(activeMode)}): " +
+                    $"bpmRefMin={s.BpmReferenceAtSourceMin:0.##}, bpmRefMax={s.BpmReferenceAtSpeed3:0.##}");
             }
 
             if (saveIfChanged)
