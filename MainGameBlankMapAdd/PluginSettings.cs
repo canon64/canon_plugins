@@ -92,19 +92,19 @@ namespace MainGameBlankMapAdd
         public bool ForceIsH = false;
 
         [DataMember(Order = 8)]
-        public bool BlankifySceneOnLoad = false;
+        public bool BlankifySceneOnLoad = true;
 
         [DataMember(Order = 9)]
-        public bool DisableRenderers = false;
+        public bool DisableRenderers = true;
 
         [DataMember(Order = 10)]
-        public bool DisableTerrains = false;
+        public bool DisableTerrains = true;
 
         [DataMember(Order = 11)]
-        public bool DisableLights = false;
+        public bool DisableLights = true;
 
         [DataMember(Order = 12)]
-        public bool DisableParticles = false;
+        public bool DisableParticles = true;
 
         [DataMember(Order = 13)]
         public bool VerboseLog = true;
@@ -152,7 +152,7 @@ namespace MainGameBlankMapAdd
         public float VideoVolume = 0.3f;
 
         [DataMember(Order = 28)]
-        public bool DisableAudioSources = false;
+        public bool DisableAudioSources = true;
 
         [DataMember(Order = 29)]
         public float VideoRoomOffsetX = 0f;

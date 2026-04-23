@@ -325,13 +325,7 @@ namespace MainGameBlankMapAdd
                 "06.Reverb",
                 "EnableVoiceReverb",
                 _settings.EnableVoiceReverb,
-                new ConfigDescription(
-                    "リバーブ有効（再生バー側で制御する内部値）",
-                    null,
-                    new ConfigurationManager.ConfigurationManagerAttributes
-                    {
-                        Browsable = false
-                    }));
+                "リバーブ有効");
             _cfgVoiceReverbPreset = Config.Bind("06.Reverb", "VoiceReverbPreset",
                 NormalizeString(_settings.VoiceReverbPreset),
                 new ConfigDescription("AudioReverbPreset名",
