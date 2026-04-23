@@ -1016,6 +1016,7 @@ namespace MainGameVoiceFaceEventBridge
         private ConfigEntry<string> _cfgPutOnAllKeywords;
         private ConfigEntry<string> _cfgCoordPattern;
         private ConfigEntry<bool> _cfgEnableVideoPlaybackByResponseText;
+        private ConfigEntry<string> _cfgVideoPlaybackTriggerKeywords;
         private ConfigEntry<bool> _cfgEnableFacePresetApply;
         private ConfigEntry<string> _cfgFacePresetJsonRelativePath;
         private ConfigEntry<bool> _cfgPoseChangeEnabled;
@@ -1268,6 +1269,11 @@ namespace MainGameVoiceFaceEventBridge
                 "EnableVideoPlaybackByResponseText",
                 true,
                 "response_text解析で動画再生（\"流す\"など）を有効化する。");
+            _cfgVideoPlaybackTriggerKeywords = Config.Bind(
+                "VideoPlayback",
+                "VideoPlaybackTriggerKeywords",
+                "流す",
+                "動画再生トリガーワード（カンマ区切り）。");
             _cfgEnableFacePresetApply = Config.Bind(
                 "FacePreset",
                 "EnableFacePresetApply",
@@ -1307,6 +1313,7 @@ namespace MainGameVoiceFaceEventBridge
             HookConfigEntryEvent(_cfgPutOnAllKeywords, restartPipe: false);
             HookConfigEntryEvent(_cfgCoordPattern, restartPipe: false);
             HookConfigEntryEvent(_cfgEnableVideoPlaybackByResponseText, restartPipe: false);
+            HookConfigEntryEvent(_cfgVideoPlaybackTriggerKeywords, restartPipe: false);
             HookConfigEntryEvent(_cfgEnableFacePresetApply, restartPipe: false);
             HookConfigEntryEvent(_cfgFacePresetJsonRelativePath, restartPipe: false);
         }
@@ -2096,6 +2103,12 @@ namespace MainGameVoiceFaceEventBridge
                 if (_cfgPutOnAllKeywords != null) _cfgPutOnAllKeywords.Value = settings.PutOnAllKeywords ?? _cfgPutOnAllKeywords.Value;
                 if (_cfgCoordPattern != null) _cfgCoordPattern.Value = settings.CoordPattern ?? _cfgCoordPattern.Value;
                 if (_cfgEnableVideoPlaybackByResponseText != null) _cfgEnableVideoPlaybackByResponseText.Value = settings.EnableVideoPlaybackByResponseText;
+                if (_cfgVideoPlaybackTriggerKeywords != null)
+                {
+                    _cfgVideoPlaybackTriggerKeywords.Value = string.IsNullOrWhiteSpace(settings.VideoPlaybackTriggerKeywords)
+                        ? "流す"
+                        : settings.VideoPlaybackTriggerKeywords.Trim();
+                }
                 if (_cfgEnableFacePresetApply != null) _cfgEnableFacePresetApply.Value = settings.EnableFacePresetApply;
                 if (_cfgFacePresetJsonRelativePath != null)
                 {
@@ -2145,6 +2158,12 @@ namespace MainGameVoiceFaceEventBridge
             if (_cfgPutOnAllKeywords != null) Settings.PutOnAllKeywords = _cfgPutOnAllKeywords.Value;
             if (_cfgCoordPattern != null) Settings.CoordPattern = _cfgCoordPattern.Value;
             if (_cfgEnableVideoPlaybackByResponseText != null) Settings.EnableVideoPlaybackByResponseText = _cfgEnableVideoPlaybackByResponseText.Value;
+            if (_cfgVideoPlaybackTriggerKeywords != null)
+            {
+                Settings.VideoPlaybackTriggerKeywords = string.IsNullOrWhiteSpace(_cfgVideoPlaybackTriggerKeywords.Value)
+                    ? "流す"
+                    : _cfgVideoPlaybackTriggerKeywords.Value.Trim();
+            }
             if (_cfgEnableFacePresetApply != null) Settings.EnableFacePresetApply = _cfgEnableFacePresetApply.Value;
             if (_cfgFacePresetJsonRelativePath != null)
             {
