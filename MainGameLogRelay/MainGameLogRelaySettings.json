@@ -1,0 +1,50 @@
+﻿{
+  "Enabled": true,
+  "ResetOwnerLogsOnStartup": true,
+  "DefaultOwnerEnabled": false,
+  "DefaultOutputMode": 0,
+  "DefaultMinimumLevel": 1,
+  "LogInternalState": false,
+  "OwnerRules": [
+    {
+      "Owner": "com.kks.main.girlbodyikgizmo",
+      "OverrideEnabled": true,
+      "Enabled": false,
+      "OverrideOutputMode": true,
+      "OutputMode": 0,
+      "OverrideMinimumLevel": true,
+      "MinimumLevel": 1,
+      "LogKey": "main/MainGirlHipHijack"
+    },
+    {
+      "Owner": "com.kks.maingame.uiinputcapture",
+      "OverrideEnabled": true,
+      "Enabled": false,
+      "OverrideOutputMode": true,
+      "OutputMode": 0,
+      "OverrideMinimumLevel": true,
+      "MinimumLevel": 1,
+      "LogKey": "main/MainGameUiInputCapture"
+    },
+    {
+      "Owner": "com.kks.maingame.transformgizmo",
+      "OverrideEnabled": true,
+      "Enabled": false,
+      "OverrideOutputMode": true,
+      "OutputMode": 0,
+      "OverrideMinimumLevel": true,
+      "MinimumLevel": 1,
+      "LogKey": "main/MainGameTransformGizmo"
+    },
+    {
+      "Owner": "com.kks.main.girlshoulderikstabilizer",
+      "OverrideEnabled": true,
+      "Enabled": false,
+      "OverrideOutputMode": true,
+      "OutputMode": 0,
+      "OverrideMinimumLevel": true,
+      "MinimumLevel": 1,
+      "LogKey": "main/MainGirlShoulderIkStabilizer"
+    }
+  ]
+}

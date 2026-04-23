@@ -10,6 +10,7 @@ musicmp4/
 pose_presets/
 release_artifacts/
 _test_deploy/
+clean_deploy/
 
 # Always keep readme docs commit-ready
 !README.md
