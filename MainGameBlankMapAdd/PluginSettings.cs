@@ -1,0 +1,335 @@
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+
+namespace MainGameBlankMapAdd
+{
+    [DataContract]
+    internal sealed class PluginSettings
+    {
+        private static int NormalizeCubeFaceTileCount(int value)
+        {
+            switch (value)
+            {
+                case 1:
+                case 4:
+                case 9:
+                case 16:
+                case 25:
+                    return value;
+                default:
+                    return 1;
+            }
+        }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext ctx)
+        {
+            // 旧デフォルト900は民宿マップと競合するため自動マイグレーション
+            if (AddedMapNo == 900 || AddedMapNo == 9000) AddedMapNo = 5682352;
+            if (AddedThumbnailID <= 0) AddedThumbnailID = 9000;
+            if (VideoPath == null) VideoPath = string.Empty;
+            if (FloorOverrideVideoPath == null) FloorOverrideVideoPath = string.Empty;
+            if (CeilingOverrideVideoPath == null) CeilingOverrideVideoPath = string.Empty;
+            if (RoomWidth  <= 0.01f) RoomWidth  = 12f;
+            if (RoomDepth  <= 0.01f) RoomDepth  = 12f;
+            if (RoomHeight <= 0.01f) RoomHeight = 6f;
+            if (VideoVolume < 0f)    VideoVolume = 0.3f;
+            if (SphereRadius <= 0.01f) SphereRadius = 8f;
+            if (string.IsNullOrWhiteSpace(VoiceReverbPreset)) VoiceReverbPreset = "Psychotic";
+            if (VoiceReverbMinDistance < 0f) VoiceReverbMinDistance = 4f;
+            if (VoiceReverbMaxDistance <= VoiceReverbMinDistance + 1f)
+                VoiceReverbMaxDistance = 50f;
+            if (PlaybackBarShowMouseBottomPx < 0f) PlaybackBarShowMouseBottomPx = 0f;
+            if (PlaybackBarHeight < 20f) PlaybackBarHeight = 72f;
+            if (PlaybackBarMarginX < 0f) PlaybackBarMarginX = 0f;
+            if (PlaybackBarButtonWidth < 36f) PlaybackBarButtonWidth = 64f;
+            CubeFaceTileCount = NormalizeCubeFaceTileCount(CubeFaceTileCount);
+            if (FolderFadeDuration < 0.01f) FolderFadeDuration = 1.0f;
+            if (HttpPort <= 0 || HttpPort > 65535) HttpPort = 55782;
+            FolderPlayEnabled = true;
+            if (FolderPlayPath == null) FolderPlayPath = string.Empty;
+            if (FolderPlayPaths == null) FolderPlayPaths = new List<string>();
+            if (float.IsNaN(VideoAudioGain) || float.IsInfinity(VideoAudioGain) || VideoAudioGain <= 0f)
+                VideoAudioGain = 1f;
+            if (WebCamRequestedWidth <= 0) WebCamRequestedWidth = 1920;
+            if (WebCamRequestedHeight <= 0) WebCamRequestedHeight = 1080;
+            if (WebCamRequestedFps <= 0) WebCamRequestedFps = 30;
+            if (WebCamStatusLogIntervalSec < 0.25f) WebCamStatusLogIntervalSec = 1f;
+            if (WebCamBlackSampleIntervalSec < 0.5f) WebCamBlackSampleIntervalSec = 2f;
+            if (string.IsNullOrWhiteSpace(OverlayTargetSurface)) OverlayTargetSurface = "All";
+            else OverlayTargetSurface = OverlayTargetSurface.Trim();
+            if (float.IsNaN(OverlayOpacity) || float.IsInfinity(OverlayOpacity)) OverlayOpacity = 0.5f;
+            if (OverlayOpacity < 0f) OverlayOpacity = 0f;
+            if (OverlayOpacity > 1f) OverlayOpacity = 1f;
+            if (string.IsNullOrWhiteSpace(OverlayTileMode)) OverlayTileMode = "single";
+            if (OverlayTileMode != "single" && OverlayTileMode != "tile") OverlayTileMode = "single";
+            if (float.IsNaN(OverlayBeatOpacityMin) || float.IsInfinity(OverlayBeatOpacityMin)) OverlayBeatOpacityMin = 0.1f;
+            if (float.IsNaN(OverlayBeatOpacityMax) || float.IsInfinity(OverlayBeatOpacityMax)) OverlayBeatOpacityMax = 1.0f;
+            if (OverlayBeatOpacityMin < 0f) OverlayBeatOpacityMin = 0f;
+            if (OverlayBeatOpacityMin > 1f) OverlayBeatOpacityMin = 1f;
+            if (OverlayBeatOpacityMax < 0f) OverlayBeatOpacityMax = 0f;
+            if (OverlayBeatOpacityMax > 1f) OverlayBeatOpacityMax = 1f;
+            if (!string.IsNullOrWhiteSpace(FolderPlayPath))
+            {
+                bool exists = false;
+                for (int i = 0; i < FolderPlayPaths.Count; i++)
+                {
+                    if (string.Equals(FolderPlayPaths[i], FolderPlayPath, System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists)
+                    FolderPlayPaths.Add(FolderPlayPath);
+            }
+        }
+
+        [DataMember(Order = 0)]
+        public int AddedMapNo = 5682352;
+
+        [DataMember(Order = 1)]
+        public int SourceMapNo = 1;
+
+        [DataMember(Order = 2)]
+        public string AddedMapName = "video_all_pose_room";
+
+        [DataMember(Order = 3)]
+        public string AddedDisplayName = "VideoAllPoseRoom";
+
+        [DataMember(Order = 4)]
+        public int AddedSort = 910;
+
+        [DataMember(Order = 5)]
+        public bool ForceIsGate = true;
+
+        [DataMember(Order = 6)]
+        public bool ForceIsFreeH = true;
+
+        [DataMember(Order = 7)]
+        public bool ForceIsH = false;
+
+        [DataMember(Order = 8)]
+        public bool BlankifySceneOnLoad = true;
+
+        [DataMember(Order = 9)]
+        public bool DisableRenderers = true;
+
+        [DataMember(Order = 10)]
+        public bool DisableTerrains = true;
+
+        [DataMember(Order = 11)]
+        public bool DisableLights = true;
+
+        [DataMember(Order = 12)]
+        public bool DisableParticles = true;
+
+        [DataMember(Order = 13)]
+        public bool VerboseLog = true;
+
+        [DataMember(Order = 14)]
+        public int AddedThumbnailID = 9000;
+
+        [DataMember(Order = 15)]
+        public bool EnableVideoRoom = true;
+
+        [DataMember(Order = 16)]
+        public string VideoPath = "";
+
+        [DataMember(Order = 17)]
+        public bool UseFloorVideoOverride = false;
+
+        [DataMember(Order = 18)]
+        public string FloorOverrideVideoPath = "";
+
+        [DataMember(Order = 19)]
+        public bool UseCeilingVideoOverride = false;
+
+        [DataMember(Order = 20)]
+        public string CeilingOverrideVideoPath = "";
+
+        [DataMember(Order = 21)]
+        public bool VideoLoop = true;
+
+        [DataMember(Order = 22)]
+        public bool MuteVideoAudio = false;
+
+        [DataMember(Order = 26)]
+        public bool AutoPlayOnMapLoad = false;
+
+        [DataMember(Order = 23)]
+        public float RoomWidth = 12f;
+
+        [DataMember(Order = 24)]
+        public float RoomDepth = 12f;
+
+        [DataMember(Order = 25)]
+        public float RoomHeight = 6f;
+
+        [DataMember(Order = 27)]
+        public float VideoVolume = 0.3f;
+
+        [DataMember(Order = 28)]
+        public bool DisableAudioSources = true;
+
+        [DataMember(Order = 29)]
+        public float VideoRoomOffsetX = 0f;
+
+        [DataMember(Order = 30)]
+        public float VideoRoomOffsetY = 0f;
+
+        [DataMember(Order = 31)]
+        public float VideoRoomOffsetZ = 0f;
+
+        [DataMember(Order = 32)]
+        public float VideoRoomRotationX = 0f;
+
+        [DataMember(Order = 33)]
+        public float VideoRoomRotationY = 180f;
+
+        [DataMember(Order = 34)]
+        public float VideoRoomRotationZ = 0f;
+
+        /// <summary>true=球体、false=平面(Quad)</summary>
+        [DataMember(Order = 35)]
+        public bool UseSphere = false;
+
+        [DataMember(Order = 36)]
+        public float SphereRadius = 8f;
+
+        [DataMember(Order = 37)]
+        public bool EnableVoiceReverb = true;
+
+        [DataMember(Order = 38)]
+        public string VoiceReverbPreset = "Psychotic";
+
+        [DataMember(Order = 39)]
+        public float VoiceReverbMinDistance = 4f;
+
+        [DataMember(Order = 40)]
+        public float VoiceReverbMaxDistance = 50f;
+
+        /// <summary>true=球体の内側面に表示、false=外側面に表示</summary>
+        [DataMember(Order = 41)]
+        public bool SphereInsideView = true;
+
+        [DataMember(Order = 42)]
+        public bool EnablePlaybackBar = true;
+
+        [DataMember(Order = 43)]
+        public float PlaybackBarShowMouseBottomPx = 0f;
+
+        [DataMember(Order = 44)]
+        public float PlaybackBarHeight = 72f;
+
+        [DataMember(Order = 45)]
+        public float PlaybackBarMarginX = 0f;
+
+        [DataMember(Order = 46)]
+        public float PlaybackBarButtonWidth = 64f;
+
+        [DataMember(Order = 47)]
+        public int CubeFaceTileCount = 1;
+
+        [DataMember(Order = 50)]
+        public bool FolderPlayEnabled = true;
+
+        [DataMember(Order = 51)]
+        public string FolderPlayPath = "";
+
+        [DataMember(Order = 59)]
+        public List<string> FolderPlayPaths = new List<string>();
+
+        [DataMember(Order = 52)]
+        public bool FolderPlayLoop = true;
+
+        [DataMember(Order = 58)]
+        public bool FolderPlaySingleLoop = false;
+
+        /// <summary>"Name", "Date", or "Random"</summary>
+        [DataMember(Order = 53)]
+        public string FolderPlaySortMode = "Name";
+
+        [DataMember(Order = 54)]
+        public bool FolderPlaySortAscending = true;
+
+        /// <summary>フォルダ再生時の動画切り替えクロスフェード時間（秒）。0で即時切替。</summary>
+        [DataMember(Order = 55)]
+        public float FolderFadeDuration = 1.0f;
+
+        /// <summary>外部HTTP受信を有効にする</summary>
+        [DataMember(Order = 56)]
+        public bool HttpEnabled = true;
+
+        /// <summary>HTTP受信ポート番号</summary>
+        [DataMember(Order = 57)]
+        public int HttpPort = 55782;
+
+        /// <summary>再生中Hボイス音源(Voice/PlayObjectPCM)を動画部屋座標へ同期する</summary>
+        [DataMember(Order = 60)]
+        public bool SyncVoiceSourcesToVideoRoom = false;
+
+        [DataMember(Order = 61)]
+        public bool ApplyReverbToVideoAudio = false;
+
+        /// <summary>動画音声の追加ゲイン倍率（最終適用はDualMonoFilter側で処理）</summary>
+        [DataMember(Order = 62)]
+        public float VideoAudioGain = 1f;
+
+        /// <summary>再生バーの説明ポップアップ表示</summary>
+        [DataMember(Order = 63)]
+        public bool EnableUiHelpPopup = true;
+
+        /// <summary>audio-snap 診断ログを出力する（通常は false でよい）</summary>
+        [DataMember(Order = 64)]
+        public bool EnableAudioDiagnosticsLog = false;
+
+        [DataMember(Order = 65)]
+        public int WebCamRequestedWidth = 1920;
+
+        [DataMember(Order = 66)]
+        public int WebCamRequestedHeight = 1080;
+
+        [DataMember(Order = 67)]
+        public int WebCamRequestedFps = 30;
+
+        [DataMember(Order = 68)]
+        public float WebCamStatusLogIntervalSec = 1f;
+
+        [DataMember(Order = 69)]
+        public float WebCamBlackSampleIntervalSec = 2f;
+
+        /// <summary>サブカメラ映像をVideoSurfaceの上に半透明オーバーレイする</summary>
+        [DataMember(Order = 70)]
+        public bool OverlayEnabled = false;
+
+        /// <summary>オーバーレイ対象の論理面（Front/Back/Left/Right/Floor/Ceiling/All）</summary>
+        [DataMember(Order = 71)]
+        public string OverlayTargetSurface = "All";
+
+        /// <summary>オーバーレイ透明度（0=完全透明, 1=完全不透明）</summary>
+        [DataMember(Order = 72)]
+        public float OverlayOpacity = 0.5f;
+
+        /// <summary>オーバーレイ分割モード（single=論理面全体に1枚, tile=物理Quadごとに1枚）</summary>
+        [DataMember(Order = 73)]
+        public string OverlayTileMode = "single";
+
+        /// <summary>オーバーレイ透明度の拍連動を有効化</summary>
+        [DataMember(Order = 74)]
+        public bool OverlayBeatOpacityEnabled = false;
+
+        /// <summary>拍連動透明度の最小値（0=完全透明）</summary>
+        [DataMember(Order = 75)]
+        public float OverlayBeatOpacityMin = 0.1f;
+
+        /// <summary>拍連動透明度の最大値（1=完全不透明）</summary>
+        [DataMember(Order = 76)]
+        public float OverlayBeatOpacityMax = 1.0f;
+
+        /// <summary>拍連動透明度を反転（true=拍強で透明、拍弱で不透明）</summary>
+        [DataMember(Order = 77)]
+        public bool OverlayBeatOpacityInverted = false;
+
+    }
+}
