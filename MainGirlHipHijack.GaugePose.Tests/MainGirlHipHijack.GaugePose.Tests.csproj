@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>disable</Nullable><NuGetAudit>false</NuGetAudit><NoWarn>0649;0414</NoWarn></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\MainGirlHipHijack\Plugin.GaugePoseBlend.cs" Link="Plugin.GaugePoseBlend.cs" />
+    <Compile Include="..\MainGameVrDildo\Plugin.GaugePoseSource.cs" Link="Plugin.GaugePoseSource.cs" />
+  </ItemGroup>
+</Project>

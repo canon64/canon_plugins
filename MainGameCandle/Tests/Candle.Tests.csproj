@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><LangVersion>latest</LangVersion><NoWarn>0067;0649</NoWarn></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\CandleFlow.cs" Link="Product\CandleFlow.cs" />
+    <Compile Include="..\CandleModel.cs" Link="Product\CandleModel.cs" />
+    <Compile Include="..\WaxMaterial.cs" Link="Product\WaxMaterial.cs" />
+    <Compile Include="..\WaxTextureLayer.cs" Link="Product\WaxTextureLayer.cs" />
+    <Compile Include="..\..\MainGameMagicPaint\PaintCore.cs" Link="Product\PaintCore.cs" />
+    <Compile Include="..\..\MainGameMagicPaint\PaintVisibility.cs" Link="Product\PaintVisibility.cs" />
+    <Compile Include="..\..\MainGameMagicPaint\BrushRaster.cs" Link="Product\BrushRaster.cs" />
+    <Compile Include="..\..\MainGameMagicPaint\SkinOverlayApi.cs" Link="Product\SkinOverlayApi.cs" />
+    <Compile Include="..\..\MainGameMagicPaint\SkinSurface.cs" Link="Product\SkinSurface.cs" />
+    <Compile Include="..\..\MainGameMagicPaint\SkinCoordinates.cs" Link="Product\SkinCoordinates.cs" />
+    <Compile Include="..\..\MainGameMagicPaint\NativeSkinPaint.cs" Link="Product\NativeSkinPaint.cs" />
+    <Compile Include="..\..\MainGameMagicPaint\SkinReliefPatch.cs" Link="Product\SkinReliefPatch.cs" />
+    <Compile Include="..\Plugin.cs" Link="Product\Plugin.cs" />
+    <Compile Include="..\Plugin.Vr.cs" Link="Product\Plugin.Vr.cs" />
+    <Compile Include="..\Plugin.PlaybackBar.cs" Link="Product\Plugin.PlaybackBar.cs" />
+    <Compile Include="..\Plugin.Reaction.cs" Link="Product\Plugin.Reaction.cs" />
+    <Compile Include="..\Plugin.Wax.cs" Link="Product\Plugin.Wax.cs" />
+    <Compile Include="..\WaxSurface.cs" Link="Product\WaxSurface.cs" />
+    <Compile Include="..\..\_shared\GadgetBarCycle.cs" Link="Product\GadgetBarCycle.cs" />
+    <Compile Include="..\..\_shared\VrItemFocus.cs" Link="Product\VrItemFocus.cs" />
+    <Compile Include="..\..\MainGameMagicPaint\TriangleIndex.cs" Link="Product\TriangleIndex.cs" />
+    <Compile Include="..\..\MainGameMagicPaint\SurfaceMath.cs" Link="Product\SurfaceMath.cs" />
+    <Compile Include="..\..\MainGameBlankMapAdd\PlaybackButtonFlow.cs" Link="Product\PlaybackButtonFlow.cs" />
+    <Compile Include="..\..\MainGameVoiceFaceEventBridge\Plugin.ActorImpactCue.cs" Link="Product\Plugin.ActorImpactCue.cs" />
+    <Compile Include="..\..\MainGameVoiceFaceEventBridge\Audio\ImpactCueTarget.cs" Link="Product\ImpactCueTarget.cs" />
+    <Compile Include="..\..\MainGameVoiceFaceEventBridge\Audio\ContactCuePolicy.cs" Link="Product\ContactCuePolicy.cs" />
+    <Compile Include="..\..\MainGameVoiceFaceEventBridge\Plugin.ContactVoice.cs" Link="Product\Plugin.ContactVoice.cs" />
+    <Compile Include="..\..\MainGameVoiceFaceEventBridge\Plugin.ContactMoans.cs" Link="Product\Plugin.ContactMoans.cs" />
+    <Compile Include="..\..\MainGameVoiceFaceEventBridge\SessionGate.Contact.cs" Link="Product\SessionGate.Contact.cs" />
+    <Compile Include="..\..\_shared\HSceneRuntime.cs" Link="Product\HSceneRuntime.cs" />
+  </ItemGroup>
+</Project>

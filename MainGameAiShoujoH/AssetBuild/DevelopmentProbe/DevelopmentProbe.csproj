@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><AssemblyName>AiHDedicatedHProbe.Batch10V1</AssemblyName></PropertyGroup><ItemGroup>
+<Reference Include="MainGameDevelopmentBridge"><HintPath>../../../MainGameDevelopmentBridge/bin/Release/net472/MainGameDevelopmentBridge.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="MainGameAiShoujoH"><HintPath>../../bin/Release/net472/MainGameAiShoujoH.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="MainGameAiShoujoMode"><HintPath>../../../MainGameAiShoujoMode/bin/Release/net472/MainGameAiShoujoMode.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="canon_gate"><HintPath>../../../canon_gate/bin/Release/net472/canon_gate.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="BepInEx"><HintPath>F:/kks/BepInEx/core/BepInEx.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="Assembly-CSharp"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="UnityEngine"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="UnityEngine.CoreModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="UnityEngine.AnimationModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.AnimationModule.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="UnityEngine.AudioModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.AudioModule.dll</HintPath><Private>false</Private></Reference>
+</ItemGroup></Project>

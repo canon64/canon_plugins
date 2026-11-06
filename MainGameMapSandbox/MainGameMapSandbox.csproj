@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><GenerateAssemblyInfo>false</GenerateAssemblyInfo><ManagedDir>F:\kks\KoikatsuSunshine_Data\Managed</ManagedDir></PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BepInEx"><HintPath>F:\kks\BepInEx\core\BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(ManagedDir)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <ProjectReference Include="..\MapEnvironmentRuntime\MapEnvironmentRuntime.csproj" />
+  </ItemGroup>
+  <Import Project="..\MapEnvironmentRuntime\NumericAudit.targets" />
+  <ItemGroup>
+    <Reference Include="canon_gate"><HintPath>..\canon_gate\bin\Release\net472\canon_gate.dll</HintPath><Private>false</Private></Reference>
+    <Compile Include="..\_shared\PluginActivityGate.cs" Link="PluginActivityGate.cs" />
+  </ItemGroup>
+</Project>

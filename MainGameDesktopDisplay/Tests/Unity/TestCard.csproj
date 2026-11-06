@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>WinExe</OutputType><LangVersion>latest</LangVersion><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup><Reference Include="System.Windows.Forms" /><Reference Include="System.Drawing" /><Compile Include="TestCard.cs" /><Compile Include="../../DesktopCapture.cs" Link="DesktopCapture.cs" /></ItemGroup>
+</Project>

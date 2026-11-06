@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Conversation/KksIkParameterSnapshot.cs" Link="KksIkParameterSnapshot.cs" />
+    <Reference Include="System.Runtime.Serialization" />
+    <None Include="case.json" CopyToOutputDirectory="PreserveNewest" />
+    <Reference Include="Assembly-CSharp-firstpass"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/Assembly-CSharp-firstpass.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.CoreModule.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

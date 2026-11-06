@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\AudioBpmAnalyzer.cs" Link="AudioBpmAnalyzer.cs" />
+    <Compile Include="..\SongBpmAnalysisRequest.cs" Link="SongBpmAnalysisRequest.cs" />
+    <Compile Include="..\BpmAudioDecoder.cs" Link="BpmAudioDecoder.cs" />
+    <Compile Include="..\Beat\Plugin.AutoBpm.cs" Link="Plugin.AutoBpm.cs" />
+    <Compile Include="..\..\MainGameBlankMapAdd\PlaybackTransportLayout.cs" Link="PlaybackTransportLayout.cs" />
+  </ItemGroup>
+</Project>

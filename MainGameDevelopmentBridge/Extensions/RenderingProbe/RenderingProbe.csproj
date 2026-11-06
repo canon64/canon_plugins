@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MainGameDevelopmentBridge"><HintPath>../../bin/Release/net472/MainGameDevelopmentBridge.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

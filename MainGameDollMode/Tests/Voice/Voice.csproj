@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\DollModeGuardHooks.Voice.cs" Link="DollModeGuardHooks.Voice.cs" />
+    <Reference Include="0Harmony"><HintPath>F:\kks\BepInEx\core\0Harmony.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

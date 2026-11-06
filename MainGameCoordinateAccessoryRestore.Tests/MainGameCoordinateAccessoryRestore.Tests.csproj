@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\MainGameCoordinateAccessoryRestore\Plugin.cs" Link="Plugin.cs" />
+    <Compile Include="..\_shared\PluginSessionGate.cs" Link="PluginSessionGate.cs" />
+    <Compile Include="..\canon_gate\GateApi.cs" Link="GateApi.cs" />
+    <Compile Include="..\canon_gate\ExceptionPolicy.cs" Link="ExceptionPolicy.cs" />
+  </ItemGroup>
+</Project>

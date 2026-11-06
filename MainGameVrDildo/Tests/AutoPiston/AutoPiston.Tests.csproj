@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../PistonPolicy.cs" Link="PistonPolicy.cs" />
+    <Compile Include="../../Plugin.AutoPiston.cs" Link="Plugin.AutoPiston.cs" />
+    <Compile Include="../../Plugin.PistonRhythm.cs" Link="Plugin.PistonRhythm.cs" />
+    <Compile Include="../../../MainGameRhythmSync/MotionSyncApi.cs" Link="MotionSyncApi.cs" />
+    <Compile Include="../../Plugin.ComposerParent.cs" Link="Plugin.ComposerParent.cs" />
+    <Compile Include="../../Plugin.InputCapture.cs" Link="Plugin.InputCapture.cs" />
+  </ItemGroup>
+</Project>

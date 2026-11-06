@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework></PropertyGroup>
+  <ItemGroup><Compile Include="../../../MainGameAiShoujoMode/Life/AiResidentState.cs" Link="AiResidentState.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../../../MainGameAiShoujoMode/Life/AiNativeHResultState.cs" Link="AiNativeHResultState.cs" /></ItemGroup>
+</Project>

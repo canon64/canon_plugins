@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><LangVersion>latest</LangVersion><Nullable>disable</Nullable></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\_shared\HSceneRuntime.cs" Link="HSceneRuntime.cs" />
+    <Compile Include="..\Audio\TransientBoostOwnership.cs" Link="TransientBoostOwnership.cs" />
+    <Compile Include="..\..\MainGameHandySync\Plugin.HandyClient.cs" Link="HandyClient.cs" />
+    <Compile Include="..\..\canon_gate\GateApi.cs" Link="GateApi.cs" />
+    <Compile Include="..\..\canon_gate\GateApi.AiMode.cs" Link="GateApi.AiMode.cs" />
+    <Compile Include="..\..\canon_gate\ExceptionPolicy.cs" Link="ExceptionPolicy.cs" />
+    <Compile Include="..\Scheduling\StableActionScheduler.cs" Link="StableActionScheduler.cs" />
+    <Compile Include="..\..\MainGameCircularDisplacement\SessionGate.cs" Link="MainGameCircularDisplacement.cs" />
+    <Compile Include="..\..\MainGameClubLights\SessionGate.cs" Link="MainGameClubLights.cs" />
+    <Compile Include="..\..\MainGameDisplacementMap\SessionGate.cs" Link="MainGameDisplacementMap.cs" />
+    <Compile Include="..\..\MainGameHandySync\SessionGate.cs" Link="MainGameHandySync.cs" />
+    <Compile Include="..\..\MainGameKaleidoscope\SessionGate.cs" Link="MainGameKaleidoscope.cs" />
+    <Compile Include="..\..\MainGameStudioItemSummon\SessionGate.cs" Link="MainGameStudioItemSummon.cs" />
+    <Compile Include="..\..\MainGameSubCameraDisplayProbe\SessionGate.cs" Link="MainGameSubCameraDisplayProbe.cs" />
+    <Compile Include="..\..\MainGameSubtitleCore\SessionGate.cs" Link="MainGameSubtitleCore.cs" />
+    <Compile Include="..\..\MainGameSubtitleEventBridge\SessionGate.cs" Link="MainGameSubtitleEventBridge.cs" />
+    <Compile Include="..\..\MainGameVoiceBreastMorph\SessionGate.cs" Link="MainGameVoiceBreastMorph.cs" />
+    <Compile Include="..\..\MainGameVoiceFaceEventBridge\SessionGate.cs" Link="MainGameVoiceFaceEventBridge.cs" />
+    <Compile Include="..\..\MainGameVoiceImpactBoost\SessionGate.cs" Link="MainGameVoiceImpactBoost.cs" />
+    <Compile Include="..\..\MainGameVrAfterimageLab\SessionGate.cs" Link="MainGameVrAfterimageLab.cs" />
+    <Compile Include="..\..\MainGameVrScreenEffectProbe\SessionGate.cs" Link="MainGameVrScreenEffectProbe.cs" />
+    <Compile Include="..\..\MainGameVrVoiceGate\SessionGate.cs" Link="MainGameVrVoiceGate.cs" />
+    <Compile Include="..\..\SimpleAfterimage\SessionGate.cs" Link="SimpleAfterimage.cs" />
+    <Compile Include="..\..\SimpleAfterimage_VR\SessionGate.cs" Link="SimpleAfterimage_VR.cs" />
+  </ItemGroup>
+</Project>

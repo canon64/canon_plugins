@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><EnableDefaultCompileItems>false</EnableDefaultCompileItems><Optimize>false</Optimize><NoWarn>$(NoWarn);CS0649</NoWarn></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="*.cs" />
+    <Compile Include="..\ComposerContract.cs" />
+    <Compile Include="..\MapContextResolver.cs;..\MapContract.cs" />
+    <Compile Include="..\DiagnosticStatusUi.cs;..\DiagnosticLogSetting.cs" />
+    <Compile Include="..\CoordinateDiagnostics.cs" />
+    <Compile Include="..\OriginModels.cs;..\OriginStore.cs;..\PresetDocuments.cs;..\ReflectionAccess.cs;..\SaveCapture.cs;..\ComposerPlacement.cs;..\HipPlacement.cs;..\Movement.cs;..\RuntimeHooks.cs;..\RuleProjection.cs;..\IkEligibility.cs;..\..\MainGameHLocationCoordinates\RigidPose.cs" />
+    <Reference Include="0Harmony"><HintPath>F:\kks\BepInEx\core\0Harmony.dll</HintPath></Reference>
+    <Reference Include="Mono.Cecil"><HintPath>F:\kks\BepInEx\core\Mono.Cecil.dll</HintPath></Reference>
+    <Reference Include="BepInEx"><HintPath>F:\kks\BepInEx\core\BepInEx.dll</HintPath></Reference>
+    <Reference Include="System.Numerics" /><Reference Include="System.Runtime.Serialization" /><Reference Include="System.Xml.Linq" /><Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+</Project>

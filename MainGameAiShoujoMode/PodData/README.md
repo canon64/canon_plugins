@@ -1,0 +1,13 @@
+# カプセルの操作データ
+
+pods.jsonは原本prefabs/action_point/00.unity3dのp_ai_mi_devicepoint00_00と、抽出済み表示島のDevicePointAnimData/DevicePointLinkedObjectを照合してpod_export.pyで生成したデータ。
+
+座標・Quaternion・縮尺は原本アセットの値であり、原本世界座標へ親子変換を合成した後にSandboxHost.FromIslandSourcePositionを通してKKS島の配置へ変換する。
+
+表示島に存在する森・市街地・研究所の三基だけを含む。コマンドの距離・視線制限・開閉速度・開いてから閉じるまでの待機時間はparameters.jsonを使う。
+
+各カプセルの割り当てはparameters.jsonのpod.<id>.cardとpod.<id>.coordinateに保存する。設定画面では端末から離れた場所でもカプセルを選択して女性・コーデの一覧選択、保存、JSON再読込ができる。端末前のF操作は保存済み割り当てを直接使い、女性カードが空のカプセルからは登場しない。コーデが空なら女性カード内の服装を使う。
+
+機械controllerは既存の島依存バンドルから借用し、この機能からUnloadしない。原本の性格別出現演技と端末SEは未移植で、最小実装では開閉とKKS女性の出口配置・待機を使う。
+
+再生成は共通Python環境でMainGameAiShoujoMode/pod_export.pyを実行する。入力の原本解析資料はF:/kks/work/analysis/ai_girl_podとJ:/workspaces/ai_shoujo_map_extractに置かれている。

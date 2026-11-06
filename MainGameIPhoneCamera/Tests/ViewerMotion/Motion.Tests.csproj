@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net8.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\ViewerMotion.cs" Link="ViewerMotion.cs" />
+    <Compile Include="..\..\ViewerLayout.cs" Link="ViewerLayout.cs" />
+    <Compile Include="..\..\PhoneOrientationPlan.cs" Link="PhoneOrientationPlan.cs" />
+    <Compile Include="..\..\PhoneState.cs" Link="PhoneState.cs" />
+    <Compile Include="..\..\PhoneControlLayout.cs" Link="PhoneControlLayout.cs" />
+  </ItemGroup>
+</Project>

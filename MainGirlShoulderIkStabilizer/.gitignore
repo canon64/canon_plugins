@@ -1,0 +1,3 @@
+# Keep the repeatable verification entry point with the production tests.
+!tools/verify.ps1
+!tools/deploy-diagnostics.ps1

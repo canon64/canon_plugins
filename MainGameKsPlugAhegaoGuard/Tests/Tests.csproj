@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><OutputType>Exe</OutputType></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Plugin.cs" Link="Plugin.cs" />
+    <Reference Include="0Harmony"><HintPath>F:\kks\BepInEx\core\0Harmony.dll</HintPath><Private>true</Private></Reference>
+  </ItemGroup>
+</Project>

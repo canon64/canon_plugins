@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><EnableDefaultCompileItems>false</EnableDefaultCompileItems><SessionSource Condition="'$(SessionSource)'==''">..\SessionGate.cs</SessionSource><ProgramSource Condition="'$(ProgramSource)'==''">Program.cs</ProgramSource></PropertyGroup>
+ <ItemGroup>
+  <Compile Include="$(ProgramSource)" /><Compile Include="Stubs.cs" />
+  <Compile Include="$(SessionSource)" Link="SessionGate.cs" />
+  <Compile Include="..\..\canon_gate\GateApi.cs" Link="GateApi.cs" />
+  <Compile Include="..\..\canon_gate\ExceptionPolicy.cs" Link="ExceptionPolicy.cs" />
+ </ItemGroup>
+</Project>

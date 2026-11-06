@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><KKSDir>F:\kks</KKSDir></PropertyGroup>
+ <ItemGroup><Compile Remove="Tests\**\*.cs"/></ItemGroup>
+ <ItemGroup><Compile Include="..\_shared\VrItemFocus.cs" Link="VrItemFocus.cs"/></ItemGroup>
+ <ItemGroup><EmbeddedResource Include="Audio\Effects\*.wav" LogicalName="MainGameSyringe.Effects.%(Filename)%(Extension)" /></ItemGroup>
+ <ItemGroup>
+  <Compile Remove="AssetBuild\**\*.cs" />
+  <EmbeddedResource Include="Resources\syringe-models.bundle" LogicalName="MainGameSyringe.Models.bundle" />
+  <EmbeddedResource Include="AssetBuild\Assets\Source\FluidProfile.txt" LogicalName="MainGameSyringe.FluidProfile.txt" />
+ </ItemGroup>
+ <ItemGroup>
+  <Reference Include="System.Numerics" />
+  <Reference Include="System.Runtime.Serialization" />
+  <Compile Include="..\MainGameVoiceFaceEventBridge\WavFileLoader.cs" Link="Audio\WavFileLoader.cs" />
+  <Reference Include="UnityEngine.AudioModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.AudioModule.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="BepInEx"><HintPath>$(KKSDir)\BepInEx\core\BepInEx.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="0Harmony"><HintPath>$(KKSDir)\BepInEx\core\0Harmony.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="Assembly-CSharp"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.CoreModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.AnimationModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.AnimationModule.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.UI"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.UI.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="VRGIN_OpenXR"><HintPath>$(KKSDir)\BepInEx\plugins\KKS_VR\VRGIN_OpenXR.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="Unity.XR.OpenVR"><HintPath>$(KKSDir)\BepInEx\plugins\KKS_VR\Unity.XR.OpenVR.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="canon_gate"><HintPath>..\canon_gate\bin\Release\net472\canon_gate.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="MainGameSpiralEyes"><HintPath>..\MainGameSpiralEyes\bin\Release\net472\MainGameSpiralEyes.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="MainGameTransformGizmo"><HintPath>..\MainGameTransformGizmo\bin\Release\net472\MainGameTransformGizmo.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="MainGameUiInputCapture"><HintPath>..\MainGameUiInputCapture\bin\Release\net472\MainGameUiInputCapture.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="MainGameUnifiedUi"><HintPath>..\MainGameUnifiedUi\bin\Release\net472\MainGameUnifiedUi.dll</HintPath><Private>false</Private></Reference>
+ </ItemGroup>
+  <ItemGroup><Compile Include="..\_shared\GadgetRoomSnapshot.cs" Link="GadgetRoomSnapshot.cs" /></ItemGroup>
+ <ItemGroup><Reference Include="UnityEngine.JSONSerializeModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath><Private>false</Private></Reference></ItemGroup>
+</Project>

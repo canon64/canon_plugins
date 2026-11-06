@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net9.0</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+ <ItemGroup>
+  <Compile Include="..\..\..\_shared\VrItemFocus.cs" Link="VrItemFocus.cs"/>
+  <Compile Include="..\..\Plugin.Vr.cs" Link="Plugin.Vr.cs"/>
+  <Compile Include="..\..\Plugin.ReturnBoundary.cs" Link="Plugin.ReturnBoundary.cs"/>
+  <Compile Include="..\..\InjectionPolicy.cs" Link="InjectionPolicy.cs"/>
+  <Compile Include="..\..\..\MainGirlHipHijack\SyringeGripPriority.cs" Link="SyringeGripPriority.cs"/>
+ </ItemGroup>
+</Project>

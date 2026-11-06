@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\LookPolicy.cs" Link="LookPolicy.cs" />
+    <Compile Include="..\NativeParameterLease.cs" Link="NativeParameterLease.cs" />
+    <Compile Include="..\RollLayer.cs" Link="RollLayer.cs" />
+    <Compile Include="..\CameraTargets.cs" Link="CameraTargets.cs" />
+  </ItemGroup>
+</Project>

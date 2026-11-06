@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="MenuChecks.cs" />
+    <Compile Include="../../AiMomentSaveMenu.cs" Link="AiMomentSaveMenu.cs" />
+    <Compile Include="../../AiMomentSaveStore.cs" Link="AiMomentSaveStore.cs" />
+    <Compile Include="../../Furniture/AiFurnitureData.cs" Link="AiFurnitureData.cs" />
+  </ItemGroup>
+  <ItemGroup><None Include="checkpoint.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+</Project>

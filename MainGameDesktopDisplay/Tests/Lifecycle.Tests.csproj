@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup><Compile Include="../Plugin.cs" Link="Plugin.cs" /><Compile Include="../../_shared/GadgetBarCycle.cs" Link="GadgetBarCycle.cs" /><Compile Include="LifecycleBoundary.cs" /><Compile Include="LifecycleProgram.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../Plugin.Vr.cs" Link="Plugin.Vr.cs" /><Compile Include="../../_shared/VrItemFocus.cs" Link="VrItemFocus.cs" /><Compile Include="VrBoundary.cs" /><Compile Include="VrChecks.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../Plugin.Mouse.cs" Link="Plugin.Mouse.cs" /><Compile Include="../WindowsDesktopMouse.cs" Link="WindowsDesktopMouse.cs" /><Compile Include="MouseChecks.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../DisplayClip.cs" Link="DisplayClip.cs" /><Compile Include="../Plugin.Clip.cs" Link="Plugin.Clip.cs" /><Compile Include="ClipChecks.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="PointerChecks.cs" /><Compile Include="../Plugin.Position.cs" Link="Plugin.Position.cs" /><Compile Include="PositionChecks.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../Plugin.Presets.cs" Link="Plugin.Presets.cs" /><Compile Include="../DisplayPreset.cs" Link="DisplayPreset.cs" /><Compile Include="MonitorPresetChecks.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../Plugin.HotelGadget.cs" Link="Plugin.HotelGadget.cs" /><Compile Include="HotelChecks.cs" /></ItemGroup>
+</Project>

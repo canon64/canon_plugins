@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup><Compile Include="..\GateApi.cs" Link="GateApi.cs" /><Compile Include="..\Plugin.cs" Link="Plugin.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="..\ExceptionPolicy.cs" Link="ExceptionPolicy.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="..\GateApi.AiMode.cs" Link="GateApi.AiMode.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="..\GateApi.NativeEngine.cs" Link="GateApi.NativeEngine.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="..\GateApi.HotelMode.cs" Link="GateApi.HotelMode.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="..\UnregisteredPlugins.cs" Link="UnregisteredPlugins.cs" /><Compile Include="..\WarningWindow.cs" Link="WarningWindow.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="..\..\_shared\GateScopeExclusions.cs" Link="GateScopeExclusions.cs" /></ItemGroup>
+</Project>

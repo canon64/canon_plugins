@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+ <ItemGroup>
+  <Compile Remove="Vr\**\*.cs"/>
+  <Compile Include="..\PrimaryActionPolicy.cs" Link="PrimaryActionPolicy.cs"/>
+  <Compile Include="..\SyringeEffectAudio.cs" Link="SyringeEffectAudio.cs"/>
+  <Compile Include="..\SyringeRefillMotion.cs" Link="SyringeRefillMotion.cs"/>
+  <EmbeddedResource Include="..\Audio\Effects\*.wav" LogicalName="MainGameSyringe.Effects.%(Filename)%(Extension)" />
+  <Compile Include="..\Plugin.PrimaryAction.cs" Link="Plugin.PrimaryAction.cs"/>
+  <Compile Include="..\Plugin.Refill.cs" Link="Plugin.Refill.cs"/>
+  <Compile Include="..\Plugin.InjectionSound.cs" Link="Plugin.InjectionSound.cs"/>
+  <Compile Include="..\InjectionPolicy.cs" Link="InjectionPolicy.cs"/>
+  <Compile Include="..\OpacitySteps.cs" Link="OpacitySteps.cs"/>
+  <Compile Include="..\SkinGeometry.cs" Link="SkinGeometry.cs"/>
+  <Compile Include="..\..\MainGameSpiralEyes\PupilOrbitMotion.cs" Link="PupilOrbitMotion.cs"/>
+  <Compile Include="..\DoseLedger.cs" Link="DoseLedger.cs"/>
+  <Compile Include="..\ReinsertionGuard.cs" Link="ReinsertionGuard.cs"/>
+  <Compile Include="..\VoiceCueCatalog.cs" Link="VoiceCueCatalog.cs"/>
+  <Compile Include="..\Plugin.Voice.cs" Link="Plugin.Voice.cs"/>
+  <Compile Include="..\..\MainGameVoiceFaceEventBridge\WavFileLoader.cs" Link="WavFileLoader.cs"/>
+  <Reference Include="System.Runtime.Serialization"/>
+  <Compile Include="..\..\MainGameUnifiedUi\TabOrdering.cs" Link="TabOrdering.cs"/>
+  <Reference Include="System.Numerics"/>
+  <Compile Include="..\..\MainGameSpiralEyes\PupilFollowBindings.cs" Link="PupilFollowBindings.cs"/>
+  <Compile Include="..\..\MainGameSpiralEyes\Plugin.EyeEvents.cs" Link="Plugin.EyeEvents.cs"/>
+  <Compile Include="..\..\MainGameSpiralEyes\OverlayOwners.cs" Link="OverlayOwners.cs"/>
+  <Compile Include="..\..\MainGameSpiralEyes\ForcedOverlayApi.cs" Link="ForcedOverlayApi.cs"/>
+  <Compile Include="..\SessionLifecycle.cs" Link="SessionLifecycle.cs"/>
+  <Compile Include="..\..\MainGameDollMode\Plugin.DollApi.cs" Link="Plugin.DollApi.cs"/>
+  <Compile Include="..\..\canon_gate\GateApi.cs" Link="GateApi.cs"/>
+  <Compile Include="..\..\canon_gate\GateApi.AiMode.cs" Link="GateApi.AiMode.cs"/>
+  <Compile Include="..\..\canon_gate\GateApi.HotelMode.cs" Link="GateApi.HotelMode.cs"/>
+  <Compile Include="..\..\canon_gate\ExceptionPolicy.cs" Link="ExceptionPolicy.cs"/>
+ </ItemGroup>
+</Project>

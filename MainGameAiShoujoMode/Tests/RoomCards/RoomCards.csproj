@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="..\..\HotelRoomCards.cs" Link="HotelRoomCards.cs" />
+    <Compile Include="..\..\HotelRoomState.cs" Link="HotelRoomState.cs" />
+    <Compile Include="StateChecks.cs" />
+    <None Include="state-fixture.json" CopyToOutputDirectory="PreserveNewest" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+</Project>

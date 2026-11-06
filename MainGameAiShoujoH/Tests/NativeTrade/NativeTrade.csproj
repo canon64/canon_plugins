@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework></PropertyGroup><ItemGroup>
+<Compile Include="../../../MainGameAiShoujoMode/Life/AiLifeStateStore.cs" Link="AiLifeStateStore.cs" />
+<Compile Include="../../../MainGameAiShoujoMode/Life/AiInventoryOperations.cs" Link="AiInventoryOperations.cs" />
+<Compile Include="../../../MainGameAiShoujoMode/Life/AiResidentState.cs" Link="AiResidentState.cs" />
+<Compile Include="../../../MainGameAiShoujoMode/Life/NativeMerchantCatalog.cs" Link="NativeMerchantCatalog.cs" />
+<None Include="../../../MainGameAiShoujoMode/Package/Content/native-merchant-catalog.json" Link="native-merchant-catalog.json" CopyToOutputDirectory="PreserveNewest" />
+</ItemGroup></Project>

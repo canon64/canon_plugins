@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\ZipmodPose.cs" Link="ZipmodPose.cs" />
+    <Compile Include="..\..\MotionDefinitions.cs" Link="MotionDefinitions.cs" />
+    <Compile Include="..\..\ContactDefinitions.cs" Link="ContactDefinitions.cs" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="AnimationLoader.KoikatsuSunshine"><HintPath>F:\kks\BepInEx\plugins\AnimationLoader.KoikatsuSunshine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>F:\kks\KoikatsuSunshine_Data\Managed\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>F:\kks\KoikatsuSunshine_Data\Managed\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>F:\kks\KoikatsuSunshine_Data\Managed\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

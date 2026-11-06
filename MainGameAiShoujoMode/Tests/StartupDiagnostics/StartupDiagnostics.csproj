@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="../../../MapEnvironmentRuntime/StartupTrace.cs" Link="StartupTrace.cs" />
+    <Compile Include="../../../MapEnvironmentRuntime/StartupTrace.CameraProbe.cs" Link="StartupTrace.CameraProbe.cs" />
+    <Compile Include="../../../MapEnvironmentRuntime/NativeAddressReader.cs" Link="NativeAddressReader.cs" />
+  </ItemGroup>
+</Project>

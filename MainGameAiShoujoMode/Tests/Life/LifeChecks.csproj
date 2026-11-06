@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Conversation/AiReplyContracts.cs" Link="AiReplyContracts.cs" />
+    <Compile Include="../../Conversation/AiConversationPipeNative.cs" Link="AiConversationPipeNative.cs" />
+    <Compile Include="../../Conversation/AiConversationActionExecution.cs" Link="AiConversationActionExecution.cs" />
+    <Compile Include="../../AiMomentSaveStore.cs" Link="AiMomentSaveStore.cs" />
+    <Compile Include="../../Furniture/AiFurnitureData.cs" Link="AiFurnitureData.cs" />
+    <Compile Include="../../Conversation/KksConversationStateStore.cs" Link="KksConversationStateStore.cs" />
+    <None Include="../MomentSave/checkpoint.json" Link="checkpoint.json" CopyToOutputDirectory="PreserveNewest" />
+    <Compile Include="../../Life/AiInventoryOperations.cs" Link="AiInventoryOperations.cs" />
+    <Compile Include="../../Life/AiLifeStateStore.cs" Link="AiLifeStateStore.cs" />
+    <Compile Include="../../Life/AiLifeRuntimeSettings.cs" Link="AiLifeRuntimeSettings.cs" />
+    <Compile Include="../../Life/AiLifeRuntime.cs" Link="AiLifeRuntime.cs" />
+    <Compile Include="../../Life/AiResidentState.cs" Link="AiResidentState.cs" />
+    <Compile Include="../../Life/AiLifeController.cs" Link="AiLifeController.cs" />
+    <Compile Include="../../Life/AiLifeActivities.cs" Link="AiLifeActivities.cs" />
+    <Compile Include="../../Life/AiLifeAnimationCatalog.cs" Link="AiLifeAnimationCatalog.cs" />
+    <Compile Include="../../Life/AiLifeConnections.cs" Link="AiLifeConnections.cs" />
+    <Compile Include="../../Life/NativeMerchantCatalog.cs" Link="NativeMerchantCatalog.cs" />
+    <Compile Include="../../Life/AiItemCatalog.cs" Link="AiItemCatalog.cs" />
+    <Compile Include="../../../analysis/ai-conversation-system/ai/AIProject.StuffItemExtensions.cs" Link="Source.StuffItemExtensions.cs" />
+  </ItemGroup>
+</Project>

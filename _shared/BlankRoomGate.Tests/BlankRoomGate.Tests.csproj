@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup><Compile Include="..\BlankRoomGate.cs" Link="BlankRoomGate.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="..\RoomBoundCoroutine.cs" Link="RoomBoundCoroutine.cs" /></ItemGroup>
+</Project>

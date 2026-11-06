@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\_shared\VrItemFocus.cs" Link="VrItemFocus.cs" />
+    <Compile Remove="Movie\**\*.cs" />
+    <Compile Remove="Phone\**\*.cs" />
+    <Compile Remove="ViewerMotion\**\*.cs" />
+    <Compile Include="..\PhoneState.cs" Link="PhoneState.cs" />
+    <Compile Include="..\CameraAppState.cs" Link="CameraAppState.cs" />
+    <Compile Include="..\Plugin.Zoom.cs" Link="Plugin.Zoom.cs" />
+    <Compile Include="..\PhoneZoomPlan.cs" Link="PhoneZoomPlan.cs" />
+    <Compile Include="..\Plugin.PlaybackBar.cs" Link="Plugin.PlaybackBar.cs" />
+    <Compile Include="..\..\_shared\GadgetBarCycle.cs" Link="GadgetBarCycle.cs" />
+    <Compile Include="..\VrInput.cs" Link="VrInput.cs" />
+    <Compile Include="..\PhotoSize.cs" Link="PhotoSize.cs" />
+    <Compile Include="..\PhoneScreen.cs" Link="PhoneScreen.cs" />
+  </ItemGroup>
+</Project>

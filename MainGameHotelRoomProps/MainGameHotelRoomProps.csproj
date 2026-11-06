@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><ManagedDir>F:\kks\KoikatsuSunshine_Data\Managed</ManagedDir></PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Tests\**\*.cs" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="BepInEx"><HintPath>F:\kks\BepInEx\core\BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(ManagedDir)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(ManagedDir)\UnityEngine.PhysicsModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="VRGIN_OpenXR"><HintPath>F:\kks\BepInEx\plugins\KKS_VR\VRGIN_OpenXR.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Unity.XR.OpenVR"><HintPath>F:\kks\BepInEx\plugins\KKS_VR\Unity.XR.OpenVR.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="canon_gate"><HintPath>..\canon_gate\bin\Release\net472\canon_gate.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

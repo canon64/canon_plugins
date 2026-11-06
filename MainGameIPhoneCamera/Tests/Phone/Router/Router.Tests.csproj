@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net8.0</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\Plugin.PhoneShell.cs" Link="Plugin.PhoneShell.cs" />
+    <Compile Include="..\..\..\Plugin.Viewer.cs" Link="Plugin.Viewer.cs" />
+    <Compile Include="..\..\..\ViewerLayout.cs" Link="ViewerLayout.cs" />
+    <Compile Include="..\..\..\PhoneState.cs" Link="PhoneState.cs" />
+    <Compile Include="..\..\..\PhoneDeadline.cs" Link="PhoneDeadline.cs" />
+    <Compile Include="..\..\..\CameraAppState.cs" Link="CameraAppState.cs" />
+    <Compile Include="..\..\..\PhoneZoomPlan.cs" Link="PhoneZoomPlan.cs" />
+    <Compile Include="..\..\..\IPhoneAppApi.cs" Link="IPhoneAppApi.cs" />
+    <Compile Include="..\..\..\PhoneOrientationClock.cs" Link="PhoneOrientationClock.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><AssemblyName>AiHRuntimeCurveProbe.NativeV1</AssemblyName></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="RuntimeCurveProbe.cs.txt" />
+    <Reference Include="MainGameDevelopmentBridge"><HintPath>../../../../MainGameDevelopmentBridge/bin/Release/net472/MainGameDevelopmentBridge.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AnimationModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.AnimationModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

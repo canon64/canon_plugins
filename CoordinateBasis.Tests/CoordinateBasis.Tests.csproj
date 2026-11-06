@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../MainGirlHipHijack/Runtime/CharacterRootPose.cs" Link="CharacterRootPose.cs" />
+    <Compile Include="../MainGameObjectComposer/PresetEditorState.cs" Link="PresetEditorState.cs" />
+    <Compile Include="../MainGameObjectComposer/PresetWriteTransaction.cs" Link="PresetWriteTransaction.cs" />
+    <Compile Include="../MainGameObjectComposer/PresetModels.cs" Link="PresetModels.cs" />
+    <Compile Include="../MainGameObjectComposer/PresetEditFields.cs" Link="PresetEditFields.cs" />
+    <Compile Include="../_shared/RootRelativePose.cs" Link="RootRelativePose.cs" />
+    <Compile Include="../MainGameObjectComposer/Plugin.CoordinateBasis.cs" Link="Composer.CoordinateBasis.cs" />
+    <Compile Include="../MainGirlHipHijack/Plugin.CoordinateBasis.cs" Link="HipHijack.CoordinateBasis.cs" />
+  </ItemGroup>
+</Project>

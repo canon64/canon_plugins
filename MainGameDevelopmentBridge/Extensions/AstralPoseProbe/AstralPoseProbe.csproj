@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><AssemblyName>AstralPoseProbe20261102</AssemblyName></PropertyGroup>
+  <ItemGroup><Reference Include="MainGameDevelopmentBridge"><HintPath>../../bin/Release/net472/MainGameDevelopmentBridge.dll</HintPath><Private>false</Private></Reference></ItemGroup>
+</Project>

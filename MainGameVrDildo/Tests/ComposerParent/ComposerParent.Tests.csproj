@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>MainGameVrDildo</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Plugin.ComposerParent.cs" Link="DildoParent.cs" />
+    <Compile Include="..\..\..\MainGameObjectComposer\Plugin.DildoParent.cs" Link="ComposerParent.cs" />
+  </ItemGroup>
+</Project>

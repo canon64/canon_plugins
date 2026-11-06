@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="../../SessionCompletionEnumerator.cs" Link="SessionCompletionEnumerator.cs" />
+    <Compile Include="../../AiModeHSession.Return.cs" Link="AiModeHSession.Return.cs" />
+    <Compile Include="../../OwnedHReturnData.cs" Link="OwnedHReturnData.cs" />
+  </ItemGroup>
+</Project>

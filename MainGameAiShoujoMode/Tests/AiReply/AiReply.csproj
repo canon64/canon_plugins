@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><EnableDefaultCompileItems>false</EnableDefaultCompileItems><NoWarn>SYSLIB0014</NoWarn></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="../../Conversation/AiReplyContracts.cs" Link="AiReplyContracts.cs" />
+    <Compile Include="../../Conversation/AiConversationPipeNative.cs" Link="AiConversationPipeNative.cs" />
+    <Compile Include="../../Conversation/AiReplyRun.cs" Link="AiReplyRun.cs" />
+    <Compile Include="../../Conversation/AiReplySbv2.cs" Link="AiReplySbv2.cs" />
+  </ItemGroup>
+</Project>

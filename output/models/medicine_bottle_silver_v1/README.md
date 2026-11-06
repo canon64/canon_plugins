@@ -1,0 +1,13 @@
+銀色シールとサイケデリックな渦の薬液ボトル：高さ85mm・直径約45mm、ガラス瓶・紫の薬液・アルミキャップ・ゴム栓・銀色シールの5部品、文字なし。
+
+ゴム栓は黒色で、元画像に合わせて中央を円形に約1mm低くした形状を持ち、薬液は最初のモデルプレビューより濃い紫色に調整している。
+
+MedicineBottle.blendは編集用で各部品にCatmull-Clarkサブディビジョン2段を保持し、GLBとFBXは1段を評価したモデルを書き出している。
+
+textures内に渦の原画、ラベルのBaseColor（2048px）、MetallicとRoughness（各1024px）を保存し、編集用BLENDとGLBにも画像を内包している。
+
+ガラスの厚さ・屈折、薬液の吸収、金属とゴムの微細な凹凸はBlenderの材質で設定しており、ゲーム側で同じ見た目にするには対応する材質を設定する必要がある。
+
+MedicineBottle_beauty.pngは実モデルのBlenderレンダーで、KKSへの組み込みとVRでの見え方・操作は未確認。
+
+再生成はtools/build_medicine_bottle.pyをBlenderのfactory-startup付きバックグラウンド実行で使い、blockout・finish・render・verifyの順に処理する。

@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion>
+    <KKSDir Condition="'$(KKSDir)'==''">F:\kks</KKSDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Tests\**\*.cs" />
+    <Compile Include="..\_shared\VrItemFocus.cs" Link="VrItemFocus.cs" />
+    <Compile Include="..\_shared\DedicatedVrButton.cs" Link="DedicatedVrButton.cs" />
+    <Compile Include="..\_shared\GadgetBarCycle.cs" Link="GadgetBarCycle.cs" />
+    <EmbeddedResource Include="Assets\handcuffs.meshbin" LogicalName="Handcuffs.Model" />
+    <EmbeddedResource Include="Assets\HandcuffAttach-v7-reverb.wav" LogicalName="Handcuffs.AttachSound" />
+    <Reference Include="UnityEngine.AudioModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.AudioModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx"><HintPath>$(KKSDir)\BepInEx\core\BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="VRGIN_OpenXR"><HintPath>$(KKSDir)\BepInEx\plugins\KKS_VR\VRGIN_OpenXR.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Unity.XR.OpenVR"><HintPath>$(KKSDir)\BepInEx\plugins\KKS_VR\Unity.XR.OpenVR.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="canon_gate"><HintPath>..\canon_gate\bin\Release\net472\canon_gate.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="MainGirlHipHijack"><HintPath>..\MainGirlHipHijack\bin\Release\net472\MainGirlHipHijack.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="MainGameTransformGizmo"><HintPath>..\MainGameTransformGizmo\bin\Release\net472\MainGameTransformGizmo.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\_shared\GadgetRoomSnapshot.cs" Link="GadgetRoomSnapshot.cs" />
+    <Reference Include="UnityEngine.JSONSerializeModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

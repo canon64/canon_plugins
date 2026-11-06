@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup>
+    <None Include="fixture.json" CopyToOutputDirectory="PreserveNewest" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Boundary.cs" />
+    <Compile Include="../../HotelRoomCoordinateRestore.cs" Link="HotelRoomCoordinateRestore.cs" />
+    <Compile Include="../../AiModeHSession.Room.cs" Link="AiModeHSession.Room.cs" />
+    <Compile Include="../../AiModeHSession.PoseDiagnostics.cs" Link="AiModeHSession.PoseDiagnostics.cs" />
+    <Compile Include="../../HotelPoseCatalogDiagnostics.cs" Link="HotelPoseCatalogDiagnostics.cs" />
+    <Compile Include="../../HotelRoomState.cs" Link="HotelRoomState.cs" />
+    <Compile Include="../../HotelRoomCards.cs" Link="HotelRoomCards.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,10 @@
+!*.lua
+!*.ps1
+*.json
+bin/
+obj/
+runtime/
+Tests/bin/
+Tests/obj/
+Tests/results/
+*.user

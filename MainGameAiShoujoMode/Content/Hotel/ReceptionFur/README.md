@@ -1,0 +1,25 @@
+# フュルの台詞・音声
+
+HS2の専用音声65本を全件移植し、字幕原文23行と音声からの機械文字起こし42行をcatalog.jsonとdialogue.csvへ収録。
+
+受付メニューの原表示は「女の子を探してもらう」「実績の解除」「ヘルプ」「Hをお願いする」「容姿の変更」「特別待遇室へ行く」の6項目。
+
+全台詞・全メニューのconnectionStatusはunconnectedとし、動作接続は行わない。
+
+FurReceptionDialogueCatalog.GetLineは素材を参照でき、RequireConnectedLineとRequireConnectedMenuは未接続専用例外FurReceptionNotConnectedExceptionを返す。
+
+既存の受付メニューとHへの接続処理は変更せず、この素材のロード・自動再生・シーン遷移・常駐監視は追加していない。
+
+textBasisがoriginal_scenarioの台詞は原字幕で、whisper_large_v3_unreviewedは機械文字起こしのため表記や聞き取りの誤りがあり得る。
+
+voicesは全65本のWAV、audioSha256は抽出後WAVの照合値、manifest.jsonはHS2原本の照合値を保持。
+
+reception_voice_map.jsonは通常・怒り・H回数別を含む元データ105件、dialogue_all_speakers.jsonは前後の他キャラ発言も残したシナリオ50行。
+
+原本に末尾空白付きのhas_00_00_00参照が2件あり、unresolved.jsonに原値を残し、reference_candidates.jsonに空白なし音声の候補を記録。
+
+serialized_menus.jsonはシーン内の実Text参照と選択肢ID、menu_source_hashes.jsonはその原本シーンのSHA-256。
+
+対象は導入済みHS2のc-1専用音声全件で、性格別の汎用H音声は別データ。
+
+移植先での音声再生・台詞表示・ゲーム内動作は未確認。

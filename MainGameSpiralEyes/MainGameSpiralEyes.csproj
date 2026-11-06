@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><Version>1.6.2</Version><KKSDir>F:\kks</KKSDir><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+ <ItemGroup>
+  <Compile Include="Plugin.cs" />
+  <Compile Include="ParameterDefinitions.cs" />
+  <Compile Include="HSessionClient.cs" />
+  <Compile Include="PupilFollowBindings.cs" />
+  <Compile Include="PupilOrbitBindings.cs" />
+  <Compile Include="PupilOrbitMotion.cs" />
+  <Compile Include="Plugin.PupilOrbit.cs" />
+  <Compile Include="GpuEyeTexture.cs" />
+  <Compile Include="SpiralSelection.cs" />
+  <Compile Include="ForcedOverlayApi.cs" />
+  <Compile Include="OverlayOwners.cs" />
+  <Compile Include="Plugin.EyeEvents.cs" />
+  <Compile Include="Plugin.BindingDiagnostics.cs" />
+  <Reference Include="System.Runtime.Serialization" />
+  <Reference Include="BepInEx"><HintPath>$(KKSDir)\BepInEx\core\BepInEx.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="0Harmony"><HintPath>$(KKSDir)\BepInEx\core\0Harmony.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="canon_gate"><HintPath>..\canon_gate\bin\Release\net472\canon_gate.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="Assembly-CSharp"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.CoreModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.JSONSerializeModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath><Private>false</Private></Reference>
+  <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath><Private>false</Private></Reference>
+ </ItemGroup>
+</Project>

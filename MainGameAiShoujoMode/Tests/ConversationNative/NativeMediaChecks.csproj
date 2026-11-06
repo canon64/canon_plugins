@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><LangVersion>latest</LangVersion><ManagedDir>F:\kks\KoikatsuSunshine_Data\Managed</ManagedDir><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="MediaHostChecks.cs" />
+    <Compile Include="../Conversation/FakeDeadlineTimeline.cs" Link="FakeDeadlineTimeline.cs" />
+    <Compile Include="../../Conversation/KksAdvProcessClock.cs" Link="KksAdvProcessClock.cs" />
+    <Compile Include="../../Conversation/KksAdvTimedHost.cs" Link="KksAdvTimedHost.cs" />
+    <Compile Include="../../Conversation/KksAdvHostPipeline.cs" Link="KksAdvHostPipeline.cs" />
+    <Compile Include="../../Conversation/KksAdvActorHost.cs" Link="KksAdvActorHost.cs" />
+    <Compile Include="../../Conversation/KksAdvBgmHost.cs" Link="KksAdvBgmHost.cs" />
+    <Compile Include="../../Conversation/KksAdvSceneFadeHost.cs" Link="KksAdvSceneFadeHost.cs" />
+    <Compile Include="../../Conversation/KksAdvCameraHost.cs" Link="KksAdvCameraHost.cs" />
+    <Compile Include="../../Conversation/KksAdvEventCgHost.cs" Link="KksAdvEventCgHost.cs" />
+    <Compile Include="EventCgHostChecks.cs" />
+    <Compile Include="../../Conversation/KksAdvEventCgScenePlan.cs" Link="KksAdvEventCgScenePlan.cs" />
+    <Compile Include="EventCgSceneChecks.cs" />
+    <Compile Include="EventCgPlacementChecks.cs" />
+    <Compile Include="../../Conversation/KksEventCgReferenceFrame.cs" Link="KksEventCgReferenceFrame.cs" />
+    <Compile Include="../../Conversation/KksAdvPointHost.cs" Link="KksAdvPointHost.cs" />
+    <Compile Include="../../Conversation/KksAdvPointBackend.cs" Link="KksAdvPointBackend.cs" />
+    <Compile Include="../../Conversation/KksConversationStateStore.cs" Link="KksConversationStateStore.cs" />
+    <Compile Include="PointHostChecks.cs" />
+    <Compile Include="../../Conversation/KksPointDisplayPlayback.cs" Link="KksPointDisplayPlayback.cs" />
+    <Compile Include="../../Conversation/KksAdvCrossFadeHost.cs" Link="KksAdvCrossFadeHost.cs" />
+    <Compile Include="../../Conversation/KksAdvCrossFadePlayback.cs" Link="KksAdvCrossFadePlayback.cs" />
+    <Compile Include="CrossFadeChecks.cs" />
+    <Compile Include="../../Conversation/KksAdvComponentPreset.cs" Link="KksAdvComponentPreset.cs" />
+    <Compile Include="RenderPresetChecks.cs" />
+    <Compile Include="CameraHostChecks.cs" />
+    <Compile Include="SceneFadeChecks.cs" />
+    <Compile Include="../../Conversation/KksAdvBgmPlayback.cs" Link="KksAdvBgmPlayback.cs" />
+    <Compile Include="BgmPlaybackChecks.cs" />
+    <Compile Include="../../Conversation/KksConversationRuntimeSettings.cs" Link="KksConversationRuntimeSettings.cs" />
+    <Compile Include="../../Conversation/KksAdvMediaHost.cs" Link="KksAdvMediaHost.cs" />
+    <Compile Include="../../Conversation/KksAdvMachine.cs" Link="KksAdvMachine.cs" />
+    <Compile Include="../../Conversation/KksAdvFramePreparation.cs" Link="KksAdvFramePreparation.cs" />
+    <Compile Include="../../Conversation/KksAdvCoreHost.cs" Link="KksAdvCoreHost.cs" />
+    <Compile Include="../../Conversation/KksAdvTape.cs" Link="KksAdvTape.cs" />
+    <Compile Include="../../Conversation/KksAdvTextPlayback.cs" Link="KksAdvTextPlayback.cs" />
+    <Compile Include="../../Conversation/KksVoiceGroupSequence.cs" Link="KksVoiceGroupSequence.cs" />
+    <Compile Include="../../Conversation/KksVoiceBundleContext.cs" Link="KksVoiceBundleContext.cs" />
+    <Compile Include="../../Conversation/KksAdvMediaArguments.cs" Link="KksAdvMediaArguments.cs" />
+    <Compile Include="../../Conversation/KksAdvScript.cs" Link="KksAdvScript.cs" />
+    <Reference Include="Assembly-CSharp"><HintPath>$(ManagedDir)\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp-firstpass"><HintPath>$(ManagedDir)\Assembly-CSharp-firstpass.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(ManagedDir)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><OutputType>Exe</OutputType><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\HandcuffState.cs" Link="HandcuffState.cs" />
+    <Compile Include="..\..\HandcuffMountPose.cs" Link="HandcuffMountPose.cs" />
+    <Compile Include="..\..\Plugin.Vr.cs" Link="Plugin.Vr.cs" />
+    <Compile Include="..\..\Plugin.ElbowAim.cs" Link="Plugin.ElbowAim.cs" />
+    <Compile Include="..\..\Plugin.Audio.cs" Link="Plugin.Audio.cs" />
+    <EmbeddedResource Include="..\..\Assets\HandcuffAttach-v7-reverb.wav" LogicalName="Handcuffs.AttachSound" />
+    <Compile Include="..\..\Plugin.Kinematics.cs" Link="Plugin.Kinematics.cs" />
+    <Compile Include="..\..\Plugin.HotelGadget.cs" Link="Plugin.HotelGadget.cs" />
+    <Compile Include="..\..\..\_shared\GadgetRoomSnapshot.cs" Link="GadgetRoomSnapshot.cs" />
+    <Compile Include="..\..\..\_shared\VrItemFocus.cs" Link="VrItemFocus.cs" />
+    <Compile Include="..\..\..\MainGirlHipHijack\Plugin.RuntimeWristBinding.cs" Link="RuntimeWristBinding.cs" />
+    <Compile Include="..\..\..\MainGirlHipHijack\Plugin.VRWristGrab.cs" Link="VRWristGrab.cs" />
+    <Compile Include="..\..\..\MainGirlHipHijack\Plugin.VRElbowAim.cs" Link="VRElbowAim.cs" />
+    <Compile Include="..\..\..\MainGirlHipHijack\Runtime\VrInteractionState.cs" Link="VrInteractionState.cs" />
+    <EmbeddedResource Include="..\..\Assets\handcuffs.meshbin" LogicalName="Handcuffs.Model" />
+  </ItemGroup>
+</Project>

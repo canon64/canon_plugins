@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <KKSDir>F:\kks</KKSDir>
+    <ManagedDir>$(KKSDir)\KoikatsuSunshine_Data\Managed</ManagedDir>
+    <AssemblySearchPaths>{HintPathFromItem};{TargetFrameworkDirectory};{RawFileName}</AssemblySearchPaths>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Tests\**\*.cs" />
+    <Compile Include="..\_shared\GadgetBarCycle.cs" Link="GadgetBarCycle.cs" />
+    <Compile Include="..\_shared\VrItemFocus.cs" Link="VrItemFocus.cs" />
+    <Reference Include="Unity.XR.OpenVR"><HintPath>$(KKSDir)\BepInEx\plugins\KKS_VR\Unity.XR.OpenVR.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx"><HintPath>$(KKSDir)\BepInEx\core\BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>$(ManagedDir)\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(ManagedDir)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(ManagedDir)\UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(ManagedDir)\UnityEngine.PhysicsModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="VRGIN_OpenXR"><HintPath>$(KKSDir)\BepInEx\plugins\KKS_VR\VRGIN_OpenXR.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="canon_gate"><HintPath>..\canon_gate\bin\Release\net472\canon_gate.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="MainGameUnifiedUi"><HintPath>..\MainGameUnifiedUi\bin\Release\net472\MainGameUnifiedUi.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="MainGameUiInputCapture"><HintPath>..\MainGameUiInputCapture\bin\Release\net472\MainGameUiInputCapture.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="MainGameTransformGizmo"><HintPath>..\MainGameTransformGizmo\bin\Release\net472\MainGameTransformGizmo.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\_shared\GadgetRoomSnapshot.cs" Link="GadgetRoomSnapshot.cs" />
+    <Reference Include="UnityEngine.JSONSerializeModule"><HintPath>$(ManagedDir)\UnityEngine.JSONSerializeModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

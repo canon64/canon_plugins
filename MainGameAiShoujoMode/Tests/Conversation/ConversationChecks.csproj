@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><LangVersion>latest</LangVersion><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup>
+    <None Update="layout-expectations.json" CopyToOutputDirectory="PreserveNewest" />
+    <Compile Include="Program.cs" />
+    <Compile Include="DialogueChecks.cs" />
+    <Compile Include="CharacterVoiceChecks.cs" />
+    <Compile Include="../../Conversation/KksCharacterVoiceCatalog.cs" Link="KksCharacterVoiceCatalog.cs" />
+    <Compile Include="StateStoreChecks.cs" />
+    <Compile Include="PointStoreChecks.cs" />
+    <Compile Include="PointDisplayChecks.cs" />
+    <Compile Include="../../Conversation/KksPointDisplayPlayback.cs" Link="KksPointDisplayPlayback.cs" />
+    <Compile Include="AdvTapeChecks.cs" />
+    <Compile Include="AdvMachineChecks.cs" />
+    <Compile Include="AdvPreparationChecks.cs" />
+    <Compile Include="AdvOwnedSessionChecks.cs" />
+    <Compile Include="AdvTextContextChecks.cs" />
+    <Compile Include="../../Conversation/KksAdvTextContext.cs" Link="KksAdvTextContext.cs" />
+    <Compile Include="../../Conversation/KksAdvSessionScope.cs" Link="KksAdvSessionScope.cs" />
+    <Compile Include="../../Conversation/KksAdvOwnedSession.cs" Link="KksAdvOwnedSession.cs" />
+    <Compile Include="../../Conversation/KksAdvFramePreparation.cs" Link="KksAdvFramePreparation.cs" />
+    <Compile Include="AdvTextPlaybackChecks.cs" />
+    <Compile Include="VoiceGroupChecks.cs" />
+    <Compile Include="AdvClockChecks.cs" />
+    <Compile Include="AdvActorTableChecks.cs" />
+    <Compile Include="../../Conversation/KksAdvActorTable.cs" Link="KksAdvActorTable.cs" />
+    <Compile Include="FakeDeadlineTimeline.cs" />
+    <Compile Include="../../Conversation/KksAdvProcessClock.cs" Link="KksAdvProcessClock.cs" />
+    <Compile Include="../../Conversation/KksAdvTimedHost.cs" Link="KksAdvTimedHost.cs" />
+    <Compile Include="../../Conversation/KksVoiceGroupSequence.cs" Link="KksVoiceGroupSequence.cs" />
+    <Compile Include="../../Conversation/KksAdvTextPlayback.cs" Link="KksAdvTextPlayback.cs" />
+    <Compile Include="../../Conversation/KksAdvMachine.cs" Link="KksAdvMachine.cs" />
+    <Compile Include="../../Conversation/KksAdvCoreHost.cs" Link="KksAdvCoreHost.cs" />
+    <Compile Include="../../Conversation/KksAdvScript.cs" Link="KksAdvScript.cs" />
+    <Compile Include="../../Conversation/KksAdvTape.cs" Link="KksAdvTape.cs" />
+    <Compile Include="../../Conversation/KksConversationStateStore.cs" Link="KksConversationStateStore.cs" />
+    <Compile Include="../../Conversation/KksVoiceBundleContext.cs" Link="KksVoiceBundleContext.cs" />
+    <Compile Include="../../Conversation/KksDialogueProgram.cs" Link="KksDialogueProgram.cs" />
+    <Compile Include="../../Conversation/KksDialogueMachine.cs" Link="KksDialogueMachine.cs" />
+    <Compile Include="../../Conversation/KksNormalConversationRules.cs" Link="KksNormalConversationRules.cs" />
+    <Compile Include="../../Conversation/KksConversationSelector.cs" Link="KksConversationSelector.cs" />
+    <Compile Include="../../Conversation/KksConversationLayout.cs" Link="KksConversationLayout.cs" />
+    <Compile Include="../../Conversation/KksConversationLayout.Generated.cs" Link="KksConversationLayout.Generated.cs" />
+  </ItemGroup>
+</Project>

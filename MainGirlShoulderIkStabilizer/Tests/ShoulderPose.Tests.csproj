@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\ShoulderPoseMath.cs" Link="Production\ShoulderPoseMath.cs" />
+    <Compile Include="..\ShoulderRotator.cs" Link="Production\ShoulderRotator.cs" />
+    <Compile Include="..\ShoulderRotator.Diagnostics.cs" Link="Production\ShoulderRotator.Diagnostics.cs" />
+    <Compile Include="..\PoseDiagnosticWriter.cs" Link="Production\PoseDiagnosticWriter.cs" />
+    <Compile Include="..\DiagnosticStartup.cs" Link="Production\DiagnosticStartup.cs" />
+    <Compile Include="..\NativeShoulderDiagnostic.cs" Link="Production\NativeShoulderDiagnostic.cs" />
+    <Compile Include="..\Plugin.NativeDiagnostics.cs" Link="Production\Plugin.NativeDiagnostics.cs" />
+    <Compile Include="..\NativeShoulderCorrection.cs" Link="Production\NativeShoulderCorrection.cs" />
+    <Compile Include="..\PluginSettings.cs" Link="Production\PluginSettings.cs" />
+    <Compile Include="..\..\_shared\ShoulderPoseState.cs" Link="Production\ShoulderPoseState.cs" />
+    <Compile Include="..\..\_shared\OwnedBoneRotation.cs" Link="Production\OwnedBoneRotation.cs" />
+    <Compile Include="..\..\MainGirlHipHijack\Plugin.ShoulderPose.cs" Link="Production\Hip.ShoulderPose.cs" />
+    <!-- The current HipHijack intentionally restored its earlier IK/chain behavior. -->
+    <Compile Remove="ChainTargetChecks.cs;HipBoundary.cs" />
+  </ItemGroup>
+</Project>

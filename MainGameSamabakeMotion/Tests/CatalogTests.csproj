@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup><Compile Remove="Zipmod\**\*.cs;Lifecycle\**\*.cs" /><Compile Include="..\NativeCatalog.cs" Link="NativeCatalog.cs" /><Reference Include="System.Runtime.Serialization" /></ItemGroup>
+</Project>

@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Contracts/HPointRange.cs" Link="HPointRange.cs" />
+    <Compile Include="../../Integration/NativeKksEndingDecision.cs" Link="NativeKksEndingDecision.cs" />
+    <Reference Include="UnityEngine.CoreModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.CoreModule.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

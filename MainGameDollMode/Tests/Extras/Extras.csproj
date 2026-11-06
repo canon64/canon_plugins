@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion><AssemblyName>KKS_SkinEffects</AssemblyName></PropertyGroup>
+ <ItemGroup><Compile Include="..\..\Plugin.PresetExtras.cs" Link="Plugin.PresetExtras.cs"/><Compile Include="..\..\PluginSettings.cs" Link="PluginSettings.cs"/><Reference Include="System.Runtime.Serialization"/></ItemGroup>
+</Project>

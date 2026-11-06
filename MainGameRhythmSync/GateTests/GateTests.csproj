@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\canon_gate\Tests\Stubs.cs" Link="BoundaryStubs.cs" />
+    <Compile Include="..\..\canon_gate\GateApi.cs" Link="GateApi.cs" />
+    <Compile Include="..\..\canon_gate\GateApi.AiMode.cs" Link="GateApi.AiMode.cs" />
+    <Compile Include="..\..\canon_gate\GateApi.HotelMode.cs" Link="GateApi.HotelMode.cs" />
+    <Compile Include="..\..\canon_gate\ExceptionPolicy.cs" Link="ExceptionPolicy.cs" />
+    <Compile Include="..\SessionScene.cs" Link="SessionScene.cs" />
+    <Compile Include="..\Plugin.Session.cs" Link="Host.Session.cs" />
+    <Compile Include="..\Beat\Plugin.Session.cs" Link="Beat.Session.cs" />
+    <Compile Include="..\Speed\Plugin.Session.cs" Link="Speed.Session.cs" />
+    <Compile Include="..\VmdRhythmSource.cs" Link="VmdRhythmSource.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../CharacterStatusRestore.cs" Link="CharacterStatusRestore.cs" />
+    <Reference Include="System.Web.Extensions" />
+    <None Include="fixture.json" CopyToOutputDirectory="PreserveNewest" />
+    <Reference Include="Assembly-CSharp"><HintPath>F:\kks\KoikatsuSunshine_Data\Managed\Assembly-CSharp.dll</HintPath></Reference>
+    <Reference Include="UnityEngine"><HintPath>F:\kks\KoikatsuSunshine_Data\Managed\UnityEngine.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>F:\kks\KoikatsuSunshine_Data\Managed\UnityEngine.CoreModule.dll</HintPath></Reference>
+    <Reference Include="MoreAccessories"><HintPath>F:\kks\BepInEx\plugins\MoreAccessories.dll</HintPath></Reference>
+    <Reference Include="BepInEx"><HintPath>F:\kks\BepInEx\core\BepInEx.dll</HintPath></Reference>
+    <Reference Include="0Harmony"><HintPath>F:\kks\BepInEx\core\0Harmony.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

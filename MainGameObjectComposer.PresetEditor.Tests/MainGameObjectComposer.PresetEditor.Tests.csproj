@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\MainGameObjectComposer\PresetEditFields.cs" Link="PresetEditFields.cs" />
+    <Compile Include="..\MainGameObjectComposer\ComposerViewportGeometry.cs" Link="ComposerViewportGeometry.cs" />
+    <Reference Include="UnityEngine.CoreModule"><HintPath>F:\kks\KoikatsuSunshine_Data\Managed\UnityEngine.CoreModule.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

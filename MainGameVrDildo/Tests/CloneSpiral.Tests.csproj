@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net9.0</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+ <ItemGroup>
+  <Compile Remove="ComposerParent\**\*.cs" />
+  <Compile Remove="Diagnostics\**\*.cs" />
+  <Compile Remove="AutoPiston\**\*.cs" />
+    <Compile Remove="VrGrab\**\*.cs" />
+    <Compile Remove="PlaybackBar\**\*.cs" />
+  <Compile Include="..\CloneSpiralPolicy.cs" Link="CloneSpiralPolicy.cs" />
+  <Compile Include="..\Plugin.CloneSpiral.cs" Link="Plugin.CloneSpiral.cs" />
+  <Compile Include="..\Plugin.SpecialVoices.cs" Link="Plugin.SpecialVoices.cs" />
+  <Compile Include="..\Plugin.SyringeVoicePriority.cs" Link="Plugin.SyringeVoicePriority.cs" />
+  <Compile Include="..\Plugin.VoiceSettings.cs" Link="Plugin.VoiceSettings.cs" />
+  <Compile Include="..\Plugin.CloneClimax.cs" Link="Plugin.CloneClimax.cs" />
+  <Compile Include="..\Plugin.GaugeFace.cs" Link="Plugin.GaugeFace.cs" />
+  <Compile Include="..\Plugin.EyeOpening.cs" Link="Plugin.EyeOpening.cs" />
+  <Compile Include="..\ExpressionSlotChoices.cs" Link="ExpressionSlotChoices.cs" />
+  <Compile Include="..\ExpressionNames.cs" Link="ExpressionNames.cs" />
+  <Compile Include="..\..\_shared\PluginSessionGate.cs" Link="PluginSessionGate.cs" />
+  <Compile Include="..\..\canon_gate\GateApi.cs" Link="GateApi.cs" />
+  <Compile Include="..\..\canon_gate\GateApi.AiMode.cs" Link="GateApi.AiMode.cs" />
+  <Compile Include="..\..\canon_gate\GateApi.HotelMode.cs" Link="GateApi.HotelMode.cs" />
+  <Compile Include="..\..\canon_gate\ExceptionPolicy.cs" Link="ExceptionPolicy.cs" />
+ </ItemGroup>
+</Project>

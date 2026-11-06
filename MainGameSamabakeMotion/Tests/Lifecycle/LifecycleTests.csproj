@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\NativeIntegration.cs" Link="NativeIntegration.cs" />
+    <Compile Include="..\..\ZipmodPose.cs" Link="ZipmodPose.cs" />
+    <Compile Include="..\..\MotionDefinitions.cs" Link="MotionDefinitions.cs" />
+    <Compile Include="..\..\ContactDefinitions.cs" Link="ContactDefinitions.cs" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+</Project>

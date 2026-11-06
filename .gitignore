@@ -1,0 +1,113 @@
+# ===================================================================
+# 許可リスト方式。既定はすべて拒否し、公開してよいものだけを明示的に許可する。
+# 「うっかり増えたファイルが漏れる」事故を構造的に潰すための方針。
+# 公開したいものが増えたら、下の「許可」節に拡張子/パスを1行足すこと。
+# ===================================================================
+
+# まず全部拒否
+*
+
+# ディレクトリは辿れるようにしておく。
+# これが無いと、配下のファイルをいくら許可しても親で切られて効かない。
+!*/
+
+# ------------------------------------------------------------------
+# 許可（公開するもの）
+# ------------------------------------------------------------------
+!.gitignore
+!*.cs
+!*.csproj
+!MainGameAiShoujoMode/Tests/StatusRestore/fixture.json
+!MainGameHLocationPlacement/Build.ps1
+!MainGameHLocationPlacement/Deploy.ps1
+!MainGameVrDildo/prepare_oral_audio.py
+!*.sln
+!MainGameKaleidoscope/BuildShader.ps1
+!scripts/verify_perf_reductions.py
+!scripts/deploy_perf_reductions.ps1
+!scripts/audit_frame_work.py
+!scripts/Invoke-PerfBuild.ps1
+!scripts/verify_frame_work.py
+!scripts/deploy_frame_work.ps1
+!scripts/deploy_timing_probe.ps1
+!MainGameSubCameraDisplayProbe/Tests/Test-CopiedBoneCameraPersistence.ps1
+!MainGameSubCameraDisplayProbe/Tests/Test-CameraTransfer.ps1
+!scripts/summarize_frame_capture.py
+!scripts/verify_milk_view_cache.py
+!scripts/verify_map_sampling.py
+!scripts/check_game_focus.py
+!MainGameFpsDisplay/Deploy.ps1
+!tools/Build-Candle.ps1
+!tools/Deploy-Candle.ps1
+!tools/Inventory-C00ShortVoices.py
+!MainGameKaleidoscope/ShaderBuild/Assets/Kaleidoscope.shader
+!MainGameKaleidoscope/ShaderBuild/Packages/manifest.json
+!MainGameKaleidoscope/ShaderBuild/ProjectSettings/ProjectVersion.txt
+!MainGameKaleidoscope/Resources/kaleidoscope.bundle
+!MainGameBlankMapAdd/Assets/StreetlightAsphalt.png
+!MainGameBlankMapAdd/Assets/StreetlightAsphaltNormal.png
+!MainGameBlankMapAdd/Assets/generate_streetlight_normal.py
+!analysis/wavetone_bpm/bpm_core.py
+!analysis/wavetone_bpm/measure_audio.py
+!analysis/wavetone_bpm/auto_tap.py
+!analysis/wavetone_bpm/README.md
+!Sbv2JsonBatchApp/sbv2_batch.py
+!Sbv2JsonBatchApp/起動.bat
+
+# ドキュメントは README 系だけ。
+# CODEBASE_STATE.md / AGENTS.md / IMPL_PLAN.md などの内部メモは公開しない。
+!README.md
+!README_*.md
+
+# ------------------------------------------------------------------
+# 許可の後に置く拒否。許可指定より後ろに書いた分だけが上書きできる。
+# ------------------------------------------------------------------
+
+# 全ポーズ自動撮影プラグインは非公開。ソースも成果物もGitに載せない。
+MainGamePoseCatalogCapture/
+
+# ビルド成果物
+bin/
+obj/
+.build/
+_diagnostics/perf-reduction-20261027/
+.vs/
+*.user
+*.suo
+
+# 認証情報が写り込んだ画像。QRはTOTPのシークレットそのもの。
+# 上の「全部拒否」で既に止まるが、方針を変えた時に真っ先に漏れる類なので明示しておく。
+*mfa*
+*qr*
+*totp*
+*recovery-code*
+*runpod*
+*nexus*
+podid.*
+
+# git の作業ファイル
+FETCH_HEAD
+ORIG_HEAD
+MERGE_HEAD
+
+
+# Private/runtime configuration must never enter the new public history.
+.claude/
+.codex/
+.agents/
+_test_deploy/
+_diagnostics/
+*.cfg
+*.ini
+*.env
+.env
+.env.*
+*.json
+*.json.*
+*.yaml
+*.yml
+*.toml
+# Build dependency definitions and an explicit test fixture are source inputs.
+!MainGameKaleidoscope/ShaderBuild/Packages/manifest.json
+!MainGameMilkSpray/ShaderBuild/Packages/manifest.json
+!MainGameAiShoujoMode/Tests/StatusRestore/fixture.json

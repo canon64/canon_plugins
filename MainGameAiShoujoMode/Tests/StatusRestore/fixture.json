@@ -1,0 +1,6 @@
+{
+  "zero": 0, "one": 1, "two": 2, "three": 3, "clothingCount": 9,
+  "nativeSlots": 20, "expandedSlots": 35, "largeSlots": 62, "longSavedSlots": 75,
+  "otherCoordinate": 28, "otherBackCoordinate": 27, "mouthPattern": 24,
+  "mouthOpen": 0.8, "invalidByte": 255
+}

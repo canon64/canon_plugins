@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="SpecialMovementChecks.cs" />
+    <Compile Include="HotelWalkChecks.cs" />
+    <Compile Include="ConversationJsonChecks.cs" />
+    <ProjectReference Include="..\MainGameAiShoujoMode.csproj" />
+    <ProjectReference Include="..\..\MapEnvironmentRuntime\MapEnvironmentRuntime.csproj" />
+    <Reference Include="UnityEngine.CoreModule"><HintPath>F:\kks\KoikatsuSunshine_Data\Managed\UnityEngine.CoreModule.dll</HintPath></Reference>
+    <Reference Include="UnityEngine"><HintPath>F:\kks\KoikatsuSunshine_Data\Managed\UnityEngine.dll</HintPath></Reference>
+  </ItemGroup>
+  <Import Project="..\..\MapEnvironmentRuntime\NumericAudit.targets" />
+</Project>

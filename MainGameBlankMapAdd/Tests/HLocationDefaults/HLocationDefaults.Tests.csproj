@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><LangVersion>latest</LangVersion><NoWarn>$(NoWarn);CS0649</NoWarn></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Diagnostics/HLocationTrace.cs" Link="HLocationTrace.cs" />
+    <Compile Include="../../HLocationDefaults.cs" Link="HLocationDefaults.cs" />
+    <Compile Include="../../HLocationPresetStore.cs" Link="HLocationPresetStore.cs" />
+    <Compile Include="../../Plugin.HLocationDefaults.cs" Link="Plugin.HLocationDefaults.cs" />
+    <Compile Include="../../MapWarpPointStore.cs" Link="MapWarpPointStore.cs" />
+    <Compile Include="../../MapWarpOrigin.cs" Link="MapWarpOrigin.cs" />
+    <Compile Include="../../MapLocationNavigation.cs" Link="MapLocationNavigation.cs" />
+  </ItemGroup>
+</Project>

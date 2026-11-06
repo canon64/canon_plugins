@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+ <ItemGroup>
+  <Compile Remove="Extras\**\*.cs" />
+  <Compile Remove="Voice\**\*.cs" />
+  <Compile Include="..\PluginSettings.cs" Link="PluginSettings.cs"/>
+  <Compile Include="..\DollPresets.cs" Link="DollPresets.cs"/>
+  <Reference Include="System.Runtime.Serialization"/>
+ </ItemGroup>
+</Project>

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net8.0</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Router\**\*.cs" />
+    <Compile Include="..\..\PhoneState.cs" Link="PhoneState.cs" />
+    <Compile Include="..\..\PhoneConfigWindow.cs" Link="PhoneConfigWindow.cs" />
+    <Compile Include="..\..\PhoneDeadline.cs" Link="PhoneDeadline.cs" />
+    <Compile Include="..\..\PhoneButtonInput.cs" Link="PhoneButtonInput.cs" />
+    <Compile Include="..\..\GalleryLibrary.cs" Link="GalleryLibrary.cs" />
+    <Compile Include="..\..\MovieWriter.cs" Link="MovieWriter.cs" />
+    <Compile Include="..\..\CaptureOrientation.cs" Link="CaptureOrientation.cs" />
+    <Compile Include="..\..\IPhoneAppApi.cs" Link="IPhoneAppApi.cs" />
+  </ItemGroup>
+</Project>

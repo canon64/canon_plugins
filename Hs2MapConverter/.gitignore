@@ -1,0 +1,4 @@
+!*.py
+!*.ps1
+*.json
+!README.md

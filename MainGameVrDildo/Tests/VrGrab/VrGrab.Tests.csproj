@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup>
+  <ItemGroup><Compile Include="..\..\Plugin.VrGrab.cs" Link="Plugin.VrGrab.cs" /><Compile Include="..\..\..\_shared\VrItemFocus.cs" Link="VrItemFocus.cs" /></ItemGroup>
+</Project>

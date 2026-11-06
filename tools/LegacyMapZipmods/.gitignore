@@ -1,0 +1,6 @@
+UnityProject/
+Temp/
+dist/
+backups/
+*.log
+__pycache__/

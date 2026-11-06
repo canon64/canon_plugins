@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" /><Compile Include="Boundary.cs" />
+    <Compile Include="../../Conversation/EventPositionSnapshot.cs" Link="EventPositionSnapshot.cs" />
+    <Compile Include="../../AiModeHLocations.Diagnostics.cs" Link="AiModeHLocations.Diagnostics.cs" />
+    <Compile Include="../../../MapEnvironmentRuntime/JsonCodec.cs" Link="JsonCodec.cs" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="UnityEngine.CoreModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.CoreModule.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

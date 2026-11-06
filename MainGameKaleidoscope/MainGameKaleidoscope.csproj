@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>MainGameKaleidoscope</AssemblyName>
+    <RootNamespace>MainGameKaleidoscope</RootNamespace>
+    <Nullable>disable</Nullable>
+    <KKSDir Condition="'$(KKSDir)'==''">F:\kks</KKSDir>
+    <BepInExDir Condition="'$(BepInExDir)'==''">$(KKSDir)\BepInEx</BepInExDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="ShaderBuild\**\*.cs" />
+    <Compile Remove="Tests\**\*.cs" />
+    <None Update="Resources\kaleidoscope.bundle" CopyToOutputDirectory="PreserveNewest" />
+    <Reference Include="0Harmony"><HintPath>$(BepInExDir)\core\0Harmony.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="BepInEx"><HintPath>$(BepInExDir)\core\BepInEx.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.CoreModule.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="UnityEngine.VRModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.VRModule.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="VRGIN_OpenXR"><HintPath>$(BepInExDir)\plugins\KKS_VR\VRGIN_OpenXR.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="UnityEngine.AudioModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.AudioModule.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\Assembly-CSharp.dll</HintPath><Private>False</Private></Reference>
+    <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(KKSDir)\KoikatsuSunshine_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath><Private>False</Private></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MainGameUnifiedUi\MainGameUnifiedUi.csproj"><Private>False</Private></ProjectReference>
+    <ProjectReference Include="..\MainGameSubCameraDisplayProbe\MainGameSubCameraDisplayProbe.csproj"><Private>False</Private></ProjectReference>
+    <ProjectReference Include="..\SimpleAfterimage\SimpleAfterimage.csproj"><Private>False</Private></ProjectReference>
+  </ItemGroup>
+  <ItemGroup><Reference Include="canon_gate"><HintPath>..\canon_gate\bin\Release\net472\canon_gate.dll</HintPath><Private>False</Private></Reference></ItemGroup>
+</Project>

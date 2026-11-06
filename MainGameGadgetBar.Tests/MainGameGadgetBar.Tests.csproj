@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net9.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup>
+ <ItemGroup>
+  <Compile Include="..\_shared\GadgetBarCycle.cs" Link="GadgetBarCycle.cs" />
+  <Compile Include="..\MainGameBlankMapAdd\Plugin.GadgetBarButton.cs" Link="Plugin.GadgetBarButton.cs" />
+ </ItemGroup>
+</Project>

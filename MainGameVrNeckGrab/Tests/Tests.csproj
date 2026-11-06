@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion><AssemblyName>NeckGrab.Tests</AssemblyName></PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="NativeContracts\**\*.cs" />
+    <Compile Include="..\NeckState.cs" Link="NeckState.cs" />
+    <Compile Include="..\PalmPose.cs" Link="PalmPose.cs" />
+    <Reference Include="System.Numerics" />
+    <Compile Include="..\NeckProximity.cs" Link="NeckProximity.cs" />
+    <Compile Include="..\Plugin.NativePriority.cs" Link="Plugin.NativePriority.cs" />
+    <Compile Include="..\MotionValue.cs" Link="MotionValue.cs" />
+    <Compile Include="..\CleanupBatch.cs" Link="CleanupBatch.cs" />
+    <Compile Include="..\Plugin.Hooks.cs" Link="Plugin.Hooks.cs" />
+    <Compile Include="..\Plugin.NativeDialogue.cs" Link="Plugin.NativeDialogue.cs" />
+    <Compile Include="..\Plugin.ExternalDialogue.cs" Link="Plugin.ExternalDialogue.cs" />
+    <Reference Include="0Harmony"><HintPath>F:\kks\BepInEx\core\0Harmony.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

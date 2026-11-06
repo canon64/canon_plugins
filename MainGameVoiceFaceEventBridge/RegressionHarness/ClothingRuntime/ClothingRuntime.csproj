@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\ClothingJson.cs" Link="Production\ClothingJson.cs" />
+    <Compile Include="..\..\ClothingSnapshot.cs" Link="Production\ClothingSnapshot.cs" />
+    <Compile Include="..\..\Infrastructure\ClothingQueryServer.cs" Link="Production\ClothingQueryServer.cs" />
+    <Compile Include="..\..\Infrastructure\ClothingQueryDispatcher.cs" Link="Production\ClothingQueryDispatcher.cs" />
+    <Compile Include="..\..\..\MainGameNotifications\NotificationApi.cs" Link="Production\NotificationApi.cs" />
+    <Compile Include="..\..\..\MainGameNotifications\NotificationStore.cs" Link="Production\NotificationStore.cs" />
+  </ItemGroup>
+</Project>

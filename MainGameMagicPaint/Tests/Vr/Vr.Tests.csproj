@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Plugin.Vr.cs" Link="Production/Plugin.Vr.cs" />
+    <Compile Include="../../PaintCore.cs" Link="Production/PaintCore.cs" />
+    <Compile Include="../../PaintInteraction.cs" Link="Production/PaintInteraction.cs" />
+  <Compile Include="../../DiagnosticTrace.cs" Link="Production/DiagnosticTrace.cs" /></ItemGroup>
+</Project>

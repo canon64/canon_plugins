@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup><Reference Include="System.Runtime.Serialization" /><Compile Include="../BridgeJson.cs" Link="BridgeJson.cs" /><Compile Include="../ReflectionCommands.cs" Link="ReflectionCommands.cs" /><Compile Include="../PipeServer.cs" Link="PipeServer.cs" /><Compile Include="../MailboxServer.cs" Link="MailboxServer.cs" /><Compile Include="../DevelopmentStartup.cs" Link="DevelopmentStartup.cs" /></ItemGroup>
+  <ItemGroup>
+    <Compile Include="../NotificationSnapshot.cs" Link="NotificationSnapshot.cs" />
+    <Compile Include="../../MainGameNotifications/NotificationApi.cs" Link="NotificationApi.cs" />
+    <Compile Include="../../MainGameNotifications/NotificationStore.cs" Link="NotificationStore.cs" />
+  </ItemGroup>
+</Project>

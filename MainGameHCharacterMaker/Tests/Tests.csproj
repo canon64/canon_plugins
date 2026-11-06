@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\ShapeEditSession.cs" Link="ShapeEditSession.cs" />
+    <Compile Include="..\ValueEditSession.cs" Link="ValueEditSession.cs" />
+    <Compile Include="..\CardSaveIo.cs" Link="CardSaveIo.cs" />
+    <Compile Include="..\..\MainGameBlankMapAdd\CharacterMakerBarApi.cs" Link="CharacterMakerBarApi.cs" />
+    <Compile Include="..\..\canon_gate\GateApi.cs" Link="GateApi.cs" />
+    <Compile Include="..\..\canon_gate\GateApi.HotelMode.cs" Link="GateApi.HotelMode.cs" />
+    <Compile Include="..\..\canon_gate\ExceptionPolicy.cs" Link="ExceptionPolicy.cs" />
+  </ItemGroup>
+</Project>

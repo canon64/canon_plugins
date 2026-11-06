@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup><Compile Remove="HotelLoadBoundary\**\*.cs" /><Compile Include="..\LayoutStore.cs" Link="LayoutStore.cs" /><Reference Include="System.Runtime.Serialization" /></ItemGroup>
+</Project>

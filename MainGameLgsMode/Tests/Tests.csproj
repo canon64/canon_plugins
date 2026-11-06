@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion><AssemblyName>MainGameLgsMode.Tests</AssemblyName></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\CommandMailbox.cs" Link="CommandMailbox.cs" />
+    <Compile Include="..\ModeController.cs" Link="ModeController.cs" />
+    <Compile Include="..\SettingsStore.cs" Link="SettingsStore.cs" />
+    <Compile Include="..\ManualHotkey.cs" Link="ManualHotkey.cs" />
+    <Compile Include="..\ManualKeyInput.cs" Link="ManualKeyInput.cs" />
+    <Compile Include="..\GameEvents.cs" Link="GameEvents.cs" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="0Harmony"><HintPath>F:\kks\BepInEx\core\0Harmony.dll</HintPath><Private>true</Private></Reference>
+  </ItemGroup>
+</Project>

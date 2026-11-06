@@ -1,0 +1,7 @@
+*.sqlite3*
+*.db*
+staging/
+test-work/
+__pycache__/
+validation*.json
+examples*.json

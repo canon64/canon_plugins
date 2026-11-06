@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><LangVersion>latest</LangVersion></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../MainGameAiShoujoMode/Lighting/NativeHLightingRenderer.cs" Link="NativeHLightingRenderer.cs" />
+    <Compile Include="../../../MainGameAiShoujoMode/Lighting/LightingUnity.cs" Link="LightingUnity.cs" />
+    <Compile Include="../../../MainGameAiShoujoMode/Lighting/LightingData.cs" Link="LightingData.cs" />
+    <EmbeddedResource Include="../../../MainGameAiShoujoMode/Lighting/Native/*"><LogicalName>WalkingLightProbe.Lighting.Native.%(Filename)%(Extension)</LogicalName></EmbeddedResource>
+    <Reference Include="MainGameDevelopmentBridge"><HintPath>../../bin/Release/net472/MainGameDevelopmentBridge.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="MapEnvironmentRuntime"><HintPath>../../../MapEnvironmentRuntime/bin/Release/net472/MapEnvironmentRuntime.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>F:/kks/BepInEx/core/0Harmony.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx"><HintPath>F:/kks/BepInEx/core/BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ImageConversionModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.ImageConversionModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.JSONSerializeModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AssetBundleModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.AssetBundleModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AnimationModule"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/UnityEngine.AnimationModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp-firstpass"><HintPath>F:/kks/KoikatsuSunshine_Data/Managed/Assembly-CSharp-firstpass.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+</Project>

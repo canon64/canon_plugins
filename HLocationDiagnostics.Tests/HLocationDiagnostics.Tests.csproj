@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../MainGirlHipHijack/Plugin.HLocationDiagnostics.cs" Link="Plugin.HLocationDiagnostics.cs" />
+    <Compile Include="../MainGirlHipHijack/Services/HipHijackLogger.cs" Link="HipHijackLogger.cs" />
+    <Compile Include="../MainGirlHipHijack/SimpleFileLogger.cs" Link="SimpleFileLogger.cs" />
+    <Compile Include="../MainGameBlankMapAdd/Plugin.HLocationNotifications.cs" Link="Plugin.HLocationNotifications.cs" />
+  </ItemGroup>
+</Project>

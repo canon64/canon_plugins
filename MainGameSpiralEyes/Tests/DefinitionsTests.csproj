@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net472</TargetFramework><OutputType>Exe</OutputType><LangVersion>latest</LangVersion></PropertyGroup>
+ <ItemGroup><Compile Include="..\ParameterDefinitions.cs" Link="ParameterDefinitions.cs"/><Reference Include="System.Runtime.Serialization"/></ItemGroup>
+ <ItemGroup><Compile Remove="Layers\**\*.cs" /></ItemGroup>
+ <ItemGroup><Compile Include="..\SpiralSelection.cs" Link="SpiralSelection.cs"/></ItemGroup>
+ <ItemGroup><Compile Include="..\HSessionClient.cs" Link="HSessionClient.cs"/><Compile Include="..\..\canon_gate\GateApi.cs" Link="GateApi.cs"/><Compile Include="..\..\canon_gate\ExceptionPolicy.cs" Link="ExceptionPolicy.cs"/></ItemGroup>
+ <ItemGroup><Compile Include="..\..\canon_gate\GateApi.AiMode.cs" Link="GateApi.AiMode.cs"/></ItemGroup>
+</Project>
