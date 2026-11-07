@@ -120,7 +120,7 @@ namespace MainGameVrNeckChain
                 if (_chain != null) ClearChain();
                 else SpawnChain();
             };
-            _neckDown = Config.Bind("Placement", "Neck down (m)", NeckOffset.y,
+            _neckDown = Config.Bind("Placement", "Neck down (m)", -0.03668067f,
                 "首ボーンから鎖の根元を下へずらす距離。負の値を指定します。");
             _neckForward = Config.Bind("Placement", "Neck forward (m)", NeckOffset.z,
                 "首ボーンから鎖の根元を前へずらす距離。");
@@ -131,18 +131,18 @@ namespace MainGameVrNeckChain
                 new ConfigDescription("Leash Choker の大きさ。", new AcceptableValueRange<float>(0.6f, 2f)));
             _collarScaleX = Config.Bind("Collar", "Scale X", 1f,
                 new ConfigDescription("首輪の横幅倍率。", new AcceptableValueRange<float>(0.3f, 3f)));
-            _collarScaleY = Config.Bind("Collar", "Scale Y", 1f,
+            _collarScaleY = Config.Bind("Collar", "Scale Y", 0.6256303f,
                 new ConfigDescription("首輪の高さ倍率。", new AcceptableValueRange<float>(0.3f, 3f)));
             _collarScaleZ = Config.Bind("Collar", "Scale Z", 1f,
                 new ConfigDescription("首輪の前後幅倍率。", new AcceptableValueRange<float>(0.3f, 3f)));
             _collarOffsetX = Config.Bind("Collar", "Offset X (m)", 0f, "首輪の左右位置。");
             _collarOffsetY = Config.Bind("Collar", "Offset Y (m)", 0f, "首輪の上下位置。");
-            _collarOffsetZ = Config.Bind("Collar", "Offset Z (m)", 0f, "首輪の前後位置。");
+            _collarOffsetZ = Config.Bind("Collar", "Offset Z (m)", 9.622263e-10f, "首輪の前後位置。");
             _collarRotationX = Config.Bind("Collar", "Rotation X (deg)", 0f, "首輪のX軸回転。");
             _collarRotationY = Config.Bind("Collar", "Rotation Y (deg)", 0f, "首輪のY軸回転。");
             _collarRotationZ = Config.Bind("Collar", "Rotation Z (deg)", 0f, "首輪のZ軸回転。");
-            _chainOffsetX = Config.Bind("Placement", "Chain side (m)", 0f, "鎖の接続位置の左右微調整。");
-            _chainScale = Config.Bind("Chain", "Scale", 1f,
+            _chainOffsetX = Config.Bind("Placement", "Chain side (m)", -0.02394958f, "鎖の接続位置の左右微調整。");
+            _chainScale = Config.Bind("Chain", "Scale", 0.6848739f,
                 new ConfigDescription("鎖全体の大きさと長さ。", new AcceptableValueRange<float>(0.5f, 2f)));
             _chainScaleX = Config.Bind("Chain", "Scale X", 1f,
                 new ConfigDescription("鎖の横幅倍率。", new AcceptableValueRange<float>(0.3f, 3f)));
@@ -151,7 +151,7 @@ namespace MainGameVrNeckChain
             _chainScaleZ = Config.Bind("Chain", "Scale Z", 1f,
                 new ConfigDescription("鎖の長さ方向の倍率。", new AcceptableValueRange<float>(0.3f, 3f)));
             _ringOffsetX = Config.Bind("Collar ring", "Offset X (m)", 0.055f, "鎖をつなぐ首輪内の左右位置。");
-            _ringOffsetY = Config.Bind("Collar ring", "Offset Y (m)", -0.03f, "鎖をつなぐ首輪内の上下位置。");
+            _ringOffsetY = Config.Bind("Collar ring", "Offset Y (m)", -0.03907563f, "鎖をつなぐ首輪内の上下位置。");
             _ringOffsetZ = Config.Bind("Collar ring", "Offset Z (m)", 0f, "鎖をつなぐ首輪内の前後位置。");
             _collarAttachRadius = Config.Bind("Collar", "Attach radius (m)", 0.10f,
                 new ConfigDescription("離した首輪が所定の首位置へ戻る距離。", new AcceptableValueRange<float>(0.02f, 0.5f)));

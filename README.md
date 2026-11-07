@@ -198,6 +198,19 @@ dotnet build MainGirlHipHijack/MainGirlHipHijack.csproj -c Release
 - プラグイン固有設定: 各プラグインフォルダ内の `*.json`
 - ログ: 各プラグインフォルダの `*.log` または `_logs/` 配下。`MainGameLogRelay` 導入時は owner 単位で集約
 
+### アイテム・万華鏡の初期値（2026-11-08）
+
+ディルド、注射器、鎖・首輪、iPhone、マジック・スプレー、ディスプレイ、MilkSpray、万華鏡は、調整済みの保存値をコードの初期値に反映しています。設定ファイルのない環境では、この初期値を使用します。
+既存の設定ファイルがある環境では保存済み設定が優先されるため、DLLを更新しても利用者の調整値は上書きしません。
+ロウソクは従来の初期値と保存値が一致しており、手錠には独立した保存設定がありません。診断ログは初期OFFを維持し、個人の画像・フォルダ・実行ファイルのパスは初期値へ取り込みません。
+
+実設定のJSON・CFG、CSV、音声WAV、音声用 `manifest.json` は、このソース公開には含みません。音声を使用する場合は次の場所にWAVと対応する `manifest.json` を別途配置してください（ゲームフォルダ基準）。
+
+- ディルド: `BepInEx/plugins/canon_plugins/MainGameVoiceFaceEventBridge/ImpactCueAudio/` 配下の `Piston`・`HardPiston`・`Ogazm`・`Oral` など。
+- 注射器の台詞: `BepInEx/plugins/canon_plugins/MainGameSyringe/Audio/` 配下の `Prepared`（用意）・`Inserted`（刺入）・`Injected`（投与）。
+
+注射器の投与・補充の効果音はDLLに埋め込まれます。ビルドにはソース公開に含まれない音声・モデル等の資産も必要です。
+
 ## リポジトリ内の他のドキュメント
 
 - [AGENTS.md](AGENTS.md) — AI 作業時のスコープ・運用ルール

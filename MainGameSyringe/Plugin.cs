@@ -44,10 +44,10 @@ namespace MainGameSyringe
   {
    _enabled=Config.Bind("General","Enabled",true,"注射器の有効／無効。OFFで注射器と注射由来の螺旋目を解除。");
    _diagnostics=Config.Bind("Diagnostics","Enabled",false,"操作・開始・終了時だけ診断ログを出す。");
-   _showGizmo=Config.Bind("Desktop","ShowGizmo",false,"注射器の移動・回転ギズモを表示。OFFで確実に非表示にする。");
+   _showGizmo=Config.Bind("Desktop","ShowGizmo",true,"注射器の移動・回転ギズモを表示。OFFで確実に非表示にする。");
    _gizmoSize=Config.Bind("Desktop","GizmoSize",.2f,new ConfigDescription("注射器ギズモの表示倍率",new AcceptableValueRange<float>(.2f,1f)));
    _fadeIn=Config.Bind("Effect","FadeInSeconds",30f,new ConfigDescription("完全透明から完全不透明になる秒数。100段階。次の注射から反映。",new AcceptableValueRange<float>(10f,300f)));
-   _fadeOut=Config.Bind("Effect","FadeOutSeconds",600f,new ConfigDescription("最大の濃さから完全透明になる秒数。100段階。次の注射から反映。",new AcceptableValueRange<float>(10f,3600f)));
+   _fadeOut=Config.Bind("Effect","FadeOutSeconds",602.63f,new ConfigDescription("最大の濃さから完全透明になる秒数。100段階。次の注射から反映。",new AcceptableValueRange<float>(10f,3600f)));
    _gripRadius=Config.Bind("Interaction","GripRadius",.08f,new ConfigDescription("握れる距離（m）",new AcceptableValueRange<float>(.02f,.3f)));
    _scale=Config.Bind("Model","Scale",1f,new ConfigDescription("注射器の大きさ",new AcceptableValueRange<float>(.25f,3f)));
    _gripPosition=Config.Bind("VR","GripPosition",new Vector3(0,-.015f,.06f),"手に対する位置（m）");

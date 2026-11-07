@@ -53,11 +53,11 @@ namespace MainGameDesktopDisplay
             _enabled = Config.Bind("General", "Enabled", true, "ディスプレイを有効にします。再有効化は次のHから。");
             _mouseEnabled = Config.Bind("Desktop", "MouseControl", true, "右手のA＝左クリック、B＝右クリック、スティック上下左右＝縦横スクロール。表示中だけ専用入力を有効にします。");
             _mouseEnabled.SettingChanged += MouseSettingChanged;
-            _monitorDevice = Config.Bind("Desktop", "Monitor", "", "表示対象のモニター名。空欄はメインモニター。");
+            _monitorDevice = Config.Bind("Desktop", "Monitor", "DISPLAY1", "表示対象のモニター名。空欄はメインモニター。");
             _cursor = Config.Bind("Desktop", "Cursor", true, "デスクトップのマウスカーソルを含めます。");
             _fps = Config.Bind("Desktop", "FPS", 15, new ConfigDescription("キャプチャ更新の上限。", new AcceptableValueList<int>(5, 10, 15, 30)));
             _resolution = Config.Bind("Desktop", "MaximumDimension", 1280, new ConfigDescription("キャプチャ画像の長辺上限。", new AcceptableValueList<int>(640, 1280, 1920)));
-            _width = Config.Bind("Display", "WidthMeters", 1.2f, new ConfigDescription("画面の幅（m）。", new AcceptableValueRange<float>(.1f, 20f)));
+            _width = Config.Bind("Display", "WidthMeters", 0.3823568f, new ConfigDescription("画面の幅（m）。", new AcceptableValueRange<float>(.1f, 20f)));
             _distance = Config.Bind("Display", "DistanceMeters", .5f, new ConfigDescription("呼び出し距離（m）。", new AcceptableValueRange<float>(.2f, 20f)));
             _widthText = _width.Value.ToString("0.###", System.Globalization.CultureInfo.InvariantCulture);
             InitializeSpawnPosition();

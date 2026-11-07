@@ -111,3 +111,6 @@ _diagnostics/
 !MainGameKaleidoscope/ShaderBuild/Packages/manifest.json
 !MainGameMilkSpray/ShaderBuild/Packages/manifest.json
 !MainGameAiShoujoMode/Tests/StatusRestore/fixture.json
+
+# Local audits, build logs and source backups must never be published.
+/output/

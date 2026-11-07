@@ -9,8 +9,8 @@ namespace MainGameSyringe
   ConfigEntry<float> _needleWidth;ConfigEntry<bool> _autoStick,_nearSurface;
   void BindContactSettings()
   {
-   _needleWidth=NumberSetting("Insertion","NeedleWidth",.002f,0,.02f,"針先接触判定の幅（直径、m）");
-   _autoStick=Config.Bind("Desktop","StickAfterGizmoDrag",false,"ギズモ操作終了時に一度だけ刺入を判定する。");
+   _needleWidth=NumberSetting("Insertion","NeedleWidth",0.004f,0,.02f,"針先接触判定の幅（直径、m）");
+   _autoStick=Config.Bind("Desktop","StickAfterGizmoDrag",true,"ギズモ操作終了時に一度だけ刺入を判定する。");
    _nearSurface=Config.Bind("Insertion","NearestSkinContact",true,"針先から許容距離内にある腕・太もも・首の肌へ現在の角度で固定する。OFFでは針軸と判定幅で接触を要求する。");
   }
   void GizmoDragChanged(bool dragging)

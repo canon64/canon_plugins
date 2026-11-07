@@ -45,7 +45,7 @@ namespace MainGameIPhoneCamera
             _height = Config.Bind("Camera", "PhotoHeight", 1920, new ConfigDescription("写真の長辺。撮影時の縦・横に合わせてPNGを保存。", new AcceptableValueRange<int>(480, 3840)));
             _fov = Config.Bind("Camera", "VerticalFov", 60f, new ConfigDescription("縦方向の撮影画角。", new AcceptableValueRange<float>(20f, 100f)));
             _grabRadius = Config.Bind("VR", "GrabRadius", .14f, new ConfigDescription("iPhoneをグリップで拾える距離（m）。", new AcceptableValueRange<float>(.03f, .4f)));
-            _lensPosition = Config.Bind("Camera", "LensPosition", new Vector3(.022f, .050f, -.005f), "本体中央を基準にした背面カメラの位置。");
+            _lensPosition = Config.Bind("Camera", "LensPosition", new Vector3(0.02f, 0.05f, -0.01f), "本体中央を基準にした背面カメラの位置。");
             _lensRotation = Config.Bind("Camera", "LensRotation", new Vector3(0f, 180f, 0f), "カメラの本体に対する角度。");
             _enabled.SettingChanged += EnabledChanged;
             _height.SettingChanged += CameraSettingsChanged;

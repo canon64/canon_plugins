@@ -14,17 +14,17 @@ namespace MainGameSyringe
   Vector2 _tabScroll;bool _showNumeric;
   void BindInsertionSettings()
   {
-   _stickDistance=NumberSetting("Insertion","SkinDistance",.025f,.001f,.2f,"針先が肌へ吸着する距離（m）");
-   _insertionDepth=NumberSetting("Insertion","Depth",.008f,0,.1f,"肌メッシュ内部へ刺す深さ（m）");
+   _stickDistance=NumberSetting("Insertion","SkinDistance",0.05f,.001f,.2f,"針先が肌へ吸着する距離（m）");
+   _insertionDepth=NumberSetting("Insertion","Depth",0.019145f,0,.1f,"肌メッシュ内部へ刺す深さ（m）");
    _pullDistance=NumberSetting("Insertion","PullReleaseDistance",.12f,.01f,1f,"刺さった注射器の握り位置から手がこの距離以上離れると、投与せず手元へ戻る（m）。範囲内で再度トリガーを押すと投与。");
    _probeMove=NumberSetting("Insertion","SurfaceSampleMovement",.005f,.001f,.05f,"手の移動で肌メッシュを再計算する移動量（m）");
    _probeAngle=NumberSetting("Insertion","SurfaceSampleAngle",2f,.1f,45f,"肌メッシュを再計算する角度変化（度）");
-   _armRadius=NumberSetting("Insertion","UpperArmRadius",.035f,.01f,.3f,"腕（上腕・前腕）の候補判定半径（m）");
-   _thighRadius=NumberSetting("Insertion","ThighRadius",.065f,.01f,.4f,"太ももの候補判定半径（m）");
+   _armRadius=NumberSetting("Insertion","UpperArmRadius",0.08f,.01f,.3f,"腕（上腕・前腕）の候補判定半径（m）");
+   _thighRadius=NumberSetting("Insertion","ThighRadius",0.15f,.01f,.4f,"太ももの候補判定半径（m）");
    _neckRadius=NumberSetting("Insertion","NeckRadius",.06f,.01f,.15f,"首（首骨から頭骨まで）の候補判定半径（m）");
    _pusherStroke=NumberSetting("Model","PusherStroke",.04f,0,.2f,"旧モデル互換用。新モデルの可動距離は40.5mmです。");
    _injectionSeconds=NumberSetting("Model","InjectionSeconds",3f,.1f,30f,"旧設定互換用。押し子の動作は注射・補充とも3秒に固定です。");
-   var timingVersion=Config.Bind("Model","InjectionTimingVersion",0,"旧既定の投与時間を3秒へ移行する版数。");
+   var timingVersion=Config.Bind("Model","InjectionTimingVersion",2,"旧既定の投与時間を3秒へ移行する版数。");
    if(timingVersion.Value<2){if(Math.Abs(_injectionSeconds.Value-.45f)<.0001f||Math.Abs(_injectionSeconds.Value-2f)<.0001f)_injectionSeconds.Value=3f;timingVersion.Value=2;}
    _remainingLiquid=NumberSetting("Model","RemainingLiquid",.02f,0,1,"注射後の薬液の残量（0～1）");
    _spawnOffset=Config.Bind("Model","SpawnOffset",new Vector3(.18f,-.14f,.5f),"手元へ配置する視点からの位置（m）");

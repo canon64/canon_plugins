@@ -865,11 +865,15 @@ namespace MainGameVrDildo
             StopPiston();
             CloseExpressionMenu();
             _settings = DildoSettings.CreateDefault();
-            _settings.EyePatternSlots = _settings.EyelidShapeSlots = _settings.MouthPatternSlots = null;
-            _settings.EyebrowPatternSlots = null;
             try
             {
-                if (File.Exists(_settingsPath)) JsonUtility.FromJsonOverwrite(File.ReadAllText(_settingsPath), _settings);
+                if (File.Exists(_settingsPath))
+                {
+                    // Legacy files without slots still use their saved pattern choices.
+                    _settings.EyePatternSlots = _settings.EyelidShapeSlots = _settings.MouthPatternSlots = null;
+                    _settings.EyebrowPatternSlots = null;
+                    JsonUtility.FromJsonOverwrite(File.ReadAllText(_settingsPath), _settings);
+                }
                 _settings.Normalize();
             }
             catch (Exception ex) { Logger.LogWarning("Settings load failed: " + ex.Message); _settings = DildoSettings.CreateDefault(); }

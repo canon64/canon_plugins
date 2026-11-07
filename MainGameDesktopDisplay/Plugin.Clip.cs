@@ -20,7 +20,9 @@ namespace MainGameDesktopDisplay
             if (_monitors.Length == 0) return;
             var monitor = _monitors[_monitor];
             _screenAspect = (float)monitor.Rect.Width / monitor.Rect.Height;
-            _clipEntry = Config.Bind("Clip." + monitor.Device.Replace('\\', '_'), "EdgesPercent", "0,0,0,0", "上下左右の切り取り率：左,右,上,下（％）。表示面と取得範囲を切り詰めます。");
+            string clipSection = "Clip." + monitor.Device.Replace('\\', '_');
+            string defaultClip = clipSection == "Clip.__._DISPLAY1" ? "0,30.9237251,6.767307,70.79644" : "0,0,0,0";
+            _clipEntry = Config.Bind(clipSection, "EdgesPercent", defaultClip, "上下左右の切り取り率：左,右,上,下（％）。表示面と取得範囲を切り詰めます。");
             var parts = _clipEntry.Value.Split(',');
             for (int i = 0; i < 4; i++)
             {

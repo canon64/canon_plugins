@@ -81,9 +81,21 @@ namespace MainGameVrNeckChain
 
         private ConfigEntry<float> BindCollisionSetting(string section, string name, float value,
             float minimum, float maximum)
-            => Config.Bind(section, name, value,
+            => Config.Bind(section, name, CollisionDefault(section, name, value),
                 new ConfigDescription("鎖専用コライダーの" + name,
                     new AcceptableValueRange<float>(minimum, maximum)));
+
+        private static float CollisionDefault(string section, string name, float fallback)
+        {
+            if (name == "Position Y (m)")
+            {
+                if (section == "Chain collider cf_j_neck_to_cf_j_spine03") return 0.07563026f;
+                if (section == "Chain collider cf_j_spine03_to_cf_j_spine02") return 0.0302521f;
+            }
+            if (section == "Chain collider cf_j_spine03_to_cf_j_spine02" && name == "Radius scale")
+                return 0.8117647f;
+            return fallback;
+        }
 
         private BodyCollisionEntry CreateCollisionEntry(string key, string label, float radius)
         {
